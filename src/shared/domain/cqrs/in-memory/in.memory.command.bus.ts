@@ -3,11 +3,16 @@ import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus
 import { CommandHandler } from '@/shared/infrastructure/cqrs/command-bus/command.handler';
 import { CommandNotRegistered } from '@/shared/infrastructure/cqrs/command-bus/command.not.registered';
 import { Response } from '@/shared/infrastructure/cqrs/command-bus/response';
-
+import { TYPES } from '@/shared/domain/d-injection/types';
+import { inject, injectable, multiInject } from 'inversify';
+@injectable()
 export class InMemoryCommandBus implements CommandBus {
   private commandHandlersMap: Map<Command, CommandHandler<Command>>;
 
-  constructor(commandHandlers: Array<CommandHandler<Command>>) {
+  constructor(
+    @multiInject(TYPES.CommandBusHandler)
+    commandHandlers: Array<CommandHandler<Command>>
+  ) {
     this.commandHandlersMap = this.formatHandlers(commandHandlers);
   }
 

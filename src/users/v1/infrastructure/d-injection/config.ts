@@ -28,34 +28,34 @@ import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 export const UserContainerModule = new ContainerModule(
   (bind: interfaces.Bind, unbind: interfaces.Unbind) => {
     bind<UserRepository>(TYPES.UserRepository).to(MongoUserRepository);
-    //  unbind<QueryBus>(TYPES_SHARED.QueryBus); // FIXME: remove this line
+    //unbind<QueryBus>(TYPES_SHARED.QueryBus); // FIXME: remove this line
 
     // Redis
     //bind<ICache>(TYPES.usersCache).to(usersCache);
 
     //event - subscribers;
-    bind<DomainEventSubscriber<DomainEvent>>(
-      TYPES_SHARED.DomainEventSubscriber
-    ).to(UpdateStatisticsOnUserCreated);
+    //bind<DomainEventSubscriber<DomainEvent>>(TYPES_SHARED.DomainEventSubscriber)
+    //  .to(UpdateStatisticsOnUserCreated)
+    //  .inSingletonScope();
 
     // query-handlers
-
     bind<QueryHandler<Query, Response>>(TYPES_SHARED.QueryBusHandler).to(
       FindAllUsersHandler
     );
+
     bind<QueryHandler<Query, Response>>(TYPES_SHARED.QueryBusHandler).to(
       FindUserHandler
     );
 
     // command-handlers
-    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler).to(
-      CreateUserHandler
-    );
-    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler).to(
-      UpdateUserHandler
-    );
-    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler).to(
-      DeleteUserHandler
-    );
+    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
+      .to(CreateUserHandler)
+      .inSingletonScope();
+    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
+      .to(UpdateUserHandler)
+      .inSingletonScope();
+    bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
+      .to(DeleteUserHandler)
+      .inSingletonScope();
   }
 );

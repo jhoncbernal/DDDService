@@ -3,11 +3,16 @@ import { QueryNotRegistered } from '@/shared/infrastructure/cqrs/query-bus/query
 import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 import { QueryHandler } from '@/shared/infrastructure/cqrs/query-bus/query.handler';
 import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
-
+import { TYPES } from '@/shared/domain/d-injection/types';
+import { inject, injectable, multiInject } from 'inversify';
+@injectable()
 export class InMemoryQueryBus implements QueryBus {
   private queryHandlersMap: Map<Query, QueryHandler<Query, Response>>;
 
-  constructor(queryHandlers: Array<QueryHandler<Query, Response>>) {
+  constructor(
+    @multiInject(TYPES.QueryBusHandler)
+    queryHandlers: Array<QueryHandler<Query, Response>>
+  ) {
     this.queryHandlersMap = this.formatHandlers(queryHandlers);
   }
 

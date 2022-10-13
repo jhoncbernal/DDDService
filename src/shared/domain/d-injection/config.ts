@@ -72,7 +72,21 @@ export class AppDependencies {
       .to(InMemoryEventBus)
       .inSingletonScope();
   }
+  private configCommandBus(container: Container) {
+    // command-bus
+    container
+      .bind<CommandBus>(TYPES.CommandBus)
+      .to(InMemoryCommandBus)
+      .inSingletonScope();
+  }
 
+  private configQueryBus(container: Container) {
+    container
+      .bind<QueryBus>(TYPES.QueryBus)
+      .to(InMemoryQueryBus)
+      .inSingletonScope();
+  }
+  /*  
   private configCommandBus(container: Container) {
     // command-bus
     container
@@ -95,5 +109,5 @@ export class AppDependencies {
 
         return new InMemoryQueryBus(handlersDefinitions);
       });
-  }
+  }*/
 }

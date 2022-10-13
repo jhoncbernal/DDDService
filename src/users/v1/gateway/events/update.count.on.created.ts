@@ -1,7 +1,8 @@
-import { injectable } from 'inversify';
+import { injectable, multiInject } from 'inversify';
 import { DomainEventClass } from '@/shared/domain/event-bus/domain.event';
 import { DomainEventSubscriber } from '@/shared/infrastructure/event-bus/domain.event.subscriber';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
+import { TYPES } from '@/shared/domain/d-injection/types';
 
 @injectable()
 export class UpdateStatisticsOnUserCreated
