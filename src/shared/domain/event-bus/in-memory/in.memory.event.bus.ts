@@ -1,16 +1,16 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { DomainEvent } from '@/shared/domain/event-bus/domain.event';
 import { DomainEventSubscriber } from '@/shared/infrastructure/event-bus/domain.event.subscriber';
 import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
-import { Logger } from '@/shared/domain/logger/logger';
+import { Logger } from '@/shared/infrastructure/logger/logger';
+import { TYPES } from '@/shared/domain/d-injection/types';
 
 @injectable()
 export class InMemoryEventBus implements EventBus {
-  private logger: Logger;
   private static instance?: InMemoryEventBus = undefined;
   private subscribers: Map<string, Array<DomainEventSubscriber<DomainEvent>>>;
 
-  constructor(logger: Logger) {
+  constructor(@inject(TYPES.Logger) private readonly logger: Logger) {
     this.subscribers = new Map();
     this.logger = logger;
   }

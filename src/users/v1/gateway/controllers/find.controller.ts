@@ -4,7 +4,7 @@ import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 import { UserFindQuery } from '@/users/v1/application/find/query';
 import { UserFindAllQuery } from '@/users/v1/application/find-all/query';
 import { BaseController } from '@/shared/domain/controller/base.controller';
-import { Logger } from '@/shared/domain/logger/logger';
+import { Logger } from '@/shared/infrastructure/logger/logger';
 
 @injectable()
 export class UserGetController extends BaseController {

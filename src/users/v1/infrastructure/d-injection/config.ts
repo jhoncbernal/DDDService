@@ -34,9 +34,9 @@ export const UserContainerModule = new ContainerModule(
     //bind<ICache>(TYPES.usersCache).to(usersCache);
 
     //event - subscribers;
-    // bind<DomainEventSubscriber<DomainEvent>>(
-    //   TYPES_SHARED.DomainEventSubscriber
-    // ).to(UpdateStatisticsOnUserCreated);
+    bind<DomainEventSubscriber<DomainEvent>>(
+      TYPES_SHARED.DomainEventSubscriber
+    ).to(UpdateStatisticsOnUserCreated);
 
     // query-handlers
 
