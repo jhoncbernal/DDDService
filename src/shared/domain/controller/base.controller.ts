@@ -5,8 +5,7 @@ import {
   ExceptionDomain,
   IBaseController
 } from '@/shared/infrastructure/controller/base.controller';
-import { Logger } from '../logger/logger';
-import { TYPES } from '@/shared/domain/d-injection/types';
+import { Logger } from '@/shared/infrastructure/logger/logger';
 
 @injectable()
 export class BaseController implements IBaseController {

@@ -19,7 +19,7 @@ import { CommandHandler } from '@/shared/infrastructure/cqrs/command-bus/command
 import { FindUserHandler } from '@/users/v1/application/find/handler';
 import { FindAllUsersHandler } from '@/users/v1/application/find-all/handler';
 import { UpdateUserHandler } from '@/users/v1/application/update/handler';
-import { DeleteUserHandler } from '../../application/delete/handler';
+import { DeleteUserHandler } from '@/users/v1/application/delete/handler';
 import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 
 //import { ICache } from '@/shared/domain/cache/cache';
