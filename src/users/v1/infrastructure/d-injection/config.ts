@@ -34,9 +34,9 @@ export const UserContainerModule = new ContainerModule(
     //bind<ICache>(TYPES.usersCache).to(usersCache);
 
     //event - subscribers;
-    //bind<DomainEventSubscriber<DomainEvent>>(TYPES_SHARED.DomainEventSubscriber)
-    //  .to(UpdateStatisticsOnUserCreated)
-    //  .inSingletonScope();
+    bind<DomainEventSubscriber<DomainEvent>>(TYPES_SHARED.DomainEventSubscriber)
+      .to(UpdateStatisticsOnUserCreated)
+      .inSingletonScope();
 
     // query-handlers
     bind<QueryHandler<Query, Response>>(TYPES_SHARED.QueryBusHandler).to(
@@ -51,9 +51,11 @@ export const UserContainerModule = new ContainerModule(
     bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
       .to(CreateUserHandler)
       .inSingletonScope();
+
     bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
       .to(UpdateUserHandler)
       .inSingletonScope();
+
     bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
       .to(DeleteUserHandler)
       .inSingletonScope();

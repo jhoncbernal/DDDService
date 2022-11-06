@@ -7,19 +7,11 @@ import { TYPES } from '@/shared/domain/d-injection/types';
 
 @injectable()
 export class InMemoryEventBus implements EventBus {
-  private static instance?: InMemoryEventBus = undefined;
   private subscribers: Map<string, Array<DomainEventSubscriber<DomainEvent>>>;
 
   constructor(@inject(TYPES.Logger) private readonly logger: Logger) {
     this.subscribers = new Map();
     this.logger = logger;
-  }
-
-  public static getInstance(logger: Logger): InMemoryEventBus {
-    if (this.instance === undefined) {
-      this.instance = new InMemoryEventBus(logger);
-    }
-    return this.instance;
   }
 
   async start(): Promise<void> {

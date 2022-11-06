@@ -1,4 +1,4 @@
-import { injectable, multiInject } from 'inversify';
+import { injectable } from 'inversify';
 import { DomainEventClass } from '@/shared/domain/event-bus/domain.event';
 import { DomainEventSubscriber } from '@/shared/infrastructure/event-bus/domain.event.subscriber';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
