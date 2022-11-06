@@ -1,4 +1,5 @@
 // CQRS command (from params)
+import { DateTS } from '@/shared/domain/date/date';
 import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
 import { Identifier } from '@/shared/infrastructure/value-objects/identifier';
 export class UserCreateCommand implements Command {
@@ -35,6 +36,6 @@ export class UserCreateCommand implements Command {
   }
 
   getDate(): Date {
-    return this.date;
+    return DateTS.getDate();
   }
 }

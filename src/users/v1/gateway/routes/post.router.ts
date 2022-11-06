@@ -20,8 +20,7 @@ export class UserPostRouter {
     name: { type: 'string', required: true },
     email: { type: 'string', required: true },
     phone: { type: 'number', required: true },
-    company: { type: 'string', required: true },
-    date: { type: 'date', required: true }
+    company: { type: 'string', required: true }
   })
   @responses({ 201: { description: 'Created' }, 500: { description: 'Error' } })
   static async createUser(ctx: Context) {

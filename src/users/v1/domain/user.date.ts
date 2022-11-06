@@ -1,18 +1,19 @@
-//import { DomainError } from '@/shared/infrastructure/domain.error';
 import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
-//import { MomentDate } from '@/shared/infrastructure/date/date';
+import { DateTS } from '@/shared/domain/date/date';
+import { DomainError } from '@/shared/domain/domain.error';
 
 export class UserDate implements ValueObject<Date> {
-  private momentDate: Date; //MomentDate;
+  private dateTS: DateTS;
 
   constructor(private value: Date) {
-    this.momentDate = new Date(); //new MomentDate();
+    this.dateTS = new DateTS();
+    this.validate(value);
   }
 
   validate(value: Date): void {
-    /*     if (this.momentDate.isValid(value)) {
+    if (!this.dateTS.isValid(value)) {
       throw new DomainError(`User date is invalid.`);
-    } */
+    }
   }
 
   fromPrimitive(value: Date): ValueObject<Date> {
