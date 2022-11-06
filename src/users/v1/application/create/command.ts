@@ -1,32 +1,21 @@
 // CQRS command (from params)
 import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
-
+import { Identifier } from '@/shared/infrastructure/value-objects/identifier';
 export class UserCreateCommand implements Command {
-  private id: string;
   private name: string;
   private email: string;
   private phone: number;
   private company: string;
-  private date: Date;
 
-  constructor(
-    id: string,
-    name: string,
-    email: string,
-    phone: number,
-    company: string,
-    date: Date
-  ) {
-    this.id = id;
+  constructor(name: string, email: string, phone: number, company: string) {
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.company = company;
-    this.date = date;
   }
 
   getId(): string {
-    return this.id;
+    return Identifier.random().valueOf();
   }
 
   getName(): string {

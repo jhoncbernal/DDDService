@@ -16,29 +16,18 @@ export class UserPostController extends BaseController {
   }
 
   async createUser({
-    id,
     name,
     email,
     phone,
-    company,
-    date
+    company
   }: {
-    id: string;
     name: string;
     email: string;
     phone: number;
     company: string;
-    date: Date;
   }) {
     try {
-      const command = new UserCreateCommand(
-        id,
-        name,
-        email,
-        phone,
-        company,
-        date
-      );
+      const command = new UserCreateCommand(name, email, phone, company);
       return await this.commandBus.ask(command);
     } catch (error: any) {
       throw this.mapperException(error, {}, [], 'Users v1');

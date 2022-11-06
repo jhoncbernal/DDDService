@@ -27,16 +27,14 @@ export class UserPostRouter {
   static async createUser(ctx: Context) {
     try {
       // Get Params
-      const { id, name, email, phone, company, date } = ctx.validatedBody;
+      const { name, email, phone, company, date } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPostController);
       const res = await controller.createUser({
-        id,
         name,
         email,
         phone,
-        company,
-        date
+        company
       });
       // Successful response
       ctx.body = res;
