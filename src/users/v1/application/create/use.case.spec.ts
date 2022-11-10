@@ -2,13 +2,13 @@ import { CreateUserUseCase } from '@/users/v1/application/create/use.case';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
-import { UserDate } from '@/users/v1/domain/user.date';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
 import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
+import { UserPassword } from '../../domain/user.password';
 
 let users: any = [];
 
@@ -20,7 +20,7 @@ describe('create-user', () => {
       email: 'test@gmail.com',
       phone: 123456789,
       company: 'test company',
-      date: new Date()
+      password: '123456'
     };
 
     const mockUserRepository = new MockUserRepository(users);
@@ -36,7 +36,7 @@ describe('create-user', () => {
       userEmail: new UserEmail(user.email),
       userPhone: new UserPhone(user.phone),
       userCompany: new UserCompany(user.company),
-      userDate: new UserDate(new Date())
+      userPassword: new UserPassword(user.password)
     });
 
     const result: User = users.find(
@@ -48,6 +48,6 @@ describe('create-user', () => {
     expect(result?.getEmail().valueOf()).toEqual('test@gmail.com');
     expect(result?.getPhone().valueOf()).toEqual(123456789);
     expect(result?.getCompany().valueOf()).toEqual('test company');
-    expect(result?.getDate().valueOf()).toEqual(user.date);
+    expect(result?.getPassword().valueOf()).toEqual('123456');
   });
 });

@@ -1,3 +1,4 @@
+import validate from '@/shared/domain/validator/validator';
 import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
 
 export class UserName implements ValueObject<string> {
@@ -7,7 +8,14 @@ export class UserName implements ValueObject<string> {
     return new UserName(value);
   }
 
-  validate(value: string): void {}
+  validate(value: string): void {
+    // if (
+    //   !validate.isEmpty(value) ||
+    //   !validate.isLength(value, { min: 3, max: 50 })
+    // ) {
+    //   throw new Error('User name must be between 3 and 50 characters long');
+    // }
+  }
 
   valueOf(): string {
     return this.value;

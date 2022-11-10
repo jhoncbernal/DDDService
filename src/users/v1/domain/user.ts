@@ -5,8 +5,8 @@ import { UserName } from '@/users/v1/domain/user.name';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
-import { UserDate } from '@/users/v1/domain/user.date';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
+import { UserPassword } from '@/users/v1/domain/user.password';
 
 export class User extends Entity {
   constructor(
@@ -15,7 +15,7 @@ export class User extends Entity {
     private email: UserEmail,
     private phone: UserPhone,
     private company: UserCompany,
-    private date: UserDate
+    private password: UserPassword
   ) {
     super();
     this.id = id;
@@ -23,7 +23,7 @@ export class User extends Entity {
     this.email = email;
     this.phone = phone;
     this.company = company;
-    this.date = date;
+    this.password = password;
   }
 
   static create(
@@ -32,9 +32,9 @@ export class User extends Entity {
     email: UserEmail,
     phone: UserPhone,
     company: UserCompany,
-    date: UserDate
+    password: UserPassword
   ): User {
-    const user = new User(id, name, email, phone, company, date);
+    const user = new User(id, name, email, phone, company, password);
 
     user.record(
       new UserCreatedDomainEvent(
@@ -43,7 +43,7 @@ export class User extends Entity {
         email.valueOf(),
         phone.valueOf(),
         company.valueOf(),
-        new Date()
+        password.valueOf()
       )
     );
 
@@ -56,21 +56,22 @@ export class User extends Entity {
     email: string,
     phone: number,
     company: string,
-    date: Date
+    date: Date,
+    password: string
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
     const userEmail = new UserEmail(email);
     const userPhone = new UserPhone(phone);
     const userCompany = new UserCompany(company);
-    const userDate = new UserDate(date);
+    const userPassword = new UserPassword(password);
     return new User(
       userId,
       userName,
       userEmail,
       userPhone,
       userCompany,
-      userDate
+      userPassword
     );
   }
 
@@ -98,7 +99,7 @@ export class User extends Entity {
     return this.company;
   }
 
-  getDate(): UserDate {
-    return this.date;
+  getPassword(): UserPassword {
+    return this.password;
   }
 }

@@ -7,12 +7,20 @@ export class UserCreateCommand implements Command {
   private email: string;
   private phone: number;
   private company: string;
+  private password: string;
 
-  constructor(name: string, email: string, phone: number, company: string) {
+  constructor(
+    name: string,
+    email: string,
+    phone: number,
+    company: string,
+    password: string
+  ) {
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.company = company;
+    this.password = password;
   }
 
   getId(): string {
@@ -37,5 +45,9 @@ export class UserCreateCommand implements Command {
 
   getDate(): Date {
     return DateTS.getDate();
+  }
+
+  getPassword(): string {
+    return this.password;
   }
 }

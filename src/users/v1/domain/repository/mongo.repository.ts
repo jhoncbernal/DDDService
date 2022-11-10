@@ -13,8 +13,7 @@ export class MongoUserRepository implements UserRepository {
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      created_at: user.getDate().valueOf(),
-      updated_at: user.getDate().valueOf()
+      password: user.getPassword().valueOf()
     });
   }
   async update(user: User): Promise<boolean> {
@@ -26,8 +25,7 @@ export class MongoUserRepository implements UserRepository {
         name: user.getName().valueOf(),
         email: user.getEmail().valueOf(),
         phone: user.getPhone().valueOf(),
-        company: user.getCompany().valueOf(),
-        updated_at: user.getDate().valueOf()
+        company: user.getCompany().valueOf()
       }
     );
     return result.modifiedCount > 0;
@@ -57,7 +55,8 @@ export class MongoUserRepository implements UserRepository {
       result.email,
       result.phone,
       result.company,
-      result.created_at
+      result.created_at,
+      result.password
     );
   }
 }

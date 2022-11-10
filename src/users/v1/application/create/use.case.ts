@@ -11,10 +11,10 @@ import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
 
-import { UserDate } from '@/users/v1/domain/user.date';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
+import { UserPassword } from '@/users/v1/domain/user.password';
 
 type Params = {
   userId: UserId;
@@ -22,7 +22,7 @@ type Params = {
   userEmail: UserEmail;
   userPhone: UserPhone;
   userCompany: UserCompany;
-  userDate: UserDate;
+  userPassword: UserPassword;
 };
 
 @provide(TYPES.CreateUserUseCase)
@@ -40,7 +40,7 @@ export class CreateUserUseCase implements UseCase {
       params.userEmail,
       params.userPhone,
       params.userCompany,
-      params.userDate
+      params.userPassword
     );
 
     await this.userRepository.save(user);

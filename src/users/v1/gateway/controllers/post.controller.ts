@@ -19,15 +19,23 @@ export class UserPostController extends BaseController {
     name,
     email,
     phone,
-    company
+    company,
+    password
   }: {
     name: string;
     email: string;
     phone: number;
     company: string;
+    password: string;
   }) {
     try {
-      const command = new UserCreateCommand(name, email, phone, company);
+      const command = new UserCreateCommand(
+        name,
+        email,
+        phone,
+        company,
+        password
+      );
       return await this.commandBus.ask(command);
     } catch (error: any) {
       throw this.mapperException(error, {}, [], 'Users v1');

@@ -20,20 +20,22 @@ export class UserPostRouter {
     name: { type: 'string', required: true },
     email: { type: 'string', required: true },
     phone: { type: 'number', required: true },
-    company: { type: 'string', required: true }
+    company: { type: 'string', required: true },
+    password: { type: 'string', required: true }
   })
   @responses({ 201: { description: 'Created' }, 500: { description: 'Error' } })
   static async createUser(ctx: Context) {
     try {
       // Get Params
-      const { name, email, phone, company, date } = ctx.validatedBody;
+      const { name, email, phone, company, password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPostController);
       const res = await controller.createUser({
         name,
         email,
         phone,
-        company
+        company,
+        password
       });
       // Successful response
       ctx.body = res;

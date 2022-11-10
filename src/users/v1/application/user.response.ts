@@ -7,22 +7,19 @@ export class UserResponse implements Response {
   private email: string;
   private phone: number;
   private company: string;
-  private date: Date;
 
   constructor(
     id: string,
     name: string,
     email: string,
     phone: number,
-    company: string,
-    date: Date
+    company: string
   ) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.company = company;
-    this.date = date;
   }
 
   static fromDomain(user: User): UserResponse {
@@ -31,8 +28,7 @@ export class UserResponse implements Response {
       user.getName().valueOf(),
       user.getEmail().valueOf(),
       user.getPhone().valueOf(),
-      user.getCompany().valueOf(),
-      user.getDate().valueOf()
+      user.getCompany().valueOf()
     );
   }
 
@@ -54,9 +50,5 @@ export class UserResponse implements Response {
 
   getCompany(): string {
     return this.company;
-  }
-
-  getDate(): Date {
-    return this.date;
   }
 }

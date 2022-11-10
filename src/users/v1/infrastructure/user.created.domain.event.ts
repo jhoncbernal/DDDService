@@ -5,5 +5,5 @@ export type CreateUserDomainEventBody = {
   readonly email: string;
   readonly phone: number;
   readonly company: string;
-  readonly date: Date;
+  readonly password: string;
 };

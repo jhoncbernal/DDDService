@@ -6,11 +6,11 @@ import { UserRepository } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
-import { UserDate } from '@/users/v1/domain/user.date';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
+import { UserPassword } from '@/users/v1/domain/user.password';
 
 type Params = {
   userId: UserId;
@@ -33,6 +33,7 @@ export class UpdateUserUseCase implements UseCase {
     const userEmail = params.userEmail;
     const userPhone = params.userPhone;
     const userCompany = params.userCompany;
+    const userPassword = new UserPassword('');
 
     const user = new User(
       userId,
@@ -40,7 +41,7 @@ export class UpdateUserUseCase implements UseCase {
       userEmail,
       userPhone,
       userCompany,
-      new UserDate(new Date())
+      userPassword
     );
 
     const result = await this.userRepository.update(user);

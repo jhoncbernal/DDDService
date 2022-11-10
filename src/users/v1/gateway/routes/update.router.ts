@@ -42,7 +42,13 @@ export class UserPutRouter {
       const { name, email, phone, company } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUser({ id, name, email, phone, company });
+      await controller.updateUser({
+        id,
+        name,
+        email,
+        phone,
+        company
+      });
       // Successful response
       ctx.body = { result: 'Updated' };
     } catch (error: any) {
