@@ -35,6 +35,7 @@ const userSchema = new Schema(
     referal_code: { type: String, default: null },
     country_code: { type: String, default: null },
     password: { type: String, default: null },
+    recover_token: { type: String, default: null },
     status: { type: String, default: 'active' },
     documentId: { type: String, default: null },
     policy_status: {

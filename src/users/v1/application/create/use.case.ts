@@ -15,6 +15,7 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserToken } from '@/users/v1/domain/user.token';
 
 type Params = {
   userId: UserId;
@@ -23,6 +24,7 @@ type Params = {
   userPhone: UserPhone;
   userCompany: UserCompany;
   userPassword: UserPassword;
+  userToken: UserToken;
 };
 
 @provide(TYPES.CreateUserUseCase)
@@ -40,7 +42,8 @@ export class CreateUserUseCase implements UseCase {
       params.userEmail,
       params.userPhone,
       params.userCompany,
-      params.userPassword
+      params.userPassword,
+      params.userToken
     );
 
     await this.userRepository.save(user);

@@ -1,7 +1,9 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/shared/domain/d-injection/types';
 import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
+import { UserUpdatePasswordCommand } from '@/users/v1/application/update-password/command';
 import { UserUpdateCommand } from '@/users/v1/application/update/command';
+
 import { BaseController } from '@/shared/domain/controller/base.controller';
 import { Logger } from '@/shared/infrastructure/logger/logger';
 
@@ -29,6 +31,21 @@ export class UserPutController extends BaseController {
   }) {
     try {
       const command = new UserUpdateCommand(id, name, email, phone, company);
+      return await this.commandBus.dispatch(command);
+    } catch (error: any) {
+      throw this.mapperException(error?.message, {}, [], 'Users v1');
+    }
+  }
+
+  async updateUserPassword({
+    recover_token,
+    password
+  }: {
+    recover_token: string | string[] | undefined;
+    password: string;
+  }) {
+    try {
+      const command = new UserUpdatePasswordCommand(recover_token, password);
       return await this.commandBus.dispatch(command);
     } catch (error: any) {
       throw this.mapperException(error?.message, {}, [], 'Users v1');

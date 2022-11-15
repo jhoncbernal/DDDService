@@ -22,5 +22,8 @@ namespace validate {
   export function isEmpty(value: string): boolean {
     return validator.isEmpty(value);
   }
+  export function isToken(token: string): boolean {
+    return validator.isJWT(token);
+  }
 }
 export default validate;

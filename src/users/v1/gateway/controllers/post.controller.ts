@@ -20,13 +20,15 @@ export class UserPostController extends BaseController {
     email,
     phone,
     company,
-    password
+    password,
+    token
   }: {
     name: string;
     email: string;
     phone: number;
     company: string;
     password: string;
+    token: string;
   }) {
     try {
       const command = new UserCreateCommand(
@@ -34,7 +36,8 @@ export class UserPostController extends BaseController {
         email,
         phone,
         company,
-        password
+        password,
+        token
       );
       return await this.commandBus.ask(command);
     } catch (error: any) {

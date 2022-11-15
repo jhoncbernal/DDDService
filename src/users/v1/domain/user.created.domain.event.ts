@@ -11,6 +11,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
   private phone: number;
   private company: string;
   private password: string;
+  private token: string;
 
   constructor(
     id: string,
@@ -18,7 +19,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
     email: string,
     phone: number,
     company: string,
-    password: string
+    password: string,
+    token: string
   ) {
     super(
       UserCreatedDomainEvent.EVENT_NAME,
@@ -31,6 +33,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.token = token;
   }
 
   getId(): string {
@@ -57,8 +60,12 @@ export class UserCreatedDomainEvent extends DomainEvent {
     return this.password;
   }
 
+  getToken(): string {
+    return this.token;
+  }
+
   toPrimitive(): CreateUserDomainEventBody {
-    const { id, name, email, phone, company, password } = this;
+    const { id, name, email, phone, company, password, token } = this;
     return {
       id,
       name,
@@ -66,6 +73,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       phone,
       company,
       password,
+      token,
       eventName: UserCreatedDomainEvent.EVENT_NAME
     };
   }
@@ -81,7 +89,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
       body.email,
       body.phone,
       body.company,
-      body.password
+      body.password,
+      body.token
     );
   }
 }

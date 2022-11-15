@@ -12,9 +12,9 @@ export class UserPassword implements ValueObject<string> {
   }
 
   validate(value: string): void {
-    if (value && !validate.isStrongPassword(value)) {
-      throw new Error('Password is not strong enough');
-    }
+    // if (value && !validate.isStrongPassword(value)) {
+    //   throw new Error('Password is not strong enough');
+    // }
   }
 
   valueOf(): string {

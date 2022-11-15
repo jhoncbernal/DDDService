@@ -11,6 +11,7 @@ import {
 import { AppContainer } from '@/shared/domain/d-injection/container';
 import { UserPutController } from '@/users/v1/gateway/controllers/update.controller';
 import { MiddlewareRouter } from '@/shared/domain/security/middleware';
+import { header } from 'koa-swagger-decorator';
 
 export class UserPutRouter {
   @request('PUT', '/api/v1/users/{id}')
@@ -51,6 +52,40 @@ export class UserPutRouter {
       });
       // Successful response
       ctx.body = { result: 'Updated' };
+    } catch (error: any) {
+      // Error response
+      ctx.throw(error);
+    }
+  }
+
+  @request('PUT', '/api/v1/users/auth/recover')
+  @summary('Update password by user id')
+  @tags(['Users'])
+  @middlewares([new MiddlewareRouter().error])
+  @body({
+    password: {
+      type: 'string',
+      required: true
+    }
+  })
+  @header({
+    recover_token: {
+      type: 'string',
+      required: true
+    }
+  })
+  @responses({ 200: { description: 'Updated' }, 500: { description: 'Error' } })
+  static async updateUserPassword(ctx: Context) {
+    try {
+      // Get Token
+      const { recover_token } = ctx.request.header;
+      // Get Params
+      const { password } = ctx.validatedBody;
+      // Get Controller
+      const controller = AppContainer.resolve(UserPutController);
+      await controller.updateUserPassword({ recover_token, password });
+      // Successful response
+      ctx.body = { result: 'Password Updated' };
     } catch (error: any) {
       // Error response
       ctx.throw(error);

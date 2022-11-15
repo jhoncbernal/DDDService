@@ -11,6 +11,7 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserToken } from '@/users/v1/domain/user.token';
 
 type Params = {
   userId: UserId;
@@ -34,6 +35,7 @@ export class UpdateUserUseCase implements UseCase {
     const userPhone = params.userPhone;
     const userCompany = params.userCompany;
     const userPassword = new UserPassword('');
+    const userToken = new UserToken('');
 
     const user = new User(
       userId,
@@ -41,7 +43,8 @@ export class UpdateUserUseCase implements UseCase {
       userEmail,
       userPhone,
       userCompany,
-      userPassword
+      userPassword,
+      userToken
     );
 
     const result = await this.userRepository.update(user);

@@ -9,6 +9,7 @@ import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository
 import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
 import { UserPassword } from '../../domain/user.password';
+import { UserToken } from '../../domain/user.token';
 
 let users: any = [];
 
@@ -20,7 +21,9 @@ describe('create-user', () => {
       email: 'test@gmail.com',
       phone: 123456789,
       company: 'test company',
-      password: '123456'
+      password: '123456',
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
     };
 
     const mockUserRepository = new MockUserRepository(users);
@@ -36,7 +39,8 @@ describe('create-user', () => {
       userEmail: new UserEmail(user.email),
       userPhone: new UserPhone(user.phone),
       userCompany: new UserCompany(user.company),
-      userPassword: new UserPassword(user.password)
+      userPassword: new UserPassword(user.password),
+      userToken: new UserToken(user.token)
     });
 
     const result: User = users.find(
@@ -49,5 +53,8 @@ describe('create-user', () => {
     expect(result?.getPhone().valueOf()).toEqual(123456789);
     expect(result?.getCompany().valueOf()).toEqual('test company');
     expect(result?.getPassword().valueOf()).toEqual('123456');
+    expect(result?.getToken().valueOf()).toEqual(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
+    );
   });
 });

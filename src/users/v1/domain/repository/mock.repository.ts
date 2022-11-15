@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository } from '@/users/v1/domain/user.repository';
+import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 
@@ -17,6 +17,7 @@ export class MockUserRepository implements UserRepository {
       password: user.getPassword().valueOf()
     });
   }
+
   async update(user: User): Promise<boolean> {
     const result: any = await UserModel.updateOne(
       {
@@ -31,24 +32,33 @@ export class MockUserRepository implements UserRepository {
     );
     return result.modifiedCount > 0;
   }
+
   async delete(id: UserId): Promise<boolean> {
     const result: any = await UserModel.deleteOne({
       uuid: id.valueOf()
     });
-
     return result.deletedCount > 0;
   }
+
   async findById(id: UserId): Promise<User | null> {
     const result: Object = await UserModel.findOne({
       uuid: id.valueOf()
     }).lean();
-
     return result ? this.fromPrimitives(result) : null;
   }
+
+  async findBy(params: string, value: userTypes): Promise<User | null> {
+    const result: Object = await UserModel.findOne({
+      [params]: value.valueOf()
+    }).lean();
+    return result ? this.fromPrimitives(result) : null;
+  }
+
   async findAll(): Promise<User[]> {
     const result: Object[] = await UserModel.find({}).lean();
     return result.map(this.fromPrimitives);
   }
+
   private fromPrimitives(result: any): User {
     return User.fromPrimitives(
       result.uuid,

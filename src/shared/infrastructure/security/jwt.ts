@@ -1,4 +1,5 @@
 export interface SecurityJwt {
-  sign(data: object): Promise<string | object>;
-  verify(token: string): Promise<string | any>;
+  sign(data: object): string | object;
+  verify(token: string): string | any;
+  decode(token: string): string | any;
 }

@@ -8,19 +8,22 @@ export class UserCreateCommand implements Command {
   private phone: number;
   private company: string;
   private password: string;
+  private token: string;
 
   constructor(
     name: string,
     email: string,
     phone: number,
     company: string,
-    password: string
+    password: string,
+    token: string
   ) {
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.token = token;
   }
 
   getId(): string {
@@ -49,5 +52,9 @@ export class UserCreateCommand implements Command {
 
   getPassword(): string {
     return this.password;
+  }
+
+  getToken(): string {
+    return this.token;
   }
 }

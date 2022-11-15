@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository } from '@/users/v1/domain/user.repository';
+import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 
@@ -44,6 +44,14 @@ export class MongoUserRepository implements UserRepository {
 
     return result ? this.fromPrimitives(result) : null;
   }
+
+  async findBy(params: string, value: userTypes): Promise<User | null> {
+    const result: Object = await UserModel.findOne({
+      [params]: value.valueOf()
+    }).lean();
+    return result ? this.fromPrimitives(result) : null;
+  }
+
   async findAll(): Promise<User[]> {
     const result: Object[] = await UserModel.find({}).lean();
     return result.map(this.fromPrimitives);
@@ -55,8 +63,8 @@ export class MongoUserRepository implements UserRepository {
       result.email,
       result.phone,
       result.company,
-      result.created_at,
-      result.password
+      result.password,
+      result.token
     );
   }
 }

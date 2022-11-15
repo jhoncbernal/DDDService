@@ -7,6 +7,7 @@ import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserToken } from '@/users/v1/domain/user.token';
 
 export class User extends Entity {
   constructor(
@@ -15,7 +16,8 @@ export class User extends Entity {
     private email: UserEmail,
     private phone: UserPhone,
     private company: UserCompany,
-    private password: UserPassword
+    private password: UserPassword,
+    private token: UserToken
   ) {
     super();
     this.id = id;
@@ -24,6 +26,7 @@ export class User extends Entity {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.token = token;
   }
 
   static create(
@@ -32,9 +35,10 @@ export class User extends Entity {
     email: UserEmail,
     phone: UserPhone,
     company: UserCompany,
-    password: UserPassword
+    password: UserPassword,
+    token: UserToken
   ): User {
-    const user = new User(id, name, email, phone, company, password);
+    const user = new User(id, name, email, phone, company, password, token);
 
     user.record(
       new UserCreatedDomainEvent(
@@ -43,7 +47,8 @@ export class User extends Entity {
         email.valueOf(),
         phone.valueOf(),
         company.valueOf(),
-        password.valueOf()
+        password.valueOf(),
+        token.valueOf()
       )
     );
 
@@ -56,8 +61,8 @@ export class User extends Entity {
     email: string,
     phone: number,
     company: string,
-    date: Date,
-    password: string
+    password: string,
+    token: string
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
@@ -65,13 +70,15 @@ export class User extends Entity {
     const userPhone = new UserPhone(phone);
     const userCompany = new UserCompany(company);
     const userPassword = new UserPassword(password);
+    const userToken = new UserToken(token);
     return new User(
       userId,
       userName,
       userEmail,
       userPhone,
       userCompany,
-      userPassword
+      userPassword,
+      userToken
     );
   }
 
@@ -101,5 +108,9 @@ export class User extends Entity {
 
   getPassword(): UserPassword {
     return this.password;
+  }
+
+  getToken(): UserToken {
+    return this.token;
   }
 }

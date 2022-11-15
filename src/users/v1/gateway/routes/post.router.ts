@@ -27,7 +27,8 @@ export class UserPostRouter {
   static async createUser(ctx: Context) {
     try {
       // Get Params
-      const { name, email, phone, company, password } = ctx.validatedBody;
+      const { name, email, phone, company, password, token } =
+        ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPostController);
       const res = await controller.createUser({
@@ -35,7 +36,8 @@ export class UserPostRouter {
         email,
         phone,
         company,
-        password
+        password,
+        token
       });
       // Successful response
       ctx.body = res;
