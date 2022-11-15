@@ -21,7 +21,7 @@ export class UpdateUserPasswordHandler
 
   async handle(command: UserUpdatePasswordCommand): Promise<void> {
     const userToken = new UserToken(command.getToken());
-    const userEmail = new UserEmail(userToken.valueOf('email'));
+    const userEmail = new UserEmail(userToken.valueOf());
     const userPassword = new UserPassword(command.getPassword());
 
     await this.updateUserPasswordUseCase.main({

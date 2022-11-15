@@ -1,4 +1,4 @@
-import { compare, genHash } from '@/shared/domain/security/crypt';
+import Crypt from '@/shared/domain/security/crypt';
 import validate from '@/shared/domain/validator/validator';
 import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
 
@@ -12,16 +12,16 @@ export class UserPassword implements ValueObject<string> {
   }
 
   validate(value: string): void {
-    // if (value && !validate.isStrongPassword(value)) {
-    //   throw new Error('Password is not strong enough');
-    // }
+    if (value && !validate.isStrongPassword(value)) {
+      throw new Error('Password is not strong enough');
+    }
   }
 
   valueOf(): string {
-    return genHash(this.value);
+    return this.value;
   }
 
   equals(object: ValueObject<string>): boolean {
-    return compare(this.value, object.valueOf());
+    return Crypt.compare(this.valueOf(), object.valueOf());
   }
 }

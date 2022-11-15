@@ -5,5 +5,6 @@ export const TYPES = {
   UpdateUserUseCase: Symbol.for('UpdateUserUseCase'),
   DeleteUserUseCase: Symbol.for('DeleteUserUseCase'),
   FindAllUsersUseCase: Symbol.for('FindAllUsersUseCase'),
-  UpdateUserPasswordUseCase: Symbol.for('UpdateUserPasswordUseCase')
+  UpdateUserPasswordUseCase: Symbol.for('UpdateUserPasswordUseCase'),
+  LoginUseCase: Symbol.for('LoginUseCase')
 };

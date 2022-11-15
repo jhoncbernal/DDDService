@@ -16,6 +16,7 @@ export class MongoUserRepository implements UserRepository {
       password: user.getPassword().valueOf()
     });
   }
+
   async update(user: User): Promise<boolean> {
     const result: any = await UserModel.updateOne(
       {
@@ -25,11 +26,14 @@ export class MongoUserRepository implements UserRepository {
         name: user.getName().valueOf(),
         email: user.getEmail().valueOf(),
         phone: user.getPhone().valueOf(),
-        company: user.getCompany().valueOf()
+        company: user.getCompany().valueOf(),
+        password: user.getPassword().valueOf(),
+        token: user.getToken().valueOf()
       }
     );
     return result.modifiedCount > 0;
   }
+
   async delete(id: UserId): Promise<boolean> {
     const result: any = await UserModel.deleteOne({
       uuid: id.valueOf()
@@ -37,6 +41,7 @@ export class MongoUserRepository implements UserRepository {
 
     return result.deletedCount > 0;
   }
+
   async findById(id: UserId): Promise<User | null> {
     const result: Object = await UserModel.findOne({
       uuid: id.valueOf()
@@ -56,6 +61,7 @@ export class MongoUserRepository implements UserRepository {
     const result: Object[] = await UserModel.find({}).lean();
     return result.map(this.fromPrimitives);
   }
+
   private fromPrimitives(result: any): User {
     return User.fromPrimitives(
       result.uuid,

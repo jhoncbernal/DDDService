@@ -5,11 +5,14 @@ import { UserCreateCommand } from '@/users/v1/application/create/command';
 import { BaseController } from '@/shared/domain/controller/base.controller';
 import { Logger } from '@/shared/infrastructure/logger/logger';
 import { Exception } from '@/shared/infrastructure/controller/base.controller';
+import { UserLoginQuery } from '@/users/v1/application/login/query';
+import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 
 @injectable()
 export class UserPostController extends BaseController {
   constructor(
     @inject(TYPES.CommandBus) private readonly commandBus: CommandBus,
+    @inject(TYPES.QueryBus) private readonly queryBus: QueryBus,
     @inject(TYPES.Logger) logger: Logger
   ) {
     super(logger);
@@ -40,6 +43,15 @@ export class UserPostController extends BaseController {
         token
       );
       return await this.commandBus.ask(command);
+    } catch (error: any) {
+      throw this.mapperException(error, {}, [], 'Users v1');
+    }
+  }
+
+  async login({ email, password }: { email: string; password: string }) {
+    try {
+      const command = new UserLoginQuery(email, password);
+      return await this.queryBus.ask(command);
     } catch (error: any) {
       throw this.mapperException(error, {}, [], 'Users v1');
     }

@@ -12,8 +12,8 @@ import { UserPostController } from '@/users/v1/gateway/controllers/post.controll
 import { MiddlewareRouter } from '@/shared/domain/security/middleware';
 
 export class UserPostRouter {
-  @request('POST', '/api/v1/users')
-  @summary('Create a user')
+  @request('POST', '/api/v1/users/auth/signup')
+  @summary('Sing up')
   @tags(['Users'])
   @middlewares([new MiddlewareRouter().error])
   @body({
@@ -43,6 +43,33 @@ export class UserPostRouter {
       ctx.body = res;
       ctx.status = 201;
       ctx.body = { result: 'Created' };
+    } catch (error: any) {
+      // Error response
+      ctx.throw(error);
+    }
+  }
+
+  @request('POST', '/api/v1/users/auth/signin')
+  @summary('Sign in')
+  @tags(['Users'])
+  @middlewares([new MiddlewareRouter().error])
+  @body({
+    email: { type: 'string', required: true },
+    password: { type: 'string', required: true }
+  })
+  @responses({ 201: { description: '' }, 500: { description: 'Error' } })
+  static async login(ctx: Context) {
+    try {
+      // Get Params
+      const { email, password } = ctx.validatedBody;
+      // Get Controller
+      const controller = AppContainer.resolve(UserPostController);
+      const res = await controller.login({
+        email,
+        password
+      });
+      // Successful response
+      ctx.body = res;
     } catch (error: any) {
       // Error response
       ctx.throw(error);

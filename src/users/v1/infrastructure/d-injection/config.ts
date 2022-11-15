@@ -21,6 +21,7 @@ import { FindAllUsersHandler } from '@/users/v1/application/find-all/handler';
 import { UpdateUserHandler } from '@/users/v1/application/update/handler';
 import { DeleteUserHandler } from '@/users/v1/application/delete/handler';
 import { UpdateUserPasswordHandler } from '@/users/v1/application/update-password/handler';
+import { LoginUserHandler } from '../../application/login/handler';
 
 //import { ICache } from '@/shared/domain/cache/cache';
 //import { usersCache } from '@/users/v1/infrastructure/cache/users.cache';
@@ -50,6 +51,10 @@ export const UserContainerModule = new ContainerModule(
     // command-handlers
     bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
       .to(CreateUserHandler)
+      .inSingletonScope();
+
+    bind<QueryHandler<Query, Response>>(TYPES_SHARED.QueryBusHandler)
+      .to(LoginUserHandler)
       .inSingletonScope();
 
     bind<CommandHandler<Command>>(TYPES_SHARED.CommandBusHandler)
