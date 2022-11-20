@@ -10,21 +10,23 @@ import { User } from '@/users/v1/domain/user';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
-import { UserToken } from '@/users/v1/domain/user.token';
 import { AuthResponse } from '@/users/v1/application/auth.response';
+import { JsonWebToken } from '@/shared/domain/security/jwt';
 
 type Params = {
   userEmail: UserEmail;
   userPassword: UserPassword;
-  userToken: UserToken;
 };
 
 @provide(TYPES.LoginUseCase)
 export class LoginUseCase implements UseCase {
+  private jwt: JsonWebToken;
   constructor(
     @inject(TYPES.UserRepository)
     private readonly userRepository: UserRepository
-  ) {}
+  ) {
+    this.jwt = new JsonWebToken();
+  }
 
   async main(params: Params): Promise<AuthResponse> {
     let user: User | null = await this.userRepository.findBy(
@@ -37,7 +39,10 @@ export class LoginUseCase implements UseCase {
     if (!params.userPassword.equals(user.getPassword())) {
       throw new Error('Invalid password');
     }
-
-    return AuthResponse.fromDomain(params.userEmail, params.userToken);
+    const token = this.jwt.sign(
+      { email: params.userEmail.valueOf(), deviceId: '2122321312' },
+      '3m'
+    );
+    return AuthResponse.fromDomain(params.userEmail, token);
   }
 }

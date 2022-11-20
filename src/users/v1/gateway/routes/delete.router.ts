@@ -15,7 +15,7 @@ export class UserDeleteRouter {
   @request('DELETE', '/api/v1/users/{id}')
   @summary('Delete a user by id')
   @tags(['Users'])
-  @middlewares([new MiddlewareRouter().error])
+  @middlewares([new MiddlewareRouter().error, new MiddlewareRouter().isAuth])
   @path({
     id: { type: 'string', required: true }
   })

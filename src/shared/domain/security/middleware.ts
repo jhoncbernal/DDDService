@@ -14,24 +14,13 @@ export class MiddlewareRouter implements SecurityMiddleware {
   async isAuth(ctx: Ctx, next: Function): Promise<void> {
     try {
       const token: string = ctx.request.header.authorization;
-      const module: string = ctx.request.url.split('/')[3];
-
       if (token) {
         ctx.request.header.authorization = `Bearer ${token}`;
-        const decoded: any = await MiddlewareRouter.jwt.verify(token);
+        const decoded: any = MiddlewareRouter.jwt.verify(token);
 
         if (!decoded?.error) {
-          const roles: Array<string> = decoded.roles;
-          let validateRole = roles.find((role) => role == module);
-
-          if (!validateRole) {
-            ctx.status = 401;
-          } else {
-            ctx.req.user = decoded;
-            await next();
-          }
-        } else {
-          ctx.status = 401;
+          ctx.req.user = decoded;
+          await next();
         }
       } else {
         ctx.status = 403;

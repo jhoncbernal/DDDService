@@ -17,7 +17,7 @@ export class UserPutRouter {
   @request('PUT', '/api/v1/users/{id}')
   @summary('Update a user by id')
   @tags(['Users'])
-  @middlewares([new MiddlewareRouter().error])
+  @middlewares([new MiddlewareRouter().error, new MiddlewareRouter().isAuth])
   @path({
     id: { type: 'string', required: true }
   })

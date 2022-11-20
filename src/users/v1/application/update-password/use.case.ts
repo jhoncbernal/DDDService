@@ -8,28 +8,35 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserToken } from '@/users/v1/domain/user.token';
 import { User } from '@/users/v1/domain/user';
+import { JsonWebToken } from '@/shared/domain/security/jwt';
 
 type Params = {
-  userEmail: UserEmail;
   userPassword: UserPassword;
   userToken: UserToken;
 };
 
 @provide(TYPES.UpdateUserPasswordUseCase)
 export class UpdateUserPasswordUseCase implements UseCase {
+  private jwt: JsonWebToken;
   constructor(
     @inject(TYPES.UserRepository)
     private readonly userRepository: UserRepository
-  ) {}
+  ) {
+    this.jwt = new JsonWebToken();
+  }
 
   async main(params: Params) {
+    const decode = this.jwt.decode(params.userToken.valueOf());
+    if (!decode) throw new Error('Invalid token');
+
+    const userEmail = new UserEmail(decode.email);
+
     let user: User | null = await this.userRepository.findBy(
       'email',
-      params.userEmail
+      userEmail
     );
-    if (!user) {
-      throw new UserNotFound(params.userEmail.valueOf());
-    }
+    if (!user) throw new UserNotFound(userEmail.valueOf());
+
     if (!user.getToken().equals(params.userToken)) {
       throw new Error('Invalid token');
     }

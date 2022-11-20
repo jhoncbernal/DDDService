@@ -12,8 +12,8 @@ export class AuthResponse implements Response {
     this.email = email;
   }
 
-  static fromDomain(email: UserEmail, token: UserToken): AuthResponse {
-    return new AuthResponse(email.valueOf(), token.valueOf());
+  static fromDomain(email: UserEmail, token: string): AuthResponse {
+    return new AuthResponse(email.valueOf(), token);
   }
 
   getToken(): string {

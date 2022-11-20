@@ -15,7 +15,7 @@ export class UserPostRouter {
   @request('POST', '/api/v1/users/auth/signup')
   @summary('Sing up')
   @tags(['Users'])
-  @middlewares([new MiddlewareRouter().error])
+  @middlewares([new MiddlewareRouter().error, new MiddlewareRouter().isAuth])
   @body({
     name: { type: 'string', required: true },
     email: { type: 'string', required: true },

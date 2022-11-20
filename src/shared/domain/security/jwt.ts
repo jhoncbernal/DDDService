@@ -2,7 +2,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import { JWT } from '@/shared/infrastructure/config';
 import { SecurityJwt } from '@/shared/infrastructure/security/jwt';
 
-export type DecodeJwt = string | { [key: string]: string } | null;
+export type DecodeJwt = { [key: string]: string } | null;
 export class JsonWebToken implements SecurityJwt {
   private readonly secretKey: string = JWT.secretKey;
 
@@ -11,10 +11,10 @@ export class JsonWebToken implements SecurityJwt {
    * @param data
    * @returns <string | any>
    */
-  sign(data: object): string {
+  sign(data: object, expiresIn: string = '24h'): string {
     try {
       return jsonwebtoken.sign(data, this.secretKey, {
-        expiresIn: '24h'
+        expiresIn: expiresIn
       });
     } catch (error: any) {
       throw new Error(error);
@@ -41,7 +41,11 @@ export class JsonWebToken implements SecurityJwt {
    */
   decode(token: string): DecodeJwt {
     try {
-      return jsonwebtoken.decode(token);
+      const decoded = jsonwebtoken.decode(token);
+      if (typeof decoded !== 'string') {
+        return decoded;
+      }
+      throw new Error('Token is invalid');
     } catch (error: any) {
       throw new Error(error);
     }

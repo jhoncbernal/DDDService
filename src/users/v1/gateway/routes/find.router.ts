@@ -41,7 +41,7 @@ export class UserGetRouter {
   @request('GET', '/api/v1/users')
   @summary('Get all the users')
   @tags(['Users'])
-  @middlewares([new MiddlewareRouter().error])
+  @middlewares([new MiddlewareRouter().error, new MiddlewareRouter().isAuth])
   @responses({
     200: { description: 'Successful' },
     500: { description: 'Error' }
