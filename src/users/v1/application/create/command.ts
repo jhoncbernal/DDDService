@@ -1,5 +1,6 @@
 // CQRS command (from params)
 import { DateTS } from '@/shared/domain/date/date';
+import Crypt from '@/shared/domain/security/crypt';
 import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
 import { Identifier } from '@/shared/infrastructure/value-objects/identifier';
 export class UserCreateCommand implements Command {
@@ -51,7 +52,7 @@ export class UserCreateCommand implements Command {
   }
 
   getPassword(): string {
-    return this.password;
+    return Crypt.genHash(this.password);
   }
 
   getToken(): string {
