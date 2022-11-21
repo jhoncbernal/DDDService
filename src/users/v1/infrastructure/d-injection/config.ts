@@ -9,7 +9,7 @@ import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
 import { DomainEvent } from '@/shared/domain/event-bus/domain.event';
 import { DomainEventSubscriber } from '@/shared/infrastructure/event-bus/domain.event.subscriber';
 
-import { CreateUserHandler } from '@/users/v1/application/create/handler';
+import { CreateUserHandler } from '@/users/v1/application/auth/sing-up/handler';
 
 import { MongoUserRepository } from '@/users/v1/domain/repository/mongo.repository';
 import { UserRepository } from '@/users/v1/domain/user.repository';
@@ -20,8 +20,8 @@ import { FindUserHandler } from '@/users/v1/application/find/handler';
 import { FindAllUsersHandler } from '@/users/v1/application/find-all/handler';
 import { UpdateUserHandler } from '@/users/v1/application/update/handler';
 import { DeleteUserHandler } from '@/users/v1/application/delete/handler';
-import { UpdateUserPasswordHandler } from '@/users/v1/application/update-password/handler';
-import { LoginUserHandler } from '../../application/login/handler';
+import { UpdateUserPasswordHandler } from '@/users/v1/application/auth/update-password/handler';
+import { LoginUserHandler } from '../../application/auth/sing-in/handler';
 
 //import { ICache } from '@/shared/domain/cache/cache';
 //import { usersCache } from '@/users/v1/infrastructure/cache/users.cache';

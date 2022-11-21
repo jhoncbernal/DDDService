@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/shared/domain/d-injection/types';
 import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
-import { UserUpdatePasswordCommand } from '@/users/v1/application/update-password/command';
+import { UserUpdatePasswordCommand } from '@/users/v1/application/auth/update-password/command';
 import { UserUpdateCommand } from '@/users/v1/application/update/command';
 
 import { BaseController } from '@/shared/domain/controller/base.controller';

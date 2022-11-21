@@ -1,4 +1,4 @@
-import { CreateUserUseCase } from '@/users/v1/application/create/use.case';
+import { CreateUserUseCase } from '@/users/v1/application/auth/sing-up/use.case';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
@@ -8,8 +8,8 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
 import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
-import { UserPassword } from '../../domain/user.password';
-import { UserToken } from '../../domain/user.token';
+import { UserPassword } from '../../../domain/user.password';
+import { UserToken } from '../../../domain/user.token';
 
 let users: any = [];
 

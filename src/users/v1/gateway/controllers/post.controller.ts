@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/shared/domain/d-injection/types';
 import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
-import { UserCreateCommand } from '@/users/v1/application/create/command';
+import { UserCreateCommand } from '@/users/v1/application/auth/sing-up/command';
 import { BaseController } from '@/shared/domain/controller/base.controller';
 import { Logger } from '@/shared/infrastructure/logger/logger';
 import { Exception } from '@/shared/infrastructure/controller/base.controller';
-import { UserLoginQuery } from '@/users/v1/application/login/query';
+import { UserLoginQuery } from '@/users/v1/application/auth/sing-in/query';
 import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
 
 @injectable()
