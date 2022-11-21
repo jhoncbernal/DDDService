@@ -19,12 +19,9 @@ jobs:
     # https://stackoverflow.com/questions/64184839/github-actions-cachev2-unrecognized-option-posix-in-the-post-job
     container: node:lts
     timeout-minutes: 25
-    services:
-      database:
     env:
       PROJECT_NAME: ddd-service
       PROJECT_MODE: development
-      PROJECT_VERSION: 1.0.1
 
       SERVER_HOSTNAME: localhost
       SERVER_PORT: 8000
@@ -33,67 +30,35 @@ jobs:
       SWAGGER_HTML_ENDPOINT: /swagger-html
       SWAGGER_JSON_ENDPOINT: /swagger-json
 
-      JWT_SECRET_KEY: xxxx
+      JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
 
       MONGODB_HOSTNAME: localhost
       MONGODB_PORT: 27017
-      MONGODB_USERNAME: root
-      MONGODB_PASSWORD: root
+      MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
+      MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
       MONGODB_DATABASE: ddd-service-dev
 
       EVENT_BUS_RABBITMQ_HOSTNAME: localhost
       EVENT_BUS_RABBITMQ_PORT: 5670
-      EVENT_BUS_RABBITMQ_USERNAME: root
-      EVENT_BUS_RABBITMQ_PASSWORD: root
+      EVENT_BUS_RABBITMQ_USERNAME: ${{secrets.EVENT_BUS_RABBITMQ_USERNAME}}
+      EVENT_BUS_RABBITMQ_PASSWORD: ${{secrets.EVENT_BUS_RABBITMQ_PASSWORD}}
       EVENT_BUS_RABBITMQ_QUEUE: event.bus.queue
       EVENT_BUS_RABBITMQ_EXCHANGE: event.bus.exchange
       EVENT_BUS_RABBITMQ_RETRIES: 5
       EVENT_BUS_RABBITMQ_INTERVAL: 1000
 
-      CREDENTIALS_SERVICE_URL: https://example.example.com/api
-      CREDENTIALS_SERVICE_TOKEN: xxxx
+      AIRBRAKE_PROJECT_ID: ${{secrets.AIRBRAKE_PROJECT_ID}}
+      AIRBRAKE_PROJECT_KEY: ${{secrets.AIRBRAKE_PROJECT_KEY}}
 
-      AIRBRAKE_PROJECT_ID: xxxxx
-      AIRBRAKE_PROJECT_KEY: xxxxx
-
-      JAEGER_HOSTNAME: http://localhost:14268/api/traces
-
-      CODECOV_TOKEN: xxxx
+      CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
 
       REDIS_IS_SECURE: false
       REDIS_HOSTNAME: localhost
       REDIS_PORT: 6379
-      REDIS_USERNAME: root
-      REDIS_PASSWORD: root
+      REDIS_USERNAME: ${{secrets.REDIS_USERNAME}}
+      REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
 
-      REDIS_COMMANDER_USER: root
-      REDIS_COMMANDER_PASSWORD: root
-      REDIS_COMMANDER_PORT: 8081
-
-      ZOOKEEPER_PORT: 2181
-
-      KAFKA_BROKERS: localhost:9092
-      KAFKA_SASL_MECHANISM: scram-sha-256
-      KAFKA_SASL_USERNAME: root
-      KAFKA_SASL_PASSWORD: root
-
-      KAFKA_PREFIX: 0
-      KAFKA_GROUP_ID: ddd-service
-      KAFKA_TRUSTED_CERT: 0
-      KAFKA_CLIENT_CERT: 0
-      KAFKA_CLIENT_CERT_KEY: 0
-      KAFKA_PORT: 9092
-
-      REDIS_DB_BRANCH_OFFICES: 8
-      REDIS_DB_ZONES: 7
-      REDIS_DB_CREDENTIALS: 6
-      REDIS_DB_CANCELLATIONS: 5
-      REDIS_DB_LABELS: 1
-      REDIS_DB_RATES: 2
-      REDIS_DB_PICKUP: 3
-      REDIS_DB_TRACKING: 4
-
-      DD_API_KEY: xxxxx
+      DD_API_KEY: ${{secrets.DD_API_KEY}}
       DD_HOSTNAME: datadog-agent
       DD_SITE: datadoghq.com
       DD_PORT: 8126
@@ -101,33 +66,6 @@ jobs:
       RATE_LIMIT_DURATION_MS: 60000
       RATE_LIMIT_MAX_REQUESTS_WITHIN_DURATION: 20000
 
-      NEW_RELIC_KEY: xxxx
-
-      GCP_TOPIC: xxxx
-      GCP_SUBSCRIPTION: xxxx
-      GCP_PROJECT_ID: xxxx
-      GCP_TYPE: service_account
-      GCP_PRIVATE_KEY: xxxx
-      GCP_CLIENT_EMAIL: xxxx
-      GCP_CLIENT_ID: xxxx
-
-      GCP_DISTANCEMATRIX_URL: https://maps.googleapis.com/maps/api/distancematrix/json
-      GCP_DISTANCEMATRIX_KEY: xxxx
-
-      KAFKA_EVENT_BUS: 0
-      PUBSUB_EVENT_BUS: 1
-      IN_MEMORY_EVENT_BUS: 2
-      EVENT_BUS_SELECTED: 1
-
-      CRONJOB_POSTAL_CODES: 0 3 * * *
-
-      WINSTON_ERROR_LOGGER: true
-      WINSTON_INFO_LOGGER: true
-      WINSTON_WARN_LOGGER: true
-
-      AUTOMATIC_SEEDS_ENABLED: true
-
-      UAT_ENVIRONMENT_ENABLED: false
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
