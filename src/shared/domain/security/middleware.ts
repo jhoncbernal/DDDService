@@ -17,16 +17,21 @@ export class MiddlewareRouter implements SecurityMiddleware {
       if (token) {
         ctx.request.header.authorization = `Bearer ${token}`;
         const decoded: any = MiddlewareRouter.jwt.verify(token);
-
         if (!decoded?.error) {
           ctx.req.user = decoded;
           await next();
         }
       } else {
+        ctx.status = 401;
+      }
+    } catch (error: any) {
+      if (error?.message?.includes('jwt expired')) {
+        ctx.status = 401;
+      } else if (error?.message.includes('jwt malformed')) {
+        ctx.status = 403;
+      } else if (error?.message.includes('invalid signature')) {
         ctx.status = 403;
       }
-    } catch (error) {
-      ctx.status = 400;
     }
   }
 
