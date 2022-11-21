@@ -6,9 +6,10 @@
   "scripts": {
     "start": "NODE_ENV=development webpack",
     "build": "webpack",
-    "test": "jest unit --setupFiles dotenv/config",
+    "test": "jest unit --setupFiles dotenv/config --runInBand --logHeapUsage --detectOpenHandles",
     "test:integration": "jest integration --passWithNoTests --setupFiles dotenv/config",
     "quickTest": "jest unit --bail --silent --setupFiles dotenv/config",
+    "coverage": "yarn test --coverage && cp ./coverage/coverage-final.json ./coverage/coverage-final-1.json && yarn test:integration --coverage && cp ./coverage/coverage-final.json ./coverage/coverage-final-2.json",
     "serve": "yarn build && node dist/app.js"
   },
   "keywords": [
