@@ -76,3 +76,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Tests
         run: yarn coverage
+      - name: Combine coverage reports
+        run: node scripts/coverage.js
+      - name: Upload coverage to Codecov
+        run: ./node_modules/.bin/codecov --token=${{secrets.CODECOV_TOKEN}}
