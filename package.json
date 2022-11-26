@@ -10,7 +10,8 @@
     "test:integration": "jest integration --passWithNoTests --setupFiles dotenv/config",
     "quickTest": "jest unit --bail --silent --setupFiles dotenv/config",
     "coverage": "yarn test --coverage && cp ./coverage/coverage-final.json ./coverage/coverage-final-1.json && yarn test:integration --coverage && cp ./coverage/coverage-final.json ./coverage/coverage-final-2.json",
-    "serve": "yarn build && node dist/app.js"
+    "serve": "yarn build && node dist/app.js",
+    "prepare": "husky install"
   },
   "keywords": [
     "template",
@@ -73,6 +74,7 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^5.0.2",
+    "husky": "^8.0.2",
     "inversify": "^6.0.1",
     "inversify-binding-decorators": "^4.0.0",
     "jest-handlebars": "^1.0.1",
