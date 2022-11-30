@@ -48,6 +48,7 @@ export class UpdateUserUseCase implements UseCase {
       userPhone,
       userCompany,
       userPassword,
+      userRole,
       userPrivilage,
       userToken
     );

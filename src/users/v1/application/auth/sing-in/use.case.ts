@@ -40,7 +40,11 @@ export class LoginUseCase implements UseCase {
       throw new Error('Invalid password');
     }
     const token = this.jwt.sign(
-      { email: params.userEmail.valueOf(), deviceId: '2122321312' },
+      {
+        email: params.userEmail.valueOf(),
+        deviceId: '2122321312',
+        role: user.getRole().valueOf()
+      },
       '3m'
     );
     return AuthResponse.fromDomain(params.userEmail, token);

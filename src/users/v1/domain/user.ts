@@ -19,6 +19,7 @@ export class User extends Entity {
     private phone: UserPhone,
     private company: UserCompany,
     private password: UserPassword,
+    private role: UserRole,
     private privilage: UserPrivilage,
     private token: UserToken
   ) {
@@ -29,6 +30,7 @@ export class User extends Entity {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.role = role;
     this.privilage = privilage;
     this.token = token;
   }
@@ -40,6 +42,7 @@ export class User extends Entity {
     phone: UserPhone,
     company: UserCompany,
     password: UserPassword,
+    role: UserRole,
     privilage: UserPrivilage,
     token: UserToken
   ): User {
@@ -50,6 +53,7 @@ export class User extends Entity {
       phone,
       company,
       password,
+      role,
       privilage,
       token
     );
@@ -86,6 +90,7 @@ export class User extends Entity {
     const userPhone = new UserPhone(phone);
     const userCompany = new UserCompany(company);
     const userPassword = new UserPassword(password);
+    const userRole = new UserRole(role);
     const userPrivilage = new UserPrivilage(role);
     const userToken = new UserToken(token);
     return new User(
@@ -95,6 +100,7 @@ export class User extends Entity {
       userPhone,
       userCompany,
       userPassword,
+      userRole,
       userPrivilage,
       userToken
     );
@@ -128,7 +134,7 @@ export class User extends Entity {
     return this.password;
   }
   getRole(): UserRole {
-    return new UserRole('admin');
+    return this.role;
   }
   getPrivilage(): UserPrivilage {
     return this.privilage;

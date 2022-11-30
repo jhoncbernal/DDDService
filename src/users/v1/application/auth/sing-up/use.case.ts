@@ -17,6 +17,7 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserToken } from '@/users/v1/domain/user.token';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
+import { UserRole } from '@/users/v1/domain/roles/user.role';
 
 type Params = {
   userId: UserId;
@@ -25,6 +26,7 @@ type Params = {
   userPhone: UserPhone;
   userCompany: UserCompany;
   userPassword: UserPassword;
+  userRole: UserRole;
   userPrivilage: UserPrivilage;
   userToken: UserToken;
 };
@@ -45,6 +47,7 @@ export class CreateUserUseCase implements UseCase {
       params.userPhone,
       params.userCompany,
       params.userPassword,
+      params.userRole,
       params.userPrivilage,
       params.userToken
     );

@@ -43,6 +43,7 @@ describe('create-user', () => {
       userPhone: new UserPhone(user.phone),
       userCompany: new UserCompany(user.company),
       userPassword: new UserPassword(user.password),
+      userRole: new UserRole(user.role),
       userPrivilage: new UserPrivilage(user.role),
       userToken: new UserToken(user.token)
     });

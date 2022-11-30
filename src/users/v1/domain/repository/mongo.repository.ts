@@ -76,7 +76,7 @@ export class MongoUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
-      result.roles[0].role,
+      result.roles[0].role, // TODO: fix this
       result.token
     );
   }
