@@ -2,16 +2,16 @@ import compare from '@/shared/domain/utils/compare';
 import validate from '@/shared/domain/validator/validator';
 import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
 
-type RESOURCES = 'user' | 'auth' | 'privilege';
+type RESOURCES = 'users' | 'auth' | 'privilege';
 export class UserResource implements ValueObject<Array<string>> {
   private ROLE_RESOURCES: {
     [key in string]: Array<RESOURCES>;
   } = {
-    user: ['user'],
-    admin: ['user', 'auth'],
-    guest: ['user'],
-    superAdmin: ['user', 'auth', 'privilege'],
-    custom: ['user', 'auth', 'privilege']
+    user: ['users'],
+    admin: ['users', 'auth'],
+    guest: ['users'],
+    superAdmin: ['users', 'auth', 'privilege'],
+    custom: ['users', 'auth', 'privilege']
   };
   constructor(private value: string) {
     this.validate(this.ROLE_RESOURCES[value]);

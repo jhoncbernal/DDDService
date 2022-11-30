@@ -23,8 +23,8 @@ export class UserPrivilage implements ValueObject<privilege> {
 
   valueOf(): privilege {
     return {
-      resources: this.actions.valueOf(),
-      actions: this.resources.valueOf()
+      resources: this.resources.valueOf(),
+      actions: this.actions.valueOf()
     };
   }
   equals(object: ValueObject<privilege>): boolean {

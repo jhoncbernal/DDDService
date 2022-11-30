@@ -5,6 +5,7 @@ export type Ctx = {
       authorization: string;
     };
     url: string;
+    method: string;
   };
   status: number;
   req: {
