@@ -1,0 +1,77 @@
+# Copied from https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-postgresql-service-containers
+
+name: CI
+
+on:
+  push:
+    branches:
+      - development
+      - main
+
+jobs:
+  # Label of the container job
+  tests:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    # it should be node:lts-alpine but fixes: /bin/tar: unrecognized option: posix
+    # https://stackoverflow.com/questions/64184839/github-actions-cachev2-unrecognized-option-posix-in-the-post-job
+    container: node:lts
+    timeout-minutes: 25
+    env:
+      PROJECT_NAME: ddd-service
+      PROJECT_MODE: development
+
+      SERVER_HOSTNAME: localhost
+      SERVER_PORT: 8000
+
+      SWAGGER_IS_PUBLIC: true
+      SWAGGER_HTML_ENDPOINT: /swagger-html
+      SWAGGER_JSON_ENDPOINT: /swagger-json
+
+      JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+
+      MONGODB_HOSTNAME: localhost
+      MONGODB_PORT: 27017
+      MONGODB_USERNAME: ${{secrets.MONGODB_USERNAME}}
+      MONGODB_PASSWORD: ${{secrets.MONGODB_PASSWORD}}
+      MONGODB_DATABASE: ddd-service-dev
+
+      EVENT_BUS_RABBITMQ_HOSTNAME: localhost
+      EVENT_BUS_RABBITMQ_PORT: 5670
+      EVENT_BUS_RABBITMQ_USERNAME: ${{secrets.EVENT_BUS_RABBITMQ_USERNAME}}
+      EVENT_BUS_RABBITMQ_PASSWORD: ${{secrets.EVENT_BUS_RABBITMQ_PASSWORD}}
+      EVENT_BUS_RABBITMQ_QUEUE: event.bus.queue
+      EVENT_BUS_RABBITMQ_EXCHANGE: event.bus.exchange
+      EVENT_BUS_RABBITMQ_RETRIES: 5
+      EVENT_BUS_RABBITMQ_INTERVAL: 1000
+
+      AIRBRAKE_PROJECT_ID: ${{secrets.AIRBRAKE_PROJECT_ID}}
+      AIRBRAKE_PROJECT_KEY: ${{secrets.AIRBRAKE_PROJECT_KEY}}
+
+      CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
+
+      REDIS_IS_SECURE: false
+      REDIS_HOSTNAME: localhost
+      REDIS_PORT: 6379
+      REDIS_USERNAME: ${{secrets.REDIS_USERNAME}}
+      REDIS_PASSWORD: ${{secrets.REDIS_PASSWORD}}
+
+      DD_API_KEY: ${{secrets.DD_API_KEY}}
+      DD_HOSTNAME: datadog-agent
+      DD_SITE: datadoghq.com
+      DD_PORT: 8126
+
+      RATE_LIMIT_DURATION_MS: 60000
+      RATE_LIMIT_MAX_REQUESTS_WITHIN_DURATION: 20000
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/cache@v2.1.6
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os}}-modules-${{ hashFiles('**/yarn.lock')}}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Tests
+        run: yarn coverage
