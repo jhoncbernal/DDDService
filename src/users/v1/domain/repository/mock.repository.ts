@@ -14,7 +14,13 @@ export class MockUserRepository implements UserRepository {
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf()
+      password: user.getPassword().valueOf(),
+      roles: [
+        {
+          role: user.getRole().valueOf(),
+          privileges: [user.getPrivilage().valueOf()]
+        }
+      ]
     });
   }
 
@@ -68,8 +74,9 @@ export class MockUserRepository implements UserRepository {
       result.email,
       result.phone,
       result.company,
-      result.created_at,
-      result.password
+      result.password,
+      result.role,
+      result.token
     );
   }
 }

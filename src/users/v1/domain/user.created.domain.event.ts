@@ -1,5 +1,6 @@
 import { DomainEvent } from '@/shared/domain/event-bus/domain.event';
 import { CreateUserDomainEventBody } from '@/users/v1/infrastructure/user.created.domain.event';
+import { privilege } from './roles/privilages/user.privilage';
 
 export class UserCreatedDomainEvent extends DomainEvent {
   static readonly EVENT_NAME = 'user.created';
@@ -11,6 +12,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
   private phone: number;
   private company: string;
   private password: string;
+  private privilage: privilege;
   private token: string;
 
   constructor(
@@ -20,6 +22,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
     phone: number,
     company: string,
     password: string,
+    privilage: privilege,
     token: string
   ) {
     super(
@@ -33,6 +36,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.privilage = privilage;
     this.token = token;
   }
 
@@ -60,12 +64,17 @@ export class UserCreatedDomainEvent extends DomainEvent {
     return this.password;
   }
 
+  getPrivilage(): privilege {
+    return this.privilage;
+  }
+
   getToken(): string {
     return this.token;
   }
 
   toPrimitive(): CreateUserDomainEventBody {
-    const { id, name, email, phone, company, password, token } = this;
+    const { id, name, email, phone, company, password, privilage, token } =
+      this;
     return {
       id,
       name,
@@ -73,6 +82,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       phone,
       company,
       password,
+      privilage,
       token,
       eventName: UserCreatedDomainEvent.EVENT_NAME
     };
@@ -80,8 +90,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
 
   static fromPrimitives(
     id: string,
-    body: CreateUserDomainEventBody,
-    occurredAt: Date
+    body: CreateUserDomainEventBody
   ): DomainEvent {
     return new UserCreatedDomainEvent(
       id,
@@ -90,6 +99,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       body.phone,
       body.company,
       body.password,
+      body.privilage,
       body.token
     );
   }

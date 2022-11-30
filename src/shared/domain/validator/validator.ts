@@ -25,5 +25,8 @@ namespace validate {
   export function isToken(token: string): boolean {
     return validator.isJWT(token);
   }
+  export function isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
 }
 export default validate;

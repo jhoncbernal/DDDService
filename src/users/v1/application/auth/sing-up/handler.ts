@@ -10,6 +10,7 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 import { UserToken } from '@/users/v1/domain/user.token';
 
 @injectable()
@@ -28,6 +29,7 @@ export class CreateUserHandler implements CommandHandler<UserCreateCommand> {
     const userPhone = new UserPhone(command.getPhone());
     const userCompany = new UserCompany(command.getCompany());
     const userPassword = new UserPassword(command.getPassword());
+    const userPrivilage = new UserPrivilage(command.getRole());
     const userToken = new UserToken(command.getToken());
 
     await this.createUserUseCase.main({
@@ -37,6 +39,7 @@ export class CreateUserHandler implements CommandHandler<UserCreateCommand> {
       userPhone,
       userCompany,
       userPassword,
+      userPrivilage,
       userToken
     });
   }

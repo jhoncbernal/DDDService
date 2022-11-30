@@ -22,7 +22,7 @@ const userSchema = new Schema(
     company: { type: String, required: [true, 'What is your company name?'] },
     roles: [
       {
-        role: { type: String, required: true, lowercase: false },
+        role: { type: String, required: true },
         privileges: [
           {
             actions: [{ type: String, required: true, lowercase: false }],

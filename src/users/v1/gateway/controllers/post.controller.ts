@@ -24,6 +24,7 @@ export class UserPostController extends BaseController {
     phone,
     company,
     password,
+    role,
     token
   }: {
     name: string;
@@ -31,6 +32,7 @@ export class UserPostController extends BaseController {
     phone: number;
     company: string;
     password: string;
+    role: string;
     token: string;
   }) {
     try {
@@ -40,6 +42,7 @@ export class UserPostController extends BaseController {
         phone,
         company,
         password,
+        role,
         token
       );
       return await this.commandBus.ask(command);

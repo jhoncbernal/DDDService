@@ -13,7 +13,13 @@ export class MongoUserRepository implements UserRepository {
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf()
+      password: user.getPassword().valueOf(),
+      roles: [
+        {
+          role: user.getRole().valueOf(),
+          privileges: [user.getPrivilage().valueOf()]
+        }
+      ]
     });
   }
 
@@ -70,6 +76,7 @@ export class MongoUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
+      result.roles[0].role,
       result.token
     );
   }

@@ -1,7 +1,5 @@
-import { User } from '@/users/v1/domain/user';
 import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
-import { UserEmail } from '../domain/user.email';
-import { UserToken } from '../domain/user.token';
+import { UserEmail } from '@/users/v1/domain/user.email';
 // Response
 export class AuthResponse implements Response {
   private email: string;

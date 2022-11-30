@@ -8,6 +8,8 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserToken } from '@/users/v1/domain/user.token';
+import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
+import { UserRole } from './roles/user.role';
 
 export class User extends Entity {
   constructor(
@@ -17,6 +19,7 @@ export class User extends Entity {
     private phone: UserPhone,
     private company: UserCompany,
     private password: UserPassword,
+    private privilage: UserPrivilage,
     private token: UserToken
   ) {
     super();
@@ -26,6 +29,7 @@ export class User extends Entity {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.privilage = privilage;
     this.token = token;
   }
 
@@ -36,9 +40,19 @@ export class User extends Entity {
     phone: UserPhone,
     company: UserCompany,
     password: UserPassword,
+    privilage: UserPrivilage,
     token: UserToken
   ): User {
-    const user = new User(id, name, email, phone, company, password, token);
+    const user = new User(
+      id,
+      name,
+      email,
+      phone,
+      company,
+      password,
+      privilage,
+      token
+    );
 
     user.record(
       new UserCreatedDomainEvent(
@@ -48,6 +62,7 @@ export class User extends Entity {
         phone.valueOf(),
         company.valueOf(),
         password.valueOf(),
+        privilage.valueOf(),
         token.valueOf()
       )
     );
@@ -62,6 +77,7 @@ export class User extends Entity {
     phone: number,
     company: string,
     password: string,
+    role: string,
     token: string
   ): User {
     const userId = new UserId(id);
@@ -70,6 +86,7 @@ export class User extends Entity {
     const userPhone = new UserPhone(phone);
     const userCompany = new UserCompany(company);
     const userPassword = new UserPassword(password);
+    const userPrivilage = new UserPrivilage(role);
     const userToken = new UserToken(token);
     return new User(
       userId,
@@ -78,6 +95,7 @@ export class User extends Entity {
       userPhone,
       userCompany,
       userPassword,
+      userPrivilage,
       userToken
     );
   }
@@ -108,6 +126,12 @@ export class User extends Entity {
 
   getPassword(): UserPassword {
     return this.password;
+  }
+  getRole(): UserRole {
+    return new UserRole('admin');
+  }
+  getPrivilage(): UserPrivilage {
+    return this.privilage;
   }
 
   getToken(): UserToken {

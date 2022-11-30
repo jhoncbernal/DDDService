@@ -10,6 +10,8 @@ import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserToken } from '@/users/v1/domain/user.token';
+import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 
 let users: any = [];
 
@@ -22,6 +24,7 @@ describe('create-user', () => {
       phone: 123456789,
       company: 'test company',
       password: '123456',
+      role: 'admin',
       token:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
     };
@@ -40,6 +43,7 @@ describe('create-user', () => {
       userPhone: new UserPhone(user.phone),
       userCompany: new UserCompany(user.company),
       userPassword: new UserPassword(user.password),
+      userPrivilage: new UserPrivilage(user.role),
       userToken: new UserToken(user.token)
     });
 

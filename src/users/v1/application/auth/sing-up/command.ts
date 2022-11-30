@@ -1,5 +1,4 @@
 // CQRS command (from params)
-import { DateTS } from '@/shared/domain/date/date';
 import Crypt from '@/shared/domain/security/crypt';
 import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
 import { Identifier } from '@/shared/infrastructure/value-objects/identifier';
@@ -9,6 +8,7 @@ export class UserCreateCommand implements Command {
   private phone: number;
   private company: string;
   private password: string;
+  private role: string;
   private token: string;
 
   constructor(
@@ -17,6 +17,7 @@ export class UserCreateCommand implements Command {
     phone: number,
     company: string,
     password: string,
+    role: string,
     token: string
   ) {
     this.name = name;
@@ -24,6 +25,7 @@ export class UserCreateCommand implements Command {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.role = role;
     this.token = token;
   }
 
@@ -47,12 +49,12 @@ export class UserCreateCommand implements Command {
     return this.company;
   }
 
-  getDate(): Date {
-    return DateTS.getDate();
-  }
-
   getPassword(): string {
     return Crypt.genHash(this.password);
+  }
+
+  getRole(): string {
+    return this.role;
   }
 
   getToken(): string {

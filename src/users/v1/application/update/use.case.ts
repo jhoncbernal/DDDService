@@ -12,6 +12,8 @@ import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserToken } from '@/users/v1/domain/user.token';
+import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserPrivilage } from '../../domain/roles/privilages/user.privilage';
 
 type Params = {
   userId: UserId;
@@ -35,6 +37,8 @@ export class UpdateUserUseCase implements UseCase {
     const userPhone = params.userPhone;
     const userCompany = params.userCompany;
     const userPassword = new UserPassword('');
+    const userRole = new UserRole('');
+    const userPrivilage = new UserPrivilage('');
     const userToken = new UserToken('');
 
     const user = new User(
@@ -44,6 +48,7 @@ export class UpdateUserUseCase implements UseCase {
       userPhone,
       userCompany,
       userPassword,
+      userPrivilage,
       userToken
     );
 
