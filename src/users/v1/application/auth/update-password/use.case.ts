@@ -37,10 +37,10 @@ export class UpdateUserPasswordUseCase implements UseCase {
     );
     if (!user) throw new UserNotFound(userEmail.valueOf());
 
-    if (!user.getToken().equals(params.userToken)) {
+    if (!user.getToken()?.equals(params.userToken)) {
       throw new Error('Invalid token');
     }
-    user.getToken().clear();
+    user.getToken()?.clear();
     await this.userRepository.update(user);
   }
 }

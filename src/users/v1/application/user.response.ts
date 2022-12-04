@@ -32,7 +32,7 @@ export class UserResponse implements Response {
       user.getEmail().valueOf(),
       user.getPhone().valueOf(),
       user.getCompany().valueOf(),
-      user.getToken().valueOf()
+      user.getToken()?.valueOf() || ''
     );
   }
 

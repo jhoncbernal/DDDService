@@ -16,8 +16,8 @@ export class MongoUserRepository implements UserRepository {
       password: user.getPassword().valueOf(),
       roles: [
         {
-          role: user.getRole().valueOf(),
-          privileges: [user.getPrivilage().valueOf()]
+          role: user.getRole()?.valueOf(),
+          privileges: [user.getPrivilage()?.valueOf()]
         }
       ]
     });
@@ -34,7 +34,7 @@ export class MongoUserRepository implements UserRepository {
         phone: user.getPhone().valueOf(),
         company: user.getCompany().valueOf(),
         password: user.getPassword().valueOf(),
-        token: user.getToken().valueOf()
+        token: user.getToken()?.valueOf()
       }
     );
     return result.modifiedCount > 0;

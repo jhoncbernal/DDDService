@@ -19,9 +19,9 @@ export class User extends Entity {
     private phone: UserPhone,
     private company: UserCompany,
     private password: UserPassword,
-    private role: UserRole,
-    private privilage: UserPrivilage,
-    private token: UserToken
+    private role?: UserRole,
+    private privilage?: UserPrivilage,
+    private token?: UserToken
   ) {
     super();
     this.id = id;
@@ -133,14 +133,14 @@ export class User extends Entity {
   getPassword(): UserPassword {
     return this.password;
   }
-  getRole(): UserRole {
+  getRole(): UserRole | undefined {
     return this.role;
   }
-  getPrivilage(): UserPrivilage {
+  getPrivilage(): UserPrivilage | undefined {
     return this.privilage;
   }
 
-  getToken(): UserToken {
+  getToken(): UserToken | undefined {
     return this.token;
   }
 }

@@ -37,9 +37,6 @@ export class UpdateUserUseCase implements UseCase {
     const userPhone = params.userPhone;
     const userCompany = params.userCompany;
     const userPassword = new UserPassword('');
-    const userRole = new UserRole('');
-    const userPrivilage = new UserPrivilage('');
-    const userToken = new UserToken('');
 
     const user = new User(
       userId,
@@ -47,10 +44,7 @@ export class UpdateUserUseCase implements UseCase {
       userEmail,
       userPhone,
       userCompany,
-      userPassword,
-      userRole,
-      userPrivilage,
-      userToken
+      userPassword
     );
 
     const result = await this.userRepository.update(user);

@@ -58,7 +58,7 @@ describe('create-user', () => {
     expect(result?.getPhone().valueOf()).toEqual(123456789);
     expect(result?.getCompany().valueOf()).toEqual('test company');
     expect(result?.getPassword().valueOf()).toEqual('123456');
-    expect(result?.getToken().valueOf()).toEqual(
+    expect(result?.getToken()?.valueOf()).toEqual(
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
     );
   });
