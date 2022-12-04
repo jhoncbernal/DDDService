@@ -1,4 +1,4 @@
-import { DomainEvent } from '@/shared/domain/event-bus/domain.event';
+import { DomainEvent } from '@/shared/infrastructure/event-bus/domain.event';
 import { CreateUserDomainEventBody } from '@/users/v1/infrastructure/user.created.domain.event';
 import { privilege } from './roles/privilages/user.privilage';
 

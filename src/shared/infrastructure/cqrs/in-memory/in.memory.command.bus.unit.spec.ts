@@ -1,7 +1,7 @@
-import { InMemoryCommandBus } from '@/shared/domain/cqrs/in-memory/in.memory.command.bus';
-import { CommandHandler } from '@/shared/infrastructure/cqrs/command-bus/command.handler';
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
-import { Response } from '@/shared/infrastructure/cqrs/command-bus/response';
+import { InMemoryCommandBus } from '@/shared/infrastructure/cqrs/in-memory/in.memory.command.bus';
+import { CommandHandler } from '@/shared/domain/cqrs/command-bus/command.handler';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { Response } from '@/shared/domain/cqrs/command-bus/response';
 
 class MockCommand implements Command {
   constructor(private test: string) {}

@@ -6,10 +6,10 @@ import {
   Context,
   body,
   middlewares
-} from '@/shared/domain/framework/decorators';
-import { AppContainer } from '@/shared/domain/d-injection/container';
+} from '@/shared/infrastructure/framework/decorators';
+import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserPostController } from '@/users/v1/gateway/controllers/post.controller';
-import { MiddlewareRouter } from '@/shared/domain/security/middleware';
+import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 
 export class UserPostRouter {
   @request('POST', '/api/v1/users/auth/signup')

@@ -1,4 +1,4 @@
-import { Entity } from '@/shared/domain/entity';
+import { Entity } from '@/shared/infrastructure/entity';
 
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';

@@ -1,6 +1,6 @@
-import { DecodeJwt, JsonWebToken } from '@/shared/domain/security/jwt';
-import validate from '@/shared/domain/validator/validator';
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import { DecodeJwt, JsonWebToken } from '@/shared/infrastructure/security/jwt';
+import validate from '@/shared/infrastructure/validator/validator';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 export class UserToken implements ValueObject<string> {
   private jwt: JsonWebToken;

@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/shared/domain/d-injection/types';
-import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
+import { CommandBus } from '@/shared/domain/cqrs/command-bus/command.bus';
 import { UserCreateCommand } from '@/users/v1/application/auth/sing-up/command';
-import { BaseController } from '@/shared/domain/controller/base.controller';
-import { Logger } from '@/shared/infrastructure/logger/logger';
-import { Exception } from '@/shared/infrastructure/controller/base.controller';
+import { BaseController } from '@/shared/infrastructure/controller/base.controller';
+import { Logger } from '@/shared/domain/logger/logger';
+import { Exception } from '@/shared/domain/controller/base.controller';
 import { UserLoginQuery } from '@/users/v1/application/auth/sing-in/query';
-import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
+import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
 
 @injectable()
 export class UserPostController extends BaseController {

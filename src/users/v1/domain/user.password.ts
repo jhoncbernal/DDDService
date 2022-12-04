@@ -1,6 +1,6 @@
-import Crypt from '@/shared/domain/security/crypt';
-import validate from '@/shared/domain/validator/validator';
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import Crypt from '@/shared/infrastructure/security/crypt';
+import validate from '@/shared/infrastructure/validator/validator';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 export class UserPassword implements ValueObject<string> {
   constructor(private value: string) {

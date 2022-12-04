@@ -1,4 +1,4 @@
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 export class UserRoles implements ValueObject<Array<Object>> {
   constructor(private value: Array<Object>) {}

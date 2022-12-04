@@ -2,9 +2,9 @@ import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 
 import { TYPES } from '@/users/v1/infrastructure/d-injection/types';
-import { TYPES as TYPES_SHARED } from '@/shared/domain/d-injection/types';
+import { TYPES as TYPES_SHARED } from '@/shared/infrastructure/d-injection/types';
 import { UseCase } from '@/shared/domain/use.case';
-import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
+import { EventBus } from '@/shared/domain/event-bus/event.bus';
 
 import { UserRepository } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';

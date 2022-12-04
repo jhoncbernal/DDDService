@@ -1,6 +1,6 @@
-import compare from '@/shared/domain/utils/compare';
-import validate from '@/shared/domain/validator/validator';
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import compare from '@/shared/infrastructure/utils/compare';
+import validate from '@/shared/infrastructure/validator/validator';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 type ACTIONS = 'create' | 'read' | 'update' | 'delete';
 
 export class UserAction implements ValueObject<Array<string>> {

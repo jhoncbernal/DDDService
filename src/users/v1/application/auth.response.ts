@@ -1,4 +1,4 @@
-import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
+import { Response } from '@/shared/domain/cqrs/query-bus/response';
 import { UserEmail } from '@/users/v1/domain/user.email';
 // Response
 export class AuthResponse implements Response {

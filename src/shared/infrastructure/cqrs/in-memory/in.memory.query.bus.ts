@@ -1,9 +1,9 @@
-import { Query } from '@/shared/infrastructure/cqrs/query-bus/query';
-import { QueryNotRegistered } from '@/shared/infrastructure/cqrs/query-bus/query.not.registered';
-import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
-import { QueryHandler } from '@/shared/infrastructure/cqrs/query-bus/query.handler';
-import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
-import { TYPES } from '@/shared/domain/d-injection/types';
+import { Query } from '@/shared/domain/cqrs/query-bus/query';
+import { QueryNotRegistered } from '@/shared/domain/cqrs/query-bus/query.not.registered';
+import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
+import { QueryHandler } from '@/shared/domain/cqrs/query-bus/query.handler';
+import { Response } from '@/shared/domain/cqrs/query-bus/response';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
 import { inject, injectable, multiInject } from 'inversify';
 @injectable()
 export class InMemoryQueryBus implements QueryBus {

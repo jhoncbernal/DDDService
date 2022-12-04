@@ -1,10 +1,10 @@
-import { StartModule } from '@/shared/infrastructure/bootstrap/bootstrap';
+import { StartModule } from '@/shared/domain/bootstrap/bootstrap';
 
-import { AppContainer } from '@/shared/domain/d-injection/container';
+import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserContainerModule } from '@/users/v1/infrastructure/d-injection/config';
-import { TYPES } from '@/shared/domain/d-injection/types';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
 import { inject, injectable } from 'inversify';
-import { Logger } from '@/shared/infrastructure/logger/logger';
+import { Logger } from '@/shared/domain/logger/logger';
 
 @injectable()
 export class UserBootstrap implements StartModule {

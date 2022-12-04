@@ -6,7 +6,7 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
-import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
+import { EventBus } from '@/shared/domain/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserToken } from '@/users/v1/domain/user.token';

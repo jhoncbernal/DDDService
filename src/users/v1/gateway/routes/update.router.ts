@@ -7,10 +7,10 @@ import {
   Context,
   responses,
   middlewares
-} from '@/shared/domain/framework/decorators';
-import { AppContainer } from '@/shared/domain/d-injection/container';
+} from '@/shared/infrastructure/framework/decorators';
+import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserPutController } from '@/users/v1/gateway/controllers/update.controller';
-import { MiddlewareRouter } from '@/shared/domain/security/middleware';
+import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { header } from 'koa-swagger-decorator';
 
 export class UserPutRouter {

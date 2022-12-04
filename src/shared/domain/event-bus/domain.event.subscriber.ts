@@ -1,7 +1,7 @@
 import {
   DomainEvent,
   DomainEventClass
-} from '@/shared/domain/event-bus/domain.event';
+} from '@/shared/infrastructure/event-bus/domain.event';
 
 export interface DomainEventSubscriber<T extends DomainEvent> {
   subscribedTo(): Array<DomainEventClass>;

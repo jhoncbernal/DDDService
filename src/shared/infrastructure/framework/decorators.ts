@@ -8,7 +8,7 @@ import {
   middlewares,
   Context,
   SwaggerRouter
-} from '@/shared/domain/framework/koa/decorators';
+} from '@/shared/infrastructure/framework/koa/decorators';
 export {
   path,
   request,

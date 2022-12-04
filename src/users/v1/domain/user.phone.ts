@@ -1,5 +1,5 @@
-import validate from '@/shared/domain/validator/validator';
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import validate from '@/shared/infrastructure/validator/validator';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 export class UserPhone implements ValueObject<number> {
   constructor(private value: number) {

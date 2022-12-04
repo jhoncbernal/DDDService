@@ -1,4 +1,4 @@
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
 
 export interface CommandHandler<T extends Command> {
   subscribedTo(): Command;

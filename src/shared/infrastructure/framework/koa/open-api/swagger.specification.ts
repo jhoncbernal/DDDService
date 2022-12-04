@@ -1,7 +1,7 @@
 import { SwaggerRouter } from 'koa-swagger-decorator';
-import { getRoutes } from '@/shared/domain/bootstrap/import.system';
-import { PROJECT, SWAGGER } from '@/shared/infrastructure/config';
-import { Swagger as ISwagger } from '@/shared/infrastructure/open-api/swagger.specifications';
+import { getRoutes } from '@/shared/infrastructure/bootstrap/import.system';
+import { PROJECT, SWAGGER } from '@/shared/domain/config';
+import { Swagger as ISwagger } from '@/shared/domain/open-api/swagger.specifications';
 export class KoaSwagger implements ISwagger {
   public router: SwaggerRouter<any, {}>;
   constructor() {

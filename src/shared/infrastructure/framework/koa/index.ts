@@ -7,11 +7,11 @@ import bodyParser from 'koa-bodyparser';
 import cookie from 'koa-cookie';
 import morgan from 'koa-morgan';
 import koaStatic from 'koa-static';
-import { Swagger } from '@/shared/domain/open-api/swagger.specification';
-import { PROJECT, SERVER, SWAGGER } from '@/shared/infrastructure/config';
-import { Logger } from '@/shared/infrastructure/logger/logger';
-import { TYPES } from '@/shared/domain/d-injection/types';
-import { Framework } from '@/shared/infrastructure/framework/framework';
+import { Swagger } from '@/shared/infrastructure/open-api/swagger.specification';
+import { PROJECT, SERVER, SWAGGER } from '@/shared/domain/config';
+import { Logger } from '@/shared/domain/logger/logger';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
+import { Framework } from '@/shared/domain/framework/framework';
 
 @injectable()
 export class KoaFramework implements Framework {
@@ -42,7 +42,7 @@ export class KoaFramework implements Framework {
     });
 
     // Swagger
-    const appLayout = require('@/shared/infrastructure/layouts/index.hbs');
+    const appLayout = require('@/shared/domain/layouts/index.hbs');
     const swagger = new Swagger().router;
     swagger.get('/', (ctx: any) => {
       ctx.body = appLayout({

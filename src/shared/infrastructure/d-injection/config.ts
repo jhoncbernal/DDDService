@@ -1,26 +1,26 @@
 import { Container } from 'inversify';
 
-import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
+import { EventBus } from '@/shared/domain/event-bus/event.bus';
 
-import { TYPES } from '@/shared/domain/d-injection/types';
-import { Logger } from '@/shared/infrastructure/logger/logger';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
+import { Logger } from '@/shared/domain/logger/logger';
 
-import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
-import { InMemoryCommandBus } from '@/shared/domain/cqrs/in-memory/in.memory.command.bus';
-import { QueryBus } from '@/shared/infrastructure/cqrs/query-bus/query.bus';
-import { InMemoryQueryBus } from '@/shared/domain/cqrs/in-memory/in.memory.query.bus';
+import { CommandBus } from '@/shared/domain/cqrs/command-bus/command.bus';
+import { InMemoryCommandBus } from '@/shared/infrastructure/cqrs/in-memory/in.memory.command.bus';
+import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
+import { InMemoryQueryBus } from '@/shared/infrastructure/cqrs/in-memory/in.memory.query.bus';
 
-import { Framework } from '@/shared/domain/framework';
-import { Logger as LoggerClass } from '@/shared/domain/logger/logger';
+import { Framework } from '@/shared/infrastructure/framework';
+import { Logger as LoggerClass } from '@/shared/infrastructure/logger/logger';
 
-import { InMemoryEventBus } from '@/shared/domain/event-bus/in-memory/in.memory.event.bus';
+import { InMemoryEventBus } from '@/shared/infrastructure/event-bus/in-memory/in.memory.event.bus';
 
-import { MongooseConnection } from '@/shared/domain/database/database.connection';
-import { DatabaseConnection } from '@/shared/infrastructure/database/database.connection';
+import { MongooseConnection } from '@/shared/infrastructure/database/database.connection';
+import { DatabaseConnection } from '@/shared/domain/database/database.connection';
 
 import { modules } from '@/index';
-import { Framework as IFramework } from '@/shared/infrastructure/framework/framework';
-import { StartModule } from '@/shared/infrastructure/bootstrap/bootstrap';
+import { Framework as IFramework } from '@/shared/domain/framework/framework';
+import { StartModule } from '@/shared/domain/bootstrap/bootstrap';
 
 export class AppDependencies {
   register(container: Container) {

@@ -1,5 +1,5 @@
 // CQRS command (from params)
-import { Query } from '@/shared/infrastructure/cqrs/query-bus/query';
+import { Query } from '@/shared/domain/cqrs/query-bus/query';
 export class UserLoginQuery implements Query {
   private email: string;
   private password: string;

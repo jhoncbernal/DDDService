@@ -1,4 +1,4 @@
-import Crypt from '@/shared/domain/security/crypt';
+import Crypt from '@/shared/infrastructure/security/crypt';
 
 describe('Validate Class Unit Test', () => {
   let crypt = Crypt;

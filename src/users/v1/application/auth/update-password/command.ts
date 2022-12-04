@@ -1,5 +1,5 @@
 // CQRS command (from params)
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
 
 export class UserUpdatePasswordCommand implements Command {
   private token: string | string[] | undefined;

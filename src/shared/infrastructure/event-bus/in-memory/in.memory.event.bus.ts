@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { DomainEvent } from '@/shared/domain/event-bus/domain.event';
-import { DomainEventSubscriber } from '@/shared/infrastructure/event-bus/domain.event.subscriber';
-import { EventBus } from '@/shared/infrastructure/event-bus/event.bus';
-import { Logger } from '@/shared/infrastructure/logger/logger';
-import { TYPES } from '@/shared/domain/d-injection/types';
+import { DomainEvent } from '@/shared/infrastructure/event-bus/domain.event';
+import { DomainEventSubscriber } from '@/shared/domain/event-bus/domain.event.subscriber';
+import { EventBus } from '@/shared/domain/event-bus/event.bus';
+import { Logger } from '@/shared/domain/logger/logger';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
 
 @injectable()
 export class InMemoryEventBus implements EventBus {

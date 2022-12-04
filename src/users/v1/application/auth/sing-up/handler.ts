@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/users/v1/infrastructure/d-injection/types';
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
-import { CommandHandler } from '@/shared/infrastructure/cqrs/command-bus/command.handler';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { CommandHandler } from '@/shared/domain/cqrs/command-bus/command.handler';
 import { UserCreateCommand } from '@/users/v1/application/auth/sing-up/command';
 import { CreateUserUseCase } from '@/users/v1/application/auth/sing-up/use.case';
 import { UserId } from '@/users/v1/domain/user.id';

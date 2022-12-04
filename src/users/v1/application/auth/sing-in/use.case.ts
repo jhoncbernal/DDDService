@@ -11,7 +11,7 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { AuthResponse } from '@/users/v1/application/auth.response';
-import { JsonWebToken } from '@/shared/domain/security/jwt';
+import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 
 type Params = {
   userEmail: UserEmail;

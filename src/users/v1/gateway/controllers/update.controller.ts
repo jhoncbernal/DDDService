@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/shared/domain/d-injection/types';
-import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
+import { CommandBus } from '@/shared/domain/cqrs/command-bus/command.bus';
 import { UserUpdatePasswordCommand } from '@/users/v1/application/auth/update-password/command';
 import { UserUpdateCommand } from '@/users/v1/application/update/command';
 
-import { BaseController } from '@/shared/domain/controller/base.controller';
-import { Logger } from '@/shared/infrastructure/logger/logger';
+import { BaseController } from '@/shared/infrastructure/controller/base.controller';
+import { Logger } from '@/shared/domain/logger/logger';
 
 @injectable()
 export class UserPutController extends BaseController {

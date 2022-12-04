@@ -1,9 +1,9 @@
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
-import { CommandBus } from '@/shared/infrastructure/cqrs/command-bus/command.bus';
-import { CommandHandler } from '@/shared/infrastructure/cqrs/command-bus/command.handler';
-import { CommandNotRegistered } from '@/shared/infrastructure/cqrs/command-bus/command.not.registered';
-import { Response } from '@/shared/infrastructure/cqrs/command-bus/response';
-import { TYPES } from '@/shared/domain/d-injection/types';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { CommandBus } from '@/shared/domain/cqrs/command-bus/command.bus';
+import { CommandHandler } from '@/shared/domain/cqrs/command-bus/command.handler';
+import { CommandNotRegistered } from '@/shared/domain/cqrs/command-bus/command.not.registered';
+import { Response } from '@/shared/domain/cqrs/command-bus/response';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
 import { inject, injectable, multiInject } from 'inversify';
 @injectable()
 export class InMemoryCommandBus implements CommandBus {

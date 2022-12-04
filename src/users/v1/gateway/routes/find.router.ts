@@ -1,4 +1,4 @@
-import { AppContainer } from '@/shared/domain/d-injection/container';
+import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import {
   path,
   request,
@@ -7,8 +7,8 @@ import {
   tags,
   Context,
   middlewares
-} from '@/shared/domain/framework/decorators';
-import { MiddlewareRouter } from '@/shared/domain/security/middleware';
+} from '@/shared/infrastructure/framework/decorators';
+import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { UserGetController } from '@/users/v1/gateway/controllers/find.controller';
 
 export class UserGetRouter {

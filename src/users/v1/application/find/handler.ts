@@ -4,8 +4,8 @@ import { FindUserUseCase } from '@/users/v1/application/find/use.case';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserResponse } from '@/users/v1/application/user.response';
 import { UserFindQuery } from '@/users/v1/application/find/query';
-import { Query } from '@/shared/infrastructure/cqrs/query-bus/query';
-import { QueryHandler } from '@/shared/infrastructure/cqrs/query-bus/query.handler';
+import { Query } from '@/shared/domain/cqrs/query-bus/query';
+import { QueryHandler } from '@/shared/domain/cqrs/query-bus/query.handler';
 
 @injectable()
 export class FindUserHandler

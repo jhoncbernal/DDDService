@@ -1,7 +1,7 @@
 // CQRS command (from params)
-import Crypt from '@/shared/domain/security/crypt';
-import { Command } from '@/shared/infrastructure/cqrs/command-bus/command';
-import { Identifier } from '@/shared/infrastructure/value-objects/identifier';
+import Crypt from '@/shared/infrastructure/security/crypt';
+import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { Identifier } from '@/shared/domain/value-objects/identifier';
 export class UserCreateCommand implements Command {
   private name: string;
   private email: string;

@@ -8,7 +8,7 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserToken } from '@/users/v1/domain/user.token';
 import { User } from '@/users/v1/domain/user';
-import { JsonWebToken } from '@/shared/domain/security/jwt';
+import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 
 type Params = {
   userPassword: UserPassword;

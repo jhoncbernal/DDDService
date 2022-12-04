@@ -1,5 +1,5 @@
 import { User } from '@/users/v1/domain/user';
-import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
+import { Response } from '@/shared/domain/cqrs/query-bus/response';
 // Response
 export class UserResponse implements Response {
   private id: string;

@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import { buildProviderModule } from 'inversify-binding-decorators';
-import { TYPES } from '@/shared/domain/d-injection/types';
-import { AppContainer } from '@/shared/domain/d-injection/container';
-import { AppDependencies } from '@/shared/domain/d-injection/config';
-import { StartModule } from '@/shared/infrastructure/bootstrap/bootstrap';
-import { TEST } from '@/shared/infrastructure/config';
+import { TYPES } from '@/shared/infrastructure/d-injection/types';
+import { AppContainer } from '@/shared/infrastructure/d-injection/container';
+import { AppDependencies } from '@/shared/infrastructure/d-injection/config';
+import { StartModule } from '@/shared/domain/bootstrap/bootstrap';
+import { TEST } from '@/shared/domain/config';
 
 // Modules
-import { SharedBootstrap } from '@/shared/domain/bootstrap/bootstrap';
+import { SharedBootstrap } from '@/shared/infrastructure/bootstrap/bootstrap';
 import { UserBootstrap } from '@/users/v1/infrastructure/bootstrap';
 
 export const modules = [SharedBootstrap, UserBootstrap];

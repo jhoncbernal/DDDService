@@ -1,7 +1,7 @@
-import { InMemoryQueryBus } from '@/shared/domain/cqrs/in-memory/in.memory.query.bus';
-import { QueryHandler } from '@/shared/infrastructure/cqrs/query-bus/query.handler';
-import { Query } from '@/shared/infrastructure/cqrs/query-bus/query';
-import { Response } from '@/shared/infrastructure/cqrs/query-bus/response';
+import { InMemoryQueryBus } from '@/shared/infrastructure/cqrs/in-memory/in.memory.query.bus';
+import { QueryHandler } from '@/shared/domain/cqrs/query-bus/query.handler';
+import { Query } from '@/shared/domain/cqrs/query-bus/query';
+import { Response } from '@/shared/domain/cqrs/query-bus/response';
 
 class MockQuery implements Query {
   constructor(private test: string) {}

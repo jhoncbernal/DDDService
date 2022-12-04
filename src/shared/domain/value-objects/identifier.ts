@@ -1,7 +1,7 @@
 import { v4 as uuidv4, validate } from 'uuid';
 
-import { UUIDInvalid } from '@/shared/infrastructure/value-objects/uuid.invalid';
-import { ValueObject } from '@/shared/infrastructure/value-objects/value.object';
+import { UUIDInvalid } from '@/shared/domain/value-objects/uuid.invalid';
+import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 export class Identifier implements ValueObject<string> {
   constructor(private value: string) {
