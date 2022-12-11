@@ -7,7 +7,7 @@ enum Actions {
   GET = 'read',
   PUT = 'update',
   PATCH = 'update',
-  DEL = 'delete'
+  DELETE = 'delete'
 }
 export class MiddlewareRouter implements SecurityMiddleware {
   private static jwt = new JsonWebToken();
