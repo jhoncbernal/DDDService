@@ -4,8 +4,8 @@ namespace validate {
   export function isEmail(email: string) {
     return validator.isEmail(email);
   }
-  export function isPhone(phone: string): boolean {
-    return validator.isMobilePhone(phone);
+  export function isPhone(phone: string, country: any = 'any'): boolean {
+    return validator.isMobilePhone(phone, country);
   }
   export function isDate(date: Date): boolean {
     return validator.isDate(date.toString());
