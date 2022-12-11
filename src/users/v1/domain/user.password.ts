@@ -17,11 +17,16 @@ export class UserPassword implements ValueObject<string> {
     }
   }
 
-  valueOf(): string {
-    return this.value;
+  valueOf(cipher: boolean = false): string {
+    if (!cipher) return this.value;
+    return this.cipher();
   }
 
   equals(object: ValueObject<string>): boolean {
     return Crypt.compare(this.valueOf(), object.valueOf());
+  }
+
+  private cipher(): string {
+    return Crypt.genHash(this.valueOf());
   }
 }

@@ -23,4 +23,5 @@ export interface UserRepository {
   findById(id: UserId): Promise<User | null>;
   findBy(params: string, value: userTypes): Promise<User | null>;
   findAll(): Promise<User[]>;
+  updatePassword(id: string, password: string): Promise<boolean>;
 }

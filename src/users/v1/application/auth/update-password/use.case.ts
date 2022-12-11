@@ -36,11 +36,15 @@ export class UpdateUserPasswordUseCase implements UseCase {
       userEmail
     );
     if (!user) throw new UserNotFound(userEmail.valueOf());
-
+    if (params.userPassword.equals(user.getPassword())) {
+      throw new Error('You cannot use the same password');
+    }
     if (!user.getToken()?.equals(params.userToken)) {
       throw new Error('Invalid token');
     }
-    user.getToken()?.clear();
-    await this.userRepository.update(user);
+    await this.userRepository.updatePassword(
+      user.getId().valueOf(),
+      params.userPassword.valueOf(true)
+    );
   }
 }

@@ -13,7 +13,7 @@ export class MongoUserRepository implements UserRepository {
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf(),
+      password: user.getPassword().valueOf(true),
       roles: [
         {
           role: user.getRole()?.valueOf(),
@@ -35,6 +35,19 @@ export class MongoUserRepository implements UserRepository {
         company: user.getCompany().valueOf(),
         password: user.getPassword().valueOf(),
         token: user.getToken()?.valueOf()
+      }
+    );
+    return result.modifiedCount > 0;
+  }
+
+  async updatePassword(id: string, password: string): Promise<boolean> {
+    const result: any = await UserModel.updateOne(
+      {
+        uuid: id
+      },
+      {
+        password: password,
+        token: null
       }
     );
     return result.modifiedCount > 0;
