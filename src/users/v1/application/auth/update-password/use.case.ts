@@ -8,6 +8,7 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { User } from '@/users/v1/domain/user';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 
 type Params = {
   userPassword: UserPassword;
@@ -42,7 +43,7 @@ export class UpdateUserPasswordUseCase implements UseCase {
         !params.userToken &&
         !params.userPassword.equals(user.getPassword())
       ) {
-        throw new Error('Invalid password');
+        throw new UserInvalid('password');
       }
       if (params.userNewPassword.equals(user.getPassword())) {
         throw new Error('You cannot use the same password');
@@ -54,7 +55,7 @@ export class UpdateUserPasswordUseCase implements UseCase {
         params.userNewPassword
       );
     } catch (error) {
-      throw new Error('Invalid token');
+      throw new UserInvalid('token');
     }
   }
 }

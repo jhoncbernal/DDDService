@@ -1,6 +1,7 @@
 import compare from '@/shared/infrastructure/utils/compare';
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 type ACTIONS = 'create' | 'read' | 'update' | 'delete';
 
 export class UserAction implements ValueObject<Array<string>> {
@@ -23,7 +24,7 @@ export class UserAction implements ValueObject<Array<string>> {
 
   validate(values: Array<string>): void {
     if (!validate.isArray(values)) {
-      throw new Error('User Actions are invalid');
+      throw new UserInvalid('actions');
     }
   }
 

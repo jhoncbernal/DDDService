@@ -8,7 +8,7 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
-import { UserRole } from './roles/user.role';
+import { UserRole } from '@/users/v1/domain/roles/user.role';
 
 export class User extends Entity {
   constructor(

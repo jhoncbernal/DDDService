@@ -12,6 +12,7 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { AuthResponse } from '@/users/v1/application/auth.response';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 
 type Params = {
   userEmail: UserEmail;
@@ -37,7 +38,7 @@ export class LoginUseCase implements UseCase {
       throw new UserNotFound(params.userEmail.valueOf());
     }
     if (!params.userPassword.equals(user.getPassword())) {
-      throw new Error('Invalid password');
+      throw new UserInvalid('password');
     }
     const token = this.jwt.sign(
       {

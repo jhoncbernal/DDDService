@@ -1,5 +1,6 @@
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 enum ROLES {
   admin,
   user,
@@ -18,7 +19,7 @@ export class UserRole implements ValueObject<string> {
 
   validate(value: string): void {
     if (validate.isEmpty(value) || !this.isRole(value)) {
-      throw new Error('User Role is invalid');
+      throw new UserInvalid('role');
     }
   }
 

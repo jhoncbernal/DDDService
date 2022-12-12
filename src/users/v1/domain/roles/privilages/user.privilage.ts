@@ -1,7 +1,7 @@
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
 import { UserAction } from '@/users/v1/domain/roles/privilages/actions/user.action';
-import { UserResource } from './resources/user.resource';
+import { UserResource } from '@/users/v1/domain/roles/privilages/resources/user.resource';
 
 export type privilege = {
   resources: Array<string>;

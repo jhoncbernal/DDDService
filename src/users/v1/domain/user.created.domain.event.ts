@@ -1,6 +1,6 @@
 import { DomainEvent } from '@/shared/infrastructure/event-bus/domain.event';
 import { CreateUserDomainEventBody } from '@/users/v1/infrastructure/user.created.domain.event';
-import { privilege } from './roles/privilages/user.privilage';
+import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
 
 export class UserCreatedDomainEvent extends DomainEvent {
   static readonly EVENT_NAME = 'user.created';

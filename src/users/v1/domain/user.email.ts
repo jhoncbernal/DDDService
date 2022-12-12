@@ -1,5 +1,6 @@
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 
 export class UserEmail implements ValueObject<string> {
   constructor(private value: string) {
@@ -12,7 +13,7 @@ export class UserEmail implements ValueObject<string> {
 
   validate(value: string): void {
     if (value && !validate.isEmail(value)) {
-      throw new Error('User email is invalid');
+      throw new UserInvalid('email');
     }
   }
 

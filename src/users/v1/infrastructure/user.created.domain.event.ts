@@ -1,4 +1,4 @@
-import { privilege } from '../domain/roles/privilages/user.privilage';
+import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
 
 export type CreateUserDomainEventBody = {
   readonly eventName: string;
