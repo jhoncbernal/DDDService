@@ -11,9 +11,6 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserToken } from '@/users/v1/domain/user.token';
-import { UserRole } from '@/users/v1/domain/roles/user.role';
-import { UserPrivilage } from '../../domain/roles/privilages/user.privilage';
 
 type Params = {
   userId: UserId;

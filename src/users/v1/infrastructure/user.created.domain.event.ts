@@ -9,5 +9,4 @@ export type CreateUserDomainEventBody = {
   readonly company: string;
   readonly password: string;
   readonly privilage: privilege;
-  readonly token: string;
 };

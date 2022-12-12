@@ -1,8 +1,12 @@
 import { injectable } from 'inversify';
 import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
+import {
+  UserRepository,
+  userTypes,
+  UserId,
+  UserPassword
+} from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
-import { UserId } from '@/users/v1/domain/user.id';
 
 @injectable()
 export class MongoUserRepository implements UserRepository {
@@ -38,14 +42,13 @@ export class MongoUserRepository implements UserRepository {
     return result.modifiedCount > 0;
   }
 
-  async updatePassword(id: string, password: string): Promise<boolean> {
+  async updatePassword(id: UserId, password: UserPassword): Promise<boolean> {
     const result: any = await UserModel.updateOne(
       {
-        uuid: id
+        uuid: id.valueOf()
       },
       {
-        password: password,
-        token: null
+        password: password.valueOf(true)
       }
     );
     return result.modifiedCount > 0;
@@ -87,8 +90,7 @@ export class MongoUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
-      result.roles[0].role, // TODO: fix this
-      result.token
+      result.roles[0].role // TODO: fix this
     );
   }
 }

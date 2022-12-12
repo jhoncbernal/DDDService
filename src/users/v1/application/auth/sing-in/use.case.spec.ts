@@ -9,7 +9,6 @@ import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository
 import { EventBus } from '@/shared/domain/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserToken } from '@/users/v1/domain/user.token';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 
@@ -24,9 +23,7 @@ describe('create-user', () => {
       phone: 123456789,
       company: 'test company',
       password: '123456',
-      role: 'admin',
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
+      role: 'admin'
     };
 
     const mockUserRepository = new MockUserRepository(users);
@@ -44,8 +41,7 @@ describe('create-user', () => {
       userCompany: new UserCompany(user.company),
       userPassword: new UserPassword(user.password),
       userRole: new UserRole(user.role),
-      userPrivilage: new UserPrivilage(user.role),
-      userToken: new UserToken(user.token)
+      userPrivilage: new UserPrivilage(user.role)
     });
 
     const result: User = users.find(
@@ -58,8 +54,5 @@ describe('create-user', () => {
     expect(result?.getPhone().valueOf()).toEqual(123456789);
     expect(result?.getCompany().valueOf()).toEqual('test company');
     expect(result?.getPassword().valueOf()).toEqual('123456');
-    expect(result?.getToken()?.valueOf()).toEqual(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJqb3JnZUBnbWFpbC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.TkxnIhUgiJQ2nP8jRXxxdKP4fX2TmSJsa5ufStSi2Kk'
-    );
   });
 });

@@ -1,8 +1,12 @@
 import { injectable } from 'inversify';
 import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
+import {
+  UserRepository,
+  userTypes,
+  UserId,
+  UserPassword
+} from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
-import { UserId } from '@/users/v1/domain/user.id';
 
 @injectable()
 export class MockUserRepository implements UserRepository {
@@ -34,13 +38,12 @@ export class MockUserRepository implements UserRepository {
         email: user.getEmail().valueOf(),
         phone: user.getPhone().valueOf(),
         company: user.getCompany().valueOf(),
-        password: user.getPassword().valueOf(),
-        token: user.getToken()?.valueOf()
+        password: user.getPassword().valueOf()
       }
     );
     return result.modifiedCount > 0;
   }
-  async updatePassword(id: string, password: string): Promise<boolean> {
+  async updatePassword(id: UserId, password: UserPassword): Promise<boolean> {
     const result: any = await UserModel.updateOne(
       {
         uuid: id
@@ -87,8 +90,7 @@ export class MockUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
-      result.role,
-      result.token
+      result.role
     );
   }
 }
