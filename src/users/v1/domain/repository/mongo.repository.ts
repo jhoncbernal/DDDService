@@ -32,9 +32,7 @@ export class MongoUserRepository implements UserRepository {
         name: user.getName().valueOf(),
         email: user.getEmail().valueOf(),
         phone: user.getPhone().valueOf(),
-        company: user.getCompany().valueOf(),
-        password: user.getPassword().valueOf(),
-        token: user.getToken()?.valueOf()
+        company: user.getCompany().valueOf()
       }
     );
     return result.modifiedCount > 0;

@@ -12,6 +12,7 @@ import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 
 type Params = {
   userPassword: UserPassword;
+  userNewPassword: UserPassword;
   userToken: UserToken;
 };
 
@@ -36,15 +37,22 @@ export class UpdateUserPasswordUseCase implements UseCase {
       userEmail
     );
     if (!user) throw new UserNotFound(userEmail.valueOf());
-    if (params.userPassword.equals(user.getPassword())) {
-      throw new Error('You cannot use the same password');
-    }
-    if (!user.getToken()?.equals(params.userToken)) {
+    if (
+      !params.userPassword.valueOf() &&
+      !user.getToken()?.equals(params.userToken)
+    ) {
       throw new Error('Invalid token');
     }
+    if (!params.userToken && !params.userPassword.equals(user.getPassword())) {
+      throw new Error('Invalid password');
+    }
+    if (params.userNewPassword.equals(user.getPassword())) {
+      throw new Error('You cannot use the same password');
+    }
+
     await this.userRepository.updatePassword(
       user.getId().valueOf(),
-      params.userPassword.valueOf(true)
+      params.userNewPassword.valueOf(true)
     );
   }
 }

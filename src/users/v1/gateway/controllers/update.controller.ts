@@ -38,14 +38,20 @@ export class UserPutController extends BaseController {
   }
 
   async updateUserPassword({
-    recover_token,
-    password
+    authorization,
+    password,
+    new_password
   }: {
-    recover_token: string | string[] | undefined;
+    authorization: string | undefined;
+    new_password: string | undefined;
     password: string;
   }) {
     try {
-      const command = new UserUpdatePasswordCommand(recover_token, password);
+      const command = new UserUpdatePasswordCommand(
+        authorization,
+        password,
+        new_password
+      );
       return await this.commandBus.dispatch(command);
     } catch (error: any) {
       throw this.mapperException(error?.message, {}, [], 'Users v1');
