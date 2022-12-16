@@ -9,6 +9,7 @@ import { UserName } from '@/users/v1/domain/user.name';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
+import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 @injectable()
 export class UpdateUserHandler implements CommandHandler<UserUpdateCommand> {
@@ -25,13 +26,15 @@ export class UpdateUserHandler implements CommandHandler<UserUpdateCommand> {
     const userEmail = new UserEmail(command.getEmail());
     const userPhone = new UserPhone(command.getPhone());
     const userCompany = new UserCompany(command.getCompany());
+    const userCountryCode = new UserCountryCode(command.getCountryCode());
 
     await this.updateUserUseCase.main({
       userId,
       userName,
       userEmail,
       userPhone,
-      userCompany
+      userCompany,
+      userCountryCode
     });
   }
 }

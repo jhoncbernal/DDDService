@@ -8,7 +8,7 @@ export class UserCreateCommand implements Command {
   private company: string;
   private password: string;
   private role: string;
-  private token: string;
+  private country_code: string;
 
   constructor(
     name: string,
@@ -17,7 +17,7 @@ export class UserCreateCommand implements Command {
     company: string,
     password: string,
     role: string,
-    token: string
+    country_code: string
   ) {
     this.name = name;
     this.email = email;
@@ -25,7 +25,7 @@ export class UserCreateCommand implements Command {
     this.company = company;
     this.password = password;
     this.role = role;
-    this.token = token;
+    this.country_code = country_code;
   }
 
   getId(): string {
@@ -56,7 +56,7 @@ export class UserCreateCommand implements Command {
     return this.role;
   }
 
-  getToken(): string {
-    return this.token;
+  getCountryCode(): string {
+    return this.country_code;
   }
 }

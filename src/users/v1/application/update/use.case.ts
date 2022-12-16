@@ -1,4 +1,4 @@
-import { inject, injectable } from 'inversify';
+import { inject } from 'inversify';
 import { provide } from 'inversify-binding-decorators';
 import { TYPES } from '@/users/v1/infrastructure/d-injection/types';
 import { UseCase } from '@/shared/domain/use.case';
@@ -11,6 +11,7 @@ import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 type Params = {
   userId: UserId;
@@ -18,6 +19,7 @@ type Params = {
   userEmail: UserEmail;
   userPhone: UserPhone;
   userCompany: UserCompany;
+  userCountryCode: UserCountryCode;
 };
 
 @provide(TYPES.UpdateUserUseCase)
@@ -34,6 +36,7 @@ export class UpdateUserUseCase implements UseCase {
     const userPhone = params.userPhone;
     const userCompany = params.userCompany;
     const userPassword = new UserPassword('');
+    const userCountryCode = params.userCountryCode;
 
     const user = new User(
       userId,
@@ -41,7 +44,8 @@ export class UpdateUserUseCase implements UseCase {
       userEmail,
       userPhone,
       userCompany,
-      userPassword
+      userPassword,
+      userCountryCode
     );
 
     const result = await this.userRepository.update(user);

@@ -11,6 +11,7 @@ import { mock } from 'jest-mock-extended';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
+import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 let users: any = [];
 
@@ -23,6 +24,7 @@ describe('create-user', () => {
       phone: 123456789,
       company: 'test company',
       password: '123456',
+      country_code: 'CO',
       role: 'admin'
     };
 
@@ -40,6 +42,7 @@ describe('create-user', () => {
       userPhone: new UserPhone(user.phone),
       userCompany: new UserCompany(user.company),
       userPassword: new UserPassword(user.password),
+      userCountryCode: new UserCountryCode(user.country_code),
       userRole: new UserRole(user.role),
       userPrivilage: new UserPrivilage(user.role)
     });
@@ -54,5 +57,6 @@ describe('create-user', () => {
     expect(result?.getPhone().valueOf()).toEqual(123456789);
     expect(result?.getCompany().valueOf()).toEqual('test company');
     expect(result?.getPassword().valueOf()).toEqual('123456');
+    expect(result?.getCountryCode().valueOf()).toEqual('CO');
   });
 });

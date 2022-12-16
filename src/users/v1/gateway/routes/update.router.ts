@@ -40,7 +40,7 @@ export class UserPutRouter {
     try {
       // Get Params
       const { id } = ctx.validatedParams;
-      const { name, email, phone, company } = ctx.validatedBody;
+      const { name, email, phone, company, country_code } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
       await controller.updateUser({
@@ -48,7 +48,8 @@ export class UserPutRouter {
         name,
         email,
         phone,
-        company
+        company,
+        country_code
       });
       // Successful response
       ctx.body = { result: 'Updated' };

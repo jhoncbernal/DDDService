@@ -4,7 +4,6 @@ import { CommandBus } from '@/shared/domain/cqrs/command-bus/command.bus';
 import { UserCreateCommand } from '@/users/v1/application/auth/sing-up/command';
 import { BaseController } from '@/shared/infrastructure/controller/base.controller';
 import { Logger } from '@/shared/domain/logger/logger';
-import { Exception } from '@/shared/domain/controller/base.controller';
 import { UserLoginQuery } from '@/users/v1/application/auth/sing-in/query';
 import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
 
@@ -25,7 +24,7 @@ export class UserPostController extends BaseController {
     company,
     password,
     role,
-    token
+    country_code
   }: {
     name: string;
     email: string;
@@ -33,7 +32,7 @@ export class UserPostController extends BaseController {
     company: string;
     password: string;
     role: string;
-    token: string;
+    country_code: string;
   }) {
     try {
       const command = new UserCreateCommand(
@@ -43,7 +42,7 @@ export class UserPostController extends BaseController {
         company,
         password,
         role,
-        token
+        country_code
       );
       return await this.commandBus.ask(command);
     } catch (error: any) {

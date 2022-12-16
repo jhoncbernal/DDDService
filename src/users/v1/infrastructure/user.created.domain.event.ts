@@ -8,5 +8,6 @@ export type CreateUserDomainEventBody = {
   readonly phone: number;
   readonly company: string;
   readonly password: string;
+  readonly country_code: string;
   readonly privilage: privilege;
 };

@@ -9,6 +9,7 @@ import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.ev
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 export class User extends Entity {
   constructor(
@@ -18,6 +19,7 @@ export class User extends Entity {
     private phone: UserPhone,
     private company: UserCompany,
     private password: UserPassword,
+    private country_code: UserCountryCode,
     private role?: UserRole,
     private privilage?: UserPrivilage
   ) {
@@ -28,6 +30,7 @@ export class User extends Entity {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.country_code = country_code;
     this.role = role;
     this.privilage = privilage;
   }
@@ -39,6 +42,7 @@ export class User extends Entity {
     phone: UserPhone,
     company: UserCompany,
     password: UserPassword,
+    country_code: UserCountryCode,
     role: UserRole,
     privilage: UserPrivilage
   ): User {
@@ -49,6 +53,7 @@ export class User extends Entity {
       phone,
       company,
       password,
+      country_code,
       role,
       privilage
     );
@@ -61,6 +66,7 @@ export class User extends Entity {
         phone.valueOf(),
         company.valueOf(),
         password.valueOf(),
+        country_code.valueOf(),
         privilage.valueOf()
       )
     );
@@ -75,7 +81,8 @@ export class User extends Entity {
     phone: number,
     company: string,
     password: string,
-    role: string
+    role: string,
+    countryCode: string
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
@@ -85,6 +92,7 @@ export class User extends Entity {
     const userPassword = new UserPassword(password);
     const userRole = new UserRole(role);
     const userPrivilage = new UserPrivilage(role);
+    const userCountryCode = new UserCountryCode(countryCode);
     return new User(
       userId,
       userName,
@@ -92,6 +100,7 @@ export class User extends Entity {
       userPhone,
       userCompany,
       userPassword,
+      userCountryCode,
       userRole,
       userPrivilage
     );
@@ -129,5 +138,8 @@ export class User extends Entity {
   }
   getPrivilage(): UserPrivilage | undefined {
     return this.privilage;
+  }
+  getCountryCode(): UserCountryCode {
+    return this.country_code;
   }
 }

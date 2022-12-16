@@ -2,11 +2,13 @@ import { ValueObject } from '@/shared/domain/value-objects/value.object';
 
 import validate from '@/shared/infrastructure/validator/validator';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
-export class UserContryCode implements ValueObject<string> {
-  constructor(private value: string) {}
+export class UserCountryCode implements ValueObject<string> {
+  constructor(private value: string) {
+    this.validate(value);
+  }
 
   fromPrimitive(value: string): ValueObject<string> {
-    return new UserContryCode(value);
+    return new UserCountryCode(value);
   }
 
   validate(value: string): void {

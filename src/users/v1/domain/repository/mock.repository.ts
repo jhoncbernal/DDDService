@@ -19,6 +19,7 @@ export class MockUserRepository implements UserRepository {
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
       password: user.getPassword().valueOf(true),
+      country_code: user.getCountryCode().valueOf(),
       roles: [
         {
           role: user.getRole()?.valueOf(),
@@ -90,6 +91,7 @@ export class MockUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
+      result.country_code,
       result.role
     );
   }

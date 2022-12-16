@@ -31,5 +31,8 @@ namespace validate {
   export function isCountryCode(value: string): boolean {
     return validator.isISO31661Alpha2(value);
   }
+  export function isCity(value: string): boolean {
+    return validator.isAlpha(value);
+  }
 }
 export default validate;

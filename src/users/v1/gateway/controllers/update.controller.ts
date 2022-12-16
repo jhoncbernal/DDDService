@@ -21,16 +21,25 @@ export class UserPutController extends BaseController {
     name,
     email,
     phone,
-    company
+    company,
+    country_code
   }: {
     id: string;
     name: string;
     email: string;
     phone: number;
     company: string;
+    country_code: string;
   }) {
     try {
-      const command = new UserUpdateCommand(id, name, email, phone, company);
+      const command = new UserUpdateCommand(
+        id,
+        name,
+        email,
+        phone,
+        company,
+        country_code
+      );
       return await this.commandBus.dispatch(command);
     } catch (error: any) {
       throw this.mapperException(error?.message, {}, [], 'Users v1');

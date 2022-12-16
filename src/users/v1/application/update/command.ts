@@ -7,19 +7,22 @@ export class UserUpdateCommand implements Command {
   private email: string;
   private phone: number;
   private company: string;
+  private country_code: string;
 
   constructor(
     id: string,
     name: string,
     email: string,
     phone: number,
-    company: string
+    company: string,
+    country_code: string
   ) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.phone = phone;
     this.company = company;
+    this.country_code = country_code;
   }
 
   getId(): string {
@@ -40,5 +43,8 @@ export class UserUpdateCommand implements Command {
 
   getCompany(): string {
     return this.company;
+  }
+  getCountryCode(): string {
+    return this.country_code;
   }
 }
