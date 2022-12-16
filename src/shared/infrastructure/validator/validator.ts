@@ -28,5 +28,8 @@ namespace validate {
   export function isArray(value: any): boolean {
     return Array.isArray(value);
   }
+  export function isCountryCode(value: string): boolean {
+    return validator.isISO31661Alpha2(value);
+  }
 }
 export default validate;
