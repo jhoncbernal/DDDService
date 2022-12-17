@@ -1,4 +1,4 @@
-import { CreateUserUseCase } from '@/users/v1/application/auth/sing-up/use.case';
+import { CreateUserUseCase } from '@/users/v1/application/auth/sign-up/use.case';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
@@ -15,7 +15,7 @@ import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 let users: any = [];
 
-describe('create-user', () => {
+describe('sing', () => {
   it('should create a user', async () => {
     const user = {
       id: '06a84abb-4249-4fcc-bde5-1423f8394161',

@@ -1,4 +1,4 @@
-import { CreateUserUseCase } from '@/users/v1/application/auth/sing-up/use.case';
+import { CreateUserUseCase } from '@/users/v1/application/auth/sign-up/use.case';
 import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { UserName } from '@/users/v1/domain/user.name';
