@@ -19,7 +19,7 @@ export interface UserRepository {
   update(user: User): Promise<boolean>;
   delete(user: UserId): Promise<boolean>;
   findById(id: UserId): Promise<User | null>;
-  findBy(params: string, value: userTypes): Promise<User | null>;
+  findBy(params: string, value: userTypes): Promise<User | null | undefined>;
   findAll(): Promise<User[]>;
   updatePassword(id: UserId, password: UserPassword): Promise<boolean>;
 }

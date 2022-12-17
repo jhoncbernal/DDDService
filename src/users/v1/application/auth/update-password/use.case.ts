@@ -9,6 +9,7 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { User } from '@/users/v1/domain/user';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
+import validate from '@/shared/infrastructure/validator/validator';
 
 type Params = {
   userPassword: UserPassword;
@@ -32,17 +33,14 @@ export class UpdateUserPasswordUseCase implements UseCase {
       const decode: any = this.jwt.verify(params.userToken.valueOf());
       // get user by email
       const userEmail = new UserEmail(decode?.email);
-      let user: User | null = await this.userRepository.findBy(
+      let user: User | null | undefined = await this.userRepository.findBy(
         'email',
         userEmail
       );
       if (!user) throw new UserNotFound(userEmail.valueOf());
-
       // validate password
-      if (
-        !params.userToken &&
-        !params.userPassword.equals(user.getPassword())
-      ) {
+      const invalidPassword = !params.userPassword.equals(user.getPassword());
+      if (invalidPassword && !validate.isEmpty(params.userPassword.valueOf())) {
         throw new UserInvalid('password');
       }
       if (params.userNewPassword.equals(user.getPassword())) {
@@ -50,12 +48,12 @@ export class UpdateUserPasswordUseCase implements UseCase {
       }
 
       // update password
-      await this.userRepository.updatePassword(
+      return await this.userRepository.updatePassword(
         user.getId(),
         params.userNewPassword
       );
-    } catch (error) {
-      throw new UserInvalid('token');
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   }
 }

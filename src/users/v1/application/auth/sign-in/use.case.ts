@@ -30,7 +30,7 @@ export class LoginUseCase implements UseCase {
   }
 
   async main(params: Params): Promise<AuthResponse> {
-    let user: User | null = await this.userRepository.findBy(
+    let user: User | null | undefined = await this.userRepository.findBy(
       'email',
       params.userEmail
     );
@@ -46,7 +46,7 @@ export class LoginUseCase implements UseCase {
         deviceId: '2122321312',
         privilages: user.getPrivilage()?.valueOf()
       },
-      '3m'
+      '45m'
     );
     return AuthResponse.fromDomain(params.userEmail, token);
   }

@@ -15,7 +15,7 @@ import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 let users: any = [];
 
-describe('sing', () => {
+describe('create-user', () => {
   it('should create a user', async () => {
     const user = {
       id: '06a84abb-4249-4fcc-bde5-1423f8394161',
@@ -23,12 +23,12 @@ describe('sing', () => {
       email: 'test@gmail.com',
       phone: 123456789,
       company: 'test company',
-      password: '123456',
+      password: 'String123!',
       country_code: 'CO',
       role: 'admin'
     };
 
-    const mockUserRepository = new MockUserRepository(users);
+    const mockUserRepository = new MockUserRepository([]);
 
     const userCreate = new CreateUserUseCase(
       mockUserRepository,
@@ -47,16 +47,17 @@ describe('sing', () => {
       userPrivilage: new UserPrivilage(user.role)
     });
 
-    const result: User = users.find(
-      (d: User) => d.getId().valueOf() === user.id
+    const result: User | null = await mockUserRepository.findById(
+      new UserId(user.id)
     );
 
     expect(result).toBeDefined();
-    expect(result?.getName().valueOf()).toEqual('Max');
-    expect(result?.getEmail().valueOf()).toEqual('test@gmail.com');
-    expect(result?.getPhone().valueOf()).toEqual(123456789);
-    expect(result?.getCompany().valueOf()).toEqual('test company');
-    expect(result?.getPassword().valueOf()).toEqual('123456');
-    expect(result?.getCountryCode().valueOf()).toEqual('CO');
+    expect(result?.getName().valueOf()).toEqual(user.name);
+    expect(result?.getEmail().valueOf()).toEqual(user.email);
+    expect(result?.getPhone().valueOf()).toEqual(user.phone);
+    expect(result?.getCompany().valueOf()).toEqual(user.company);
+    expect(result?.getPassword().valueOf().length).toEqual(60);
+    expect(result?.getCountryCode().valueOf()).toEqual(user.country_code);
+    expect(result?.getRole()?.valueOf()).toEqual(user.role);
   });
 });
