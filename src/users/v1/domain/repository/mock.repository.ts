@@ -61,16 +61,19 @@ export class MockUserRepository implements UserRepository {
     const index: number = this.mockUsers.findIndex(
       (user: UserMock) => user.id === id.valueOf()
     );
-    await this.mockUsers.splice(index, 1);
+    if (index === -1) {
+      return false;
+    }
+    const t = this.mockUsers.splice(index, 1);
     return this.mockUsers.find((user: UserMock) => user.id === id.valueOf())
       ? false
       : true;
   }
   async findById(id: UserId): Promise<User | null> {
-    const result: any = this.mockUsers.find(
+    const result: UserMock | undefined = this.mockUsers.find(
       (user: UserMock) => user.id === id.valueOf()
     );
-    return this.mockToUser(result);
+    return result ? this.mockToUser(result) : null;
   }
   async findAll(): Promise<User[]> {
     return this.mockUsers.map((mockUser) => this.mockToUser(mockUser));
