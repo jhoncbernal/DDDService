@@ -19,7 +19,7 @@ export class UserRole implements ValueObject<string> {
 
   validate(value: string): void {
     if (validate.isEmpty(value) || !this.isRole(value)) {
-      throw new UserInvalid('role');
+      throw new UserInvalid('country');
     }
   }
 

@@ -81,8 +81,8 @@ export class User extends Entity {
     phone: number,
     company: string,
     password: string,
-    role: string,
-    countryCode: string
+    countryCode: string,
+    role: string
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
