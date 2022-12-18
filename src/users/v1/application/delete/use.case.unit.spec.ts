@@ -17,7 +17,7 @@ describe('delete-user', () => {
     const invalidId = wrongId.slice(0, -1);
     try {
       await userDelete.main({
-        userId: new UserId(wrongId)
+        userId: new UserId(invalidId)
       });
     } catch (error: any) {
       expect(error.message).toBe(`The UUID ${invalidId} is invalid`);
