@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/jhoncbernal/DDDService/branch/development/graph/badge.svg?token=EITYWOUAR3)](https://codecov.io/gh/jhoncbernal/DDDService)
+![Build Status](https://github.com/jhoncbernal/DDDService/actions/workflows/main.yaml/badge.svg) [![codecov](https://codecov.io/gh/jhoncbernal/DDDService/branch/development/graph/badge.svg?token=EITYWOUAR3)](https://codecov.io/gh/jhoncbernal/DDDService)
 
 # REPOSITORY-SERVICE
 
