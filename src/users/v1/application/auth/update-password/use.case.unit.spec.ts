@@ -1,5 +1,6 @@
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { MOCK_USER } from '@/users/v1/infrastructure/mock/user.mock';
 import { UpdateUserPasswordUseCase } from './use.case';
 
 describe('update password', () => {
@@ -7,22 +8,18 @@ describe('update password', () => {
     old: 'String123!',
     new: 'Temporal123!',
     token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjU5NDgwLCJleHAiOjMyNDkxMzk0ODB9.3w7l_XIHFYKxV0bAQFbr094yulYJYnmwuRbcSikJGKs'
-  };
-  const user = {
-    id: '06a84abb-4249-4fcc-bde5-1423f8394161',
-    name: 'Max',
-    email: 'test@gmail.com',
-    phone: 123456789,
-    company: 'test company',
-    password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
-    country_code: 'CO',
-    role: 'admin'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjU5NDgwLCJleHAiOjMyNDkxMzk0ODB9.3w7l_XIHFYKxV0bAQFbr094yulYJYnmwuRbcSikJGKs',
+    invalidToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indyb25nRW1haWxAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCJdfSwiaWF0IjoxNjcxMjU5MDAxLCJleHAiOjMyNDkxMzkwMDF9.Je7CNFjKWRqhsxmNJwZ8T9HWa_sUjfIOCu7YrbRHrXo',
+    expiredToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjk4NDkzLCJleHAiOjE2NzEyOTg0OTR9.mVEPW9H4nGRvognI1O3m7MOTz0bUsPW5xbH3IXIMidE',
+    wrongUserToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indyb25nRW1haWxAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjU5MDAxLCJleHAiOjMyNDkxMzkwMDF9.9MhlmmR8rYlVqoL1etTf-5TpqddJ5C0wHdHEJvtenPA'
   };
   let mockUserRepository: MockUserRepository;
   let userUpdate: UpdateUserPasswordUseCase;
   beforeAll(() => {
-    mockUserRepository = new MockUserRepository([user]);
+    mockUserRepository = new MockUserRepository([MOCK_USER]);
     userUpdate = new UpdateUserPasswordUseCase(mockUserRepository);
   });
   it('should change password ', async () => {
@@ -62,8 +59,7 @@ describe('update password', () => {
       await userUpdate.main({
         userPassword: new UserPassword(''),
         userNewPassword: new UserPassword(`${password.new}2`),
-        userToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indyb25nRW1haWxAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCJdfSwiaWF0IjoxNjcxMjU5MDAxLCJleHAiOjMyNDkxMzkwMDF9.Je7CNFjKWRqhsxmNJwZ8T9HWa_sUjfIOCu7YrbRHrXo'
+        userToken: password.invalidToken
       });
     } catch (error: any) {
       expect(error.message).toBe('JsonWebTokenError: invalid signature');
@@ -75,8 +71,7 @@ describe('update password', () => {
       await userUpdate.main({
         userPassword: new UserPassword(''),
         userNewPassword: new UserPassword(`${password.new}2`),
-        userToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjk4NDkzLCJleHAiOjE2NzEyOTg0OTR9.mVEPW9H4nGRvognI1O3m7MOTz0bUsPW5xbH3IXIMidE'
+        userToken: password.expiredToken
       });
     } catch (error: any) {
       expect(error.message).toBe('TokenExpiredError: jwt expired');
@@ -87,8 +82,7 @@ describe('update password', () => {
       await userUpdate.main({
         userPassword: new UserPassword(''),
         userNewPassword: new UserPassword(`${password.new}2`),
-        userToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Indyb25nRW1haWxAZ21haWwuY29tIiwiZGV2aWNlSWQiOiIyMTIyMzIxMzEyIiwicHJpdmlsYWdlcyI6eyJyZXNvdXJjZXMiOlsidXNlcnMiLCJhdXRoIl0sImFjdGlvbnMiOlsiY3JlYXRlIiwicmVhZCIsInVwZGF0ZSIsImRlbGV0ZSJdfSwiaWF0IjoxNjcxMjU5MDAxLCJleHAiOjMyNDkxMzkwMDF9.9MhlmmR8rYlVqoL1etTf-5TpqddJ5C0wHdHEJvtenPA'
+        userToken: password.wrongUserToken
       });
     } catch (error: any) {
       expect(error.message).toBe('User wrongEmail@gmail.com is not found');

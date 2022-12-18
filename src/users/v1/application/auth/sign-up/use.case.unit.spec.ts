@@ -12,52 +12,57 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
-
-let users: any = [];
+import { MOCK_NEW_USER } from '@/users/v1/infrastructure/mock/user.mock';
 
 describe('create-user', () => {
   it('should create a user', async () => {
-    const user = {
-      id: '06a84abb-4249-4fcc-bde5-1423f8394161',
-      name: 'Max',
-      email: 'test@gmail.com',
-      phone: 123456789,
-      company: 'test company',
-      password: 'String123!',
-      country_code: 'CO',
-      role: 'admin'
-    };
-
     const mockUserRepository = new MockUserRepository([]);
 
     const userCreate = new CreateUserUseCase(
       mockUserRepository,
       mock<EventBus>()
     );
-
     await userCreate.main({
-      userId: new UserId(user.id),
-      userName: new UserName(user.name),
-      userEmail: new UserEmail(user.email),
-      userPhone: new UserPhone(user.phone),
-      userCompany: new UserCompany(user.company),
-      userPassword: new UserPassword(user.password),
-      userCountryCode: new UserCountryCode(user.country_code),
-      userRole: new UserRole(user.role),
-      userPrivilage: new UserPrivilage(user.role)
+      userId: new UserId(MOCK_NEW_USER.uuid),
+      userName: new UserName(MOCK_NEW_USER.name),
+      userEmail: new UserEmail(MOCK_NEW_USER.email),
+      userPhone: new UserPhone(MOCK_NEW_USER.phone),
+      userCompany: new UserCompany(MOCK_NEW_USER.company),
+      userPassword: new UserPassword(MOCK_NEW_USER.password),
+      userCountryCode: new UserCountryCode(MOCK_NEW_USER.country_code),
+      userRole: new UserRole(MOCK_NEW_USER.role),
+      userPrivilage: new UserPrivilage(MOCK_NEW_USER.role)
     });
 
     const result: User | null = await mockUserRepository.findById(
-      new UserId(user.id)
+      new UserId(MOCK_NEW_USER.uuid)
     );
 
     expect(result).toBeDefined();
-    expect(result?.getName().valueOf()).toEqual(user.name);
-    expect(result?.getEmail().valueOf()).toEqual(user.email);
-    expect(result?.getPhone().valueOf()).toEqual(user.phone);
-    expect(result?.getCompany().valueOf()).toEqual(user.company);
-    expect(result?.getPassword().valueOf().length).toEqual(60);
-    expect(result?.getCountryCode().valueOf()).toEqual(user.country_code);
-    expect(result?.getRole()?.valueOf()).toEqual(user.role);
+    if (result) {
+      expect(result.getName().equals(new UserName(MOCK_NEW_USER.name))).toEqual(
+        true
+      );
+      expect(
+        result.getEmail().equals(new UserEmail(MOCK_NEW_USER.email))
+      ).toEqual(true);
+      expect(
+        result.getPhone().equals(new UserPhone(MOCK_NEW_USER.phone))
+      ).toEqual(true);
+      expect(
+        result.getCompany().equals(new UserCompany(MOCK_NEW_USER.company))
+      ).toEqual(true);
+      expect(
+        new UserPassword(MOCK_NEW_USER.password).equals(result.getPassword())
+      ).toEqual(true);
+      expect(
+        result
+          .getCountryCode()
+          .equals(new UserCountryCode(MOCK_NEW_USER.country_code))
+      ).toEqual(true);
+      expect(
+        result.getRole()?.equals(new UserRole(MOCK_NEW_USER.role))
+      ).toEqual(true);
+    }
   });
 });

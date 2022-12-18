@@ -1,0 +1,67 @@
+export const MOCK_USERS = [
+  {
+    uuid: '06a84abb-4249-4fcc-bde5-1423f8394161',
+    name: 'Max',
+    email: 'test@gmail.com',
+    phone: 123456789,
+    company: 'test company',
+    password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
+    country_code: 'CO',
+    roles: [
+      {
+        role: 'admin',
+        privileges: {
+          resources: ['users', 'auth'],
+          actions: ['create', 'read', 'update', 'delete']
+        }
+      }
+    ]
+  },
+  {
+    uuid: '459bed5e-c78b-49de-902d-9e0e46c91160',
+    name: 'Max2',
+    email: 'test2@gmail.com',
+    phone: 123456782,
+    company: 'test2 company',
+    password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
+    country_code: 'MX',
+    roles: [
+      {
+        role: 'user',
+        privileges: {
+          resources: ['users'],
+          actions: ['read', 'update', 'delete']
+        }
+      }
+    ]
+  }
+];
+export const MOCK_USER = {
+  uuid: '06a84abb-4249-4fcc-bde5-1423f8394161',
+  name: 'Max',
+  email: 'test@gmail.com',
+  phone: 123456789,
+  company: 'test company',
+  password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
+  country_code: 'CO',
+  roles: [
+    {
+      role: 'admin',
+      privileges: {
+        resources: ['users', 'auth'],
+        actions: ['create', 'read', 'update', 'delete']
+      }
+    }
+  ]
+};
+
+export const MOCK_NEW_USER = {
+  uuid: '06a84abb-4249-4fcc-bde5-1423f8394161',
+  name: 'Max',
+  email: 'test@gmail.com',
+  phone: 123456789,
+  company: 'test company',
+  password: 'String123!',
+  country_code: 'CO',
+  role: 'admin'
+};

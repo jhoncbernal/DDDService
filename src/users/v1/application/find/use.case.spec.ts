@@ -2,22 +2,14 @@ import { User } from '@/users/v1/domain/user';
 import { UserId } from '@/users/v1/domain/user.id';
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
 import { FindUserUseCase } from '@/users/v1/application/find/use.case';
+import { MOCK_USER } from '@/users/v1/infrastructure/mock/user.mock';
 
 describe('find-user', () => {
   let mockUserRepository: MockUserRepository;
   let userFind: FindUserUseCase;
-  const user = {
-    id: '06a84abb-4249-4fcc-bde5-1423f8394161',
-    name: 'Max',
-    email: 'test@gmail.com',
-    phone: 123456789,
-    company: 'test company',
-    password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
-    country_code: 'CO',
-    role: 'admin'
-  };
+
   beforeAll(() => {
-    mockUserRepository = new MockUserRepository([user]);
+    mockUserRepository = new MockUserRepository([MOCK_USER]);
     userFind = new FindUserUseCase(mockUserRepository);
   });
   it('should thown an error invalid ID', async () => {
@@ -46,18 +38,21 @@ describe('find-user', () => {
   });
   it('should find a user', async () => {
     await userFind.main({
-      userId: new UserId(user.id)
+      userId: new UserId(MOCK_USER.uuid)
     });
     const result: User | null = await mockUserRepository.findById(
-      new UserId(user.id)
+      new UserId(MOCK_USER.uuid)
     );
     expect(result).toBeDefined();
-    expect(result?.getName().valueOf()).toEqual(user.name);
-    expect(result?.getEmail().valueOf()).toEqual(user.email);
-    expect(result?.getPhone().valueOf()).toEqual(user.phone);
-    expect(result?.getCompany().valueOf()).toEqual(user.company);
+    expect(result?.getName().valueOf()).toEqual(MOCK_USER.name);
+    expect(result?.getEmail().valueOf()).toEqual(MOCK_USER.email);
+    expect(result?.getPhone().valueOf()).toEqual(MOCK_USER.phone);
+    expect(result?.getCompany().valueOf()).toEqual(MOCK_USER.company);
     expect(result?.getPassword().valueOf().length).toEqual(60);
-    expect(result?.getCountryCode().valueOf()).toEqual(user.country_code);
-    expect(result?.getRole()?.valueOf()).toEqual(user.role);
+    expect(result?.getCountryCode().valueOf()).toEqual(MOCK_USER.country_code);
+    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USER.roles[0].role);
+    expect(result?.getPrivilage()?.valueOf()).toEqual(
+      MOCK_USER.roles[0].privileges
+    );
   });
 });
