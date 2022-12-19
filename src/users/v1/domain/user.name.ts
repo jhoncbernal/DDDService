@@ -1,5 +1,6 @@
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { DomainError } from '@/shared/infrastructure/domain.error';
 
 export class UserName implements ValueObject<string> {
   constructor(private value: string) {
@@ -16,7 +17,9 @@ export class UserName implements ValueObject<string> {
       (validate.isEmpty(value) ||
         !validate.isLength(value, { min: 3, max: 50 }))
     ) {
-      throw new Error('User name must be between 3 and 50 characters long');
+      throw new DomainError(
+        'User name must be between 3 and 50 characters long'
+      );
     }
   }
 

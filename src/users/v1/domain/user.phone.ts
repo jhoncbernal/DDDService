@@ -1,5 +1,6 @@
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { DomainError } from '@/shared/infrastructure/domain.error';
 
 export class UserPhone implements ValueObject<number> {
   constructor(private value: number) {
@@ -12,7 +13,7 @@ export class UserPhone implements ValueObject<number> {
 
   validate(value: number): void {
     if (value && !validate.isPhone(value.toString())) {
-      throw new Error('User phone is invalid');
+      throw new DomainError('User phone is invalid');
     }
   }
 

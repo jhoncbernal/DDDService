@@ -10,6 +10,7 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
 import { UserRole } from '@/users/v1/domain/roles/user.role';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
+import { DomainError } from '@/shared/infrastructure/domain.error';
 
 export class User extends Entity {
   constructor(
@@ -107,7 +108,7 @@ export class User extends Entity {
   }
 
   toPrimitives() {
-    throw new Error('Method not implemented.');
+    throw new DomainError('Method not implemented.');
   }
 
   getId(): UserId {
