@@ -7,22 +7,8 @@ import {
 } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
 import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
-type user = {
-  uuid: string;
-  name: string;
-  email: string;
-  phone: number;
-  company: string;
-  password: string;
-  country_code: string;
-  roles: {
-    role: string;
-    privileges: {
-      resources: string[];
-      actions: string[];
-    };
-  }[];
-};
+import ObjectUtils from '@/shared/infrastructure/utils/object';
+
 type UserMock = {
   uuid: string;
   name: string;
@@ -92,7 +78,7 @@ export class MockUserRepository implements UserRepository {
   }
 
   private userToMock(user: User, cipher: boolean = false): UserMock {
-    return {
+    const result: UserMock = {
       uuid: user.getId().valueOf(),
       name: user.getName().valueOf(),
       email: user.getEmail().valueOf(),
@@ -107,6 +93,8 @@ export class MockUserRepository implements UserRepository {
         }
       ]
     };
+    ObjectUtils.sanitizeObject(result);
+    return result;
   }
 
   private fromPrimitives(result: UserMock): User {

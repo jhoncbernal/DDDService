@@ -23,7 +23,7 @@ export class UserResource implements ValueObject<Array<string>> {
   }
 
   validate(values: Array<string>): void {
-    if (!validate.isArray(values)) {
+    if (values && !validate.isArray(values)) {
       throw new UserInvalid('resources');
     }
   }

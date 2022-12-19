@@ -9,12 +9,12 @@ export class UserName implements ValueObject<string> {
   }
 
   validate(value: string): void {
-    // if (
-    //   !validate.isEmpty(value) ||
-    //   !validate.isLength(value, { min: 3, max: 50 })
-    // ) {
-    //   throw new Error('User name must be between 3 and 50 characters long');
-    // }
+    if (
+      !validate.isEmpty(value) ||
+      !validate.isLength(value, { min: 3, max: 50 })
+    ) {
+      throw new Error('User name must be between 3 and 50 characters long');
+    }
   }
 
   valueOf(): string {

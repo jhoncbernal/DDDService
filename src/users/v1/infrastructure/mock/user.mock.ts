@@ -65,3 +65,16 @@ export const MOCK_NEW_USER = {
   country_code: 'CO',
   role: 'admin'
 };
+export const MOCK_UPDATED_USER = {
+  name: 'MAX new',
+  email: 'new@gmail.com',
+  phone: 1011121314,
+  company: 'new company',
+  password: 'NewPassword123!',
+  country_code: 'CO',
+  role: 'admin',
+  privileges: {
+    resources: ['users', 'auth'],
+    actions: ['create', 'read', 'update', 'delete']
+  }
+};

@@ -18,7 +18,7 @@ export class UserRole implements ValueObject<string> {
   }
 
   validate(value: string): void {
-    if (validate.isEmpty(value) || !this.isRole(value)) {
+    if (value && (validate.isEmpty(value) || !this.isRole(value))) {
       throw new UserInvalid('role');
     }
   }
