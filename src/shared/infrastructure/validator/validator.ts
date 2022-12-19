@@ -35,5 +35,8 @@ namespace validate {
   export function isCity(value: string): boolean {
     return validator.isAlpha(value);
   }
+  export function isObject(value: any): boolean {
+    return typeof value === 'object';
+  }
 }
 export default validate;
