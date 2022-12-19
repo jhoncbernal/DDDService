@@ -1,7 +1,7 @@
 import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { MOCK_USER } from '@/users/v1/infrastructure/mock/user.mock';
-import { UpdateUserPasswordUseCase } from './use.case';
+import { UpdateUserPasswordUseCase } from '@/users/v1/application/auth/update-password/use.case';
 
 describe('update password', () => {
   const password = {

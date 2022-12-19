@@ -3,7 +3,7 @@ import {
   MOCK_USER
 } from '@/users/v1/infrastructure/mock/user.mock';
 import { User } from '@/users/v1/domain/user';
-import { UserId } from '../user.id';
+import { UserId } from '@/users/v1/domain/user.id';
 
 let invalidUser: User;
 const emptyUser = User.fromPrimitives(
