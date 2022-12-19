@@ -30,6 +30,7 @@ describe('update-users', () => {
     '',
     ''
   );
+
   beforeAll(() => {
     mockUserRepository = new MockUserRepository([MOCK_USER]);
     userUpdate = new UpdateUserUseCase(mockUserRepository);

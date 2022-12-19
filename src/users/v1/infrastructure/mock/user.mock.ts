@@ -78,3 +78,13 @@ export const MOCK_UPDATED_USER = {
     actions: ['create', 'read', 'update', 'delete']
   }
 };
+
+export const MOCK_INVALID_USER = {
+  name: 'NA',
+  email: 'test.gmail.com',
+  phone: 1,
+  company: 'test company',
+  password: 'INVALID_PASSWORD',
+  country_code: 'INVALID',
+  role: 'invalid'
+};

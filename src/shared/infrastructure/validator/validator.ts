@@ -29,7 +29,8 @@ namespace validate {
     return Array.isArray(value);
   }
   export function isCountryCode(value: string): boolean {
-    return validator.isISO31661Alpha2(value);
+    let result = validator.isISO31661Alpha2(value);
+    return result;
   }
   export function isCity(value: string): boolean {
     return validator.isAlpha(value);
