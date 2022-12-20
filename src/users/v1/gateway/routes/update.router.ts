@@ -40,7 +40,7 @@ export class UserPutRouter {
     try {
       // Get Params
       const { id } = ctx.validatedParams;
-      const { name, email, phone, company } = ctx.validatedBody;
+      const { name, email, phone, company, country_code } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
       await controller.updateUser({
@@ -48,7 +48,8 @@ export class UserPutRouter {
         name,
         email,
         phone,
-        company
+        company,
+        country_code
       });
       // Successful response
       ctx.body = { result: 'Updated' };
@@ -65,11 +66,15 @@ export class UserPutRouter {
   @body({
     password: {
       type: 'string',
+      required: false
+    },
+    new_password: {
+      type: 'string',
       required: true
     }
   })
   @header({
-    recover_token: {
+    authorization: {
       type: 'string',
       required: true
     }
@@ -78,12 +83,16 @@ export class UserPutRouter {
   static async updateUserPassword(ctx: Context) {
     try {
       // Get Token
-      const { recover_token } = ctx.request.header;
+      const { authorization } = ctx.request.header;
       // Get Params
-      const { password } = ctx.validatedBody;
+      const { password, new_password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUserPassword({ recover_token, password });
+      await controller.updateUserPassword({
+        authorization,
+        password,
+        new_password
+      });
       // Successful response
       ctx.body = { result: 'Password Updated' };
     } catch (error: any) {

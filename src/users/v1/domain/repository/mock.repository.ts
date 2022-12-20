@@ -1,73 +1,103 @@
 import { injectable } from 'inversify';
-import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
+import {
+  UserRepository,
+  userTypes,
+  UserId,
+  UserPassword
+} from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
-import { UserId } from '@/users/v1/domain/user.id';
+import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
+import ObjectUtils from '@/shared/infrastructure/utils/object';
 
+type UserMock = {
+  uuid: string;
+  name: string;
+  email: string;
+  phone: number;
+  company: string;
+  password: string;
+  country_code: string;
+  roles: {
+    role: string | undefined;
+    privileges: privilege | undefined;
+  }[];
+};
 @injectable()
 export class MockUserRepository implements UserRepository {
-  constructor(private users: User[]) {}
+  constructor(private mockUsers: UserMock[]) {}
   async save(user: User): Promise<void> {
-    await UserModel.create({
+    this.mockUsers.push(this.userToMock(user, true));
+  }
+  async findBy(params: string, value: userTypes): Promise<User | undefined> {
+    const user = this.mockUsers.find(
+      (user: any) => user[params] === value.valueOf()
+    );
+    if (user) return this.fromPrimitives(user);
+  }
+  async updatePassword(id: UserId, password: UserPassword): Promise<boolean> {
+    let result = false;
+    this.mockUsers.forEach((user: UserMock) => {
+      if (user.uuid === id.valueOf()) {
+        user.password = password.valueOf(true);
+        result = true;
+      }
+    });
+    return result;
+  }
+  async update(user: User): Promise<boolean> {
+    const result = true;
+    this.mockUsers = this.mockUsers.map((userMock: UserMock) => {
+      if (userMock.uuid === user.getId().valueOf()) {
+        const updateUser = this.userToMock(user);
+        return (userMock = { ...userMock, ...updateUser });
+      }
+      return userMock;
+    });
+    return result;
+  }
+  async delete(id: UserId): Promise<boolean> {
+    const index: number = this.mockUsers.findIndex(
+      (user: UserMock) => user.uuid === id.valueOf()
+    );
+    if (index === -1) {
+      return false;
+    }
+    const t = this.mockUsers.splice(index, 1);
+    return this.mockUsers.find((user: UserMock) => user.uuid === id.valueOf())
+      ? false
+      : true;
+  }
+  async findById(id: UserId): Promise<User | null> {
+    const result: UserMock | undefined = this.mockUsers.find(
+      (user: UserMock) => user.uuid === id.valueOf()
+    );
+    return result ? this.fromPrimitives(result) : null;
+  }
+  async findAll(): Promise<User[]> {
+    return this.mockUsers.map((mockUser) => this.fromPrimitives(mockUser));
+  }
+
+  private userToMock(user: User, cipher: boolean = false): UserMock {
+    const result: UserMock = {
       uuid: user.getId().valueOf(),
       name: user.getName().valueOf(),
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf(),
+      password: user.getPassword().valueOf(cipher),
+      country_code: user.getCountryCode().valueOf(),
       roles: [
         {
           role: user.getRole()?.valueOf(),
-          privileges: [user.getPrivilage()?.valueOf()]
+          privileges: user.getPrivilage()?.valueOf()
         }
       ]
-    });
+    };
+    ObjectUtils.sanitizeObject(result);
+    return result;
   }
 
-  async update(user: User): Promise<boolean> {
-    const result: any = await UserModel.updateOne(
-      {
-        uuid: user.getId().valueOf()
-      },
-      {
-        name: user.getName().valueOf(),
-        email: user.getEmail().valueOf(),
-        phone: user.getPhone().valueOf(),
-        company: user.getCompany().valueOf(),
-        password: user.getPassword().valueOf(),
-        token: user.getToken()?.valueOf()
-      }
-    );
-    return result.modifiedCount > 0;
-  }
-
-  async delete(id: UserId): Promise<boolean> {
-    const result: any = await UserModel.deleteOne({
-      uuid: id.valueOf()
-    });
-    return result.deletedCount > 0;
-  }
-
-  async findById(id: UserId): Promise<User | null> {
-    const result: Object = await UserModel.findOne({
-      uuid: id.valueOf()
-    }).lean();
-    return result ? this.fromPrimitives(result) : null;
-  }
-
-  async findBy(params: string, value: userTypes): Promise<User | null> {
-    const result: Object = await UserModel.findOne({
-      [params]: value.valueOf()
-    }).lean();
-    return result ? this.fromPrimitives(result) : null;
-  }
-
-  async findAll(): Promise<User[]> {
-    const result: Object[] = await UserModel.find({}).lean();
-    return result.map(this.fromPrimitives);
-  }
-
-  private fromPrimitives(result: any): User {
+  private fromPrimitives(result: UserMock): User {
     return User.fromPrimitives(
       result.uuid,
       result.name,
@@ -75,8 +105,8 @@ export class MockUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
-      result.role,
-      result.token
+      result.country_code,
+      result.roles[0].role || 'NA' // TODO: fix this
     );
   }
 }

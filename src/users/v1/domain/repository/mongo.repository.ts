@@ -1,8 +1,12 @@
 import { injectable } from 'inversify';
 import { UserModel } from '@/users/v1/infrastructure/model/user.mongoose';
-import { UserRepository, userTypes } from '@/users/v1/domain/user.repository';
+import {
+  UserRepository,
+  userTypes,
+  UserId,
+  UserPassword
+} from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
-import { UserId } from '@/users/v1/domain/user.id';
 
 @injectable()
 export class MongoUserRepository implements UserRepository {
@@ -13,7 +17,8 @@ export class MongoUserRepository implements UserRepository {
       email: user.getEmail().valueOf(),
       phone: user.getPhone().valueOf(),
       company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf(),
+      password: user.getPassword().valueOf(true),
+      country_code: user.getCountryCode().valueOf(),
       roles: [
         {
           role: user.getRole()?.valueOf(),
@@ -32,9 +37,19 @@ export class MongoUserRepository implements UserRepository {
         name: user.getName().valueOf(),
         email: user.getEmail().valueOf(),
         phone: user.getPhone().valueOf(),
-        company: user.getCompany().valueOf(),
-        password: user.getPassword().valueOf(),
-        token: user.getToken()?.valueOf()
+        company: user.getCompany().valueOf()
+      }
+    );
+    return result.modifiedCount > 0;
+  }
+
+  async updatePassword(id: UserId, password: UserPassword): Promise<boolean> {
+    const result: any = await UserModel.updateOne(
+      {
+        uuid: id.valueOf()
+      },
+      {
+        password: password.valueOf(true)
       }
     );
     return result.modifiedCount > 0;
@@ -76,8 +91,8 @@ export class MongoUserRepository implements UserRepository {
       result.phone,
       result.company,
       result.password,
-      result.roles[0].role, // TODO: fix this
-      result.token
+      result.country_code,
+      result.roles[0].role // TODO: fix this
     );
   }
 }

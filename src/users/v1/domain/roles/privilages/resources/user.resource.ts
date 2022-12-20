@@ -1,6 +1,7 @@
 import compare from '@/shared/infrastructure/utils/compare';
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 
 type RESOURCES = 'users' | 'auth' | 'privilege';
 export class UserResource implements ValueObject<Array<string>> {
@@ -22,8 +23,8 @@ export class UserResource implements ValueObject<Array<string>> {
   }
 
   validate(values: Array<string>): void {
-    if (!validate.isArray(values)) {
-      throw new Error('User Resources are invalid');
+    if (values && !validate.isArray(values)) {
+      throw new UserInvalid('resources');
     }
   }
 

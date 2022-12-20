@@ -7,9 +7,10 @@ import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserToken } from '@/users/v1/domain/user.token';
 import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
-import { UserRole } from './roles/user.role';
+import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserCountryCode } from '@/users/v1/domain/user.country.code';
+import { DomainError } from '@/shared/infrastructure/domain.error';
 
 export class User extends Entity {
   constructor(
@@ -19,9 +20,9 @@ export class User extends Entity {
     private phone: UserPhone,
     private company: UserCompany,
     private password: UserPassword,
+    private country_code: UserCountryCode,
     private role?: UserRole,
-    private privilage?: UserPrivilage,
-    private token?: UserToken
+    private privilage?: UserPrivilage
   ) {
     super();
     this.id = id;
@@ -30,9 +31,9 @@ export class User extends Entity {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.country_code = country_code;
     this.role = role;
     this.privilage = privilage;
-    this.token = token;
   }
 
   static create(
@@ -42,9 +43,9 @@ export class User extends Entity {
     phone: UserPhone,
     company: UserCompany,
     password: UserPassword,
+    country_code: UserCountryCode,
     role: UserRole,
-    privilage: UserPrivilage,
-    token: UserToken
+    privilage: UserPrivilage
   ): User {
     const user = new User(
       id,
@@ -53,9 +54,9 @@ export class User extends Entity {
       phone,
       company,
       password,
+      country_code,
       role,
-      privilage,
-      token
+      privilage
     );
 
     user.record(
@@ -66,8 +67,8 @@ export class User extends Entity {
         phone.valueOf(),
         company.valueOf(),
         password.valueOf(),
-        privilage.valueOf(),
-        token.valueOf()
+        country_code.valueOf(),
+        privilage.valueOf()
       )
     );
 
@@ -81,8 +82,8 @@ export class User extends Entity {
     phone: number,
     company: string,
     password: string,
-    role: string,
-    token: string
+    countryCode: string,
+    role: string
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
@@ -92,7 +93,7 @@ export class User extends Entity {
     const userPassword = new UserPassword(password);
     const userRole = new UserRole(role);
     const userPrivilage = new UserPrivilage(role);
-    const userToken = new UserToken(token);
+    const userCountryCode = new UserCountryCode(countryCode);
     return new User(
       userId,
       userName,
@@ -100,14 +101,14 @@ export class User extends Entity {
       userPhone,
       userCompany,
       userPassword,
+      userCountryCode,
       userRole,
-      userPrivilage,
-      userToken
+      userPrivilage
     );
   }
 
   toPrimitives() {
-    throw new Error('Method not implemented.');
+    throw new DomainError('Method not implemented.');
   }
 
   getId(): UserId {
@@ -139,8 +140,7 @@ export class User extends Entity {
   getPrivilage(): UserPrivilage | undefined {
     return this.privilage;
   }
-
-  getToken(): UserToken | undefined {
-    return this.token;
+  getCountryCode(): UserCountryCode {
+    return this.country_code;
   }
 }

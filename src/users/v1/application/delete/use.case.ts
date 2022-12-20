@@ -21,7 +21,6 @@ export class DeleteUserUseCase implements UseCase {
     const userId = new UserId(params.userId.valueOf());
 
     const result = await this.userRepository.delete(userId);
-
     if (!result) {
       throw new UserNotFound(userId.valueOf());
     }

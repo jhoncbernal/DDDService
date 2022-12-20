@@ -11,7 +11,6 @@ describe('Validate Class Unit Test', () => {
     const myPlaintextPassword = 'String123!';
     const someOtherPlaintextPassword = 'not_bacon';
     const hash = crypt.genHash(myPlaintextPassword);
-    console.info(hash);
     expect(crypt.compare(myPlaintextPassword, hash)).toBe(true);
     expect(crypt.compare(someOtherPlaintextPassword, hash)).toBe(false);
   });

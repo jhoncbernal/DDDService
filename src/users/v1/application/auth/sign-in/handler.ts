@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/users/v1/infrastructure/d-injection/types';
-import { UserLoginQuery } from '@/users/v1/application/auth/sing-in/query';
-import { LoginUseCase } from '@/users/v1/application/auth/sing-in/use.case';
+import { UserLoginQuery } from '@/users/v1/application/auth/sign-in/query';
+import { LoginUseCase } from '@/users/v1/application/auth/sign-in/use.case';
 import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { Query } from '@/shared/domain/cqrs/query-bus/query';

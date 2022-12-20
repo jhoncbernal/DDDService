@@ -4,8 +4,8 @@ namespace validate {
   export function isEmail(email: string) {
     return validator.isEmail(email);
   }
-  export function isPhone(phone: string): boolean {
-    return validator.isMobilePhone(phone);
+  export function isPhone(phone: string, country: any = 'any'): boolean {
+    return validator.isMobilePhone(phone, country);
   }
   export function isDate(date: Date): boolean {
     return validator.isDate(date.toString());
@@ -27,6 +27,16 @@ namespace validate {
   }
   export function isArray(value: any): boolean {
     return Array.isArray(value);
+  }
+  export function isCountryCode(value: string): boolean {
+    let result = validator.isISO31661Alpha2(value);
+    return result;
+  }
+  export function isCity(value: string): boolean {
+    return validator.isAlpha(value);
+  }
+  export function isObject(value: any): boolean {
+    return typeof value === 'object';
   }
 }
 export default validate;

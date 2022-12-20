@@ -32,17 +32,6 @@ export const MONGO_DB = {
   password: env.MONGODB_PASSWORD
 };
 
-export const EVENT_BUS_RABBITMQ = {
-  hostname: env.EVENT_BUS_RABBITMQ_HOSTNAME,
-  port: env.EVENT_BUS_RABBITMQ_PORT,
-  username: env.EVENT_BUS_RABBITMQ_USERNAME,
-  password: env.EVENT_BUS_RABBITMQ_PASSWORD,
-  queue: env.EVENT_BUS_RABBITMQ_QUEUE,
-  exchange: env.EVENT_BUS_RABBITMQ_EXCHANGE,
-  retries: env.EVENT_BUS_RABBITMQ_RETRIES,
-  interval: env.EVENT_BUS_RABBITMQ_INTERVAL
-};
-
 export const TTL = {
   day: 86400,
   week: 604800,
@@ -51,16 +40,6 @@ export const TTL = {
   trimester: 7776000,
   semester: 15552000,
   year: 31104000
-};
-
-export const CREDENTIALS_SERVICE = {
-  url: env.CREDENTIALS_SERVICE_URL,
-  token: env.CREDENTIALS_SERVICE_TOKEN
-};
-
-export const CONVERTER_SERVICE = {
-  url: env.CONVERTER_SERVICE_URL,
-  method: 'POST'
 };
 
 export const AIRBRAKE = {
@@ -72,16 +51,7 @@ export const CACHE = {
   isSecure: env.REDIS_IS_SECURE ?? false,
   hostname: env.REDIS_HOSTNAME,
   port: env.REDIS_PORT,
-  password: env.REDIS_PASSWORD,
-  database: {
-    credentials: env.REDIS_DB_CREDENTIALS,
-    cancellations: env.REDIS_DB_CANCELLATIONS,
-    labels: env.REDIS_DB_LABELS,
-    rates: env.REDIS_DB_RATES,
-    pickup: env.REDIS_DB_PICKUP,
-    tracking: env.REDIS_DB_TRACKING,
-    branchOffices: env.REDIS_DB_BRANCH_OFFICES
-  }
+  password: env.REDIS_PASSWORD
 };
 
 export const TEST = {
@@ -91,16 +61,6 @@ export const TEST = {
 
 export const PROCESS = {
   isMaster: !env.INSTANCE_ID || env.INSTANCE_ID === '0'
-};
-
-export const KAFKA = {
-  brokers: env.KAFKA_BROKERS,
-  prefix: env.KAFKA_PREFIX,
-  groupId: `${env.KAFKA_PREFIX}${env.KAFKA_GROUP_ID}`,
-  trustedCert: env.KAFKA_TRUSTED_CERT,
-  clientCert: env.KAFKA_CLIENT_CERT,
-  clientCertKey: env.KAFKA_CLIENT_CERT_KEY,
-  port: env.KAFKA_PORT
 };
 
 export const RATE_LIMIT = {
@@ -115,25 +75,9 @@ export const DATADOG = {
   port: env.DD_PORT
 };
 
-export const NEWRELIC = {
-  licenseKey: env.NEW_RELIC_KEY
-};
-
-export const GCP = {
-  topic: env.GCP_TOPIC,
-  subscription: env.GCP_SUBSCRIPTION,
-  projectId: env.GCP_PROJECT_ID,
-  type: env.GCP_TYPE,
-  privateKey: env.GCP_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  clientEmail: env.GCP_CLIENT_EMAIL,
-  clientId: env.GCP_CLIENT_ID
-};
-
 export const EVENT_BUSES = {
   selected: env.EVENT_BUS_SELECTED,
   buses: {
-    kafka: env.KAFKA_EVENT_BUS,
-    pubSub: env.PUBSUB_EVENT_BUS,
     inMemory: env.IN_MEMORY_EVENT_BUS
   }
 };

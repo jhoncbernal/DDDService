@@ -1,6 +1,6 @@
 import { DomainEvent } from '@/shared/infrastructure/event-bus/domain.event';
 import { CreateUserDomainEventBody } from '@/users/v1/infrastructure/user.created.domain.event';
-import { privilege } from './roles/privilages/user.privilage';
+import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
 
 export class UserCreatedDomainEvent extends DomainEvent {
   static readonly EVENT_NAME = 'user.created';
@@ -12,8 +12,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
   private phone: number;
   private company: string;
   private password: string;
+  private country_code: string;
   private privilage: privilege;
-  private token: string;
 
   constructor(
     id: string,
@@ -22,8 +22,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
     phone: number,
     company: string,
     password: string,
-    privilage: privilege,
-    token: string
+    country_code: string,
+    privilage: privilege
   ) {
     super(
       UserCreatedDomainEvent.EVENT_NAME,
@@ -36,8 +36,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
     this.phone = phone;
     this.company = company;
     this.password = password;
+    this.country_code = country_code;
     this.privilage = privilage;
-    this.token = token;
   }
 
   getId(): string {
@@ -64,17 +64,25 @@ export class UserCreatedDomainEvent extends DomainEvent {
     return this.password;
   }
 
+  getCountryCode(): string {
+    return this.country_code;
+  }
+
   getPrivilage(): privilege {
     return this.privilage;
   }
 
-  getToken(): string {
-    return this.token;
-  }
-
   toPrimitive(): CreateUserDomainEventBody {
-    const { id, name, email, phone, company, password, privilage, token } =
-      this;
+    const {
+      id,
+      name,
+      email,
+      phone,
+      company,
+      password,
+      country_code,
+      privilage
+    } = this;
     return {
       id,
       name,
@@ -82,8 +90,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
       phone,
       company,
       password,
+      country_code,
       privilage,
-      token,
       eventName: UserCreatedDomainEvent.EVENT_NAME
     };
   }
@@ -99,8 +107,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
       body.phone,
       body.company,
       body.password,
-      body.privilage,
-      body.token
+      body.country_code,
+      body.privilage
     );
   }
 }

@@ -28,8 +28,8 @@ export class UserDeleteRouter {
       const controller = AppContainer.resolve(UserDeleteController);
       await controller.deleteUser({ id });
       // Successful response
-      ctx.status = 204;
       ctx.body = { result: 'Deleted' };
+      //ctx.status = 204;
     } catch (error: any) {
       // Error response
       ctx.throw(error);

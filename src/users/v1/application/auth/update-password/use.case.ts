@@ -6,13 +6,15 @@ import { UserRepository } from '@/users/v1/domain/user.repository';
 import { UserNotFound } from '@/users/v1/domain/exceptions/not.found';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserEmail } from '@/users/v1/domain/user.email';
-import { UserToken } from '@/users/v1/domain/user.token';
 import { User } from '@/users/v1/domain/user';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
+import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
+import validate from '@/shared/infrastructure/validator/validator';
 
 type Params = {
   userPassword: UserPassword;
-  userToken: UserToken;
+  userNewPassword: UserPassword;
+  userToken: string;
 };
 
 @provide(TYPES.UpdateUserPasswordUseCase)
@@ -26,21 +28,32 @@ export class UpdateUserPasswordUseCase implements UseCase {
   }
 
   async main(params: Params) {
-    const decode = this.jwt.decode(params.userToken.valueOf());
-    if (!decode) throw new Error('Invalid token');
+    try {
+      // validate token
+      const decode: any = this.jwt.verify(params.userToken.valueOf());
+      // get user by email
+      const userEmail = new UserEmail(decode?.email);
+      let user: User | null | undefined = await this.userRepository.findBy(
+        'email',
+        userEmail
+      );
+      if (!user) throw new UserNotFound(userEmail.valueOf());
+      // validate password
+      const invalidPassword = !params.userPassword.equals(user.getPassword());
+      if (invalidPassword && !validate.isEmpty(params.userPassword.valueOf())) {
+        throw new UserInvalid('password');
+      }
+      if (params.userNewPassword.equals(user.getPassword())) {
+        throw new Error('You cannot use the same password');
+      }
 
-    const userEmail = new UserEmail(decode.email);
-
-    let user: User | null = await this.userRepository.findBy(
-      'email',
-      userEmail
-    );
-    if (!user) throw new UserNotFound(userEmail.valueOf());
-
-    if (!user.getToken()?.equals(params.userToken)) {
-      throw new Error('Invalid token');
+      // update password
+      return await this.userRepository.updatePassword(
+        user.getId(),
+        params.userNewPassword
+      );
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-    user.getToken()?.clear();
-    await this.userRepository.update(user);
   }
 }
