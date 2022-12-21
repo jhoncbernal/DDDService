@@ -1,19 +1,19 @@
 // CQRS command (from params)
 import { Query } from '@/shared/domain/cqrs/query-bus/query';
-export class UserLoginQuery implements Query {
-  private email: string;
-  private password: string;
+import { SignInDto } from '@/users/v1/gateway/dto/sign-in.dto';
 
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
+export class UserLoginQuery implements Query {
+  private signIn: SignInDto;
+
+  constructor(signIn: SignInDto) {
+    this.signIn = signIn;
   }
 
   getEmail(): string {
-    return this.email;
+    return this.signIn.email;
   }
 
   getPassword(): string {
-    return this.password;
+    return this.signIn.password;
   }
 }

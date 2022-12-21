@@ -12,6 +12,7 @@ import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserPutController } from '@/users/v1/gateway/controllers/update.controller';
 import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { header } from 'koa-swagger-decorator';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
 
 export class UserPutRouter {
   @request('PUT', '/api/v1/users/{id}')
@@ -43,14 +44,14 @@ export class UserPutRouter {
       const { name, email, phone, company, country_code } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUser({
-        id,
+      const user = UserDto.fromJSON({
         name,
         email,
         phone,
         company,
         country_code
       });
+      await controller.updateUser(id, user);
       // Successful response
       ctx.body = { result: 'Updated' };
     } catch (error: any) {

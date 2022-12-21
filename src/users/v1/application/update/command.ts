@@ -1,28 +1,14 @@
 // CQRS command (from params)
 import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { UserDto } from '../../gateway/dto/user.dto';
 
 export class UserUpdateCommand implements Command {
   private id: string;
-  private name: string;
-  private email: string;
-  private phone: number;
-  private company: string;
-  private country_code: string;
+  private user: UserDto;
 
-  constructor(
-    id: string,
-    name: string,
-    email: string,
-    phone: number,
-    company: string,
-    country_code: string
-  ) {
+  constructor(id: string, user: UserDto) {
     this.id = id;
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
-    this.company = company;
-    this.country_code = country_code;
+    this.user = user;
   }
 
   getId(): string {
@@ -30,21 +16,21 @@ export class UserUpdateCommand implements Command {
   }
 
   getName(): string {
-    return this.name;
+    return this.user.name;
   }
 
   getEmail(): string {
-    return this.email;
+    return this.user.email;
   }
 
   getPhone(): number {
-    return this.phone;
+    return this.user.phone;
   }
 
   getCompany(): string {
-    return this.company;
+    return this.user.company;
   }
   getCountryCode(): string {
-    return this.country_code;
+    return this.user.country_code;
   }
 }

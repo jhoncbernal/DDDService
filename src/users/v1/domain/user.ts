@@ -108,7 +108,17 @@ export class User extends Entity {
   }
 
   toPrimitives() {
-    throw new DomainError('Method not implemented.');
+    return {
+      id: this.id.valueOf(),
+      name: this.name.valueOf(),
+      email: this.email.valueOf(),
+      phone: this.phone.valueOf(),
+      company: this.company.valueOf(),
+      password: this.password.valueOf(),
+      country_code: this.country_code.valueOf(),
+      role: this.role?.valueOf(),
+      privilage: this.privilage?.valueOf()
+    };
   }
 
   getId(): UserId {
