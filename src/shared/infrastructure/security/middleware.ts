@@ -19,7 +19,7 @@ export class MiddlewareRouter implements SecurityMiddleware {
    */
   async isAuth(ctx: Ctx, next: Function): Promise<void> {
     try {
-      const resource: string = ctx.request.url.split('/')[3];
+      const resource: string = ctx.request.url.split('/')[3].split('?')[0];
       const subResource: string = ctx.request.url.split('/')[4];
       const token: string = ctx.request.header.authorization;
       const action: string = ctx.request.method;

@@ -6,7 +6,8 @@ import {
   summary,
   tags,
   Context,
-  middlewares
+  middlewares,
+  query
 } from '@/shared/infrastructure/framework/decorators';
 import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { UserGetController } from '@/users/v1/gateway/controllers/find.controller';
@@ -40,6 +41,10 @@ export class UserGetRouter {
 
   @request('GET', '/api/v1/users')
   @summary('Get all the users')
+  @query({
+    page: { type: 'number', required: false },
+    limit: { type: 'number', required: false }
+  })
   @tags(['Users'])
   @middlewares([new MiddlewareRouter().error, new MiddlewareRouter().isAuth])
   @responses({
@@ -49,9 +54,12 @@ export class UserGetRouter {
   static async getAllUsers(ctx: Context) {
     try {
       // Get Controller
-      //const { page, limit } = ctx.validatedParams;
+      const { page, limit } = ctx.request.query;
       const controller = AppContainer.resolve(UserGetController);
-      const res = await controller.getAllUsers({ page: 10, limit: 1 });
+      const res = await controller.getAllUsers({
+        page: Number(page) || 1,
+        limit: Number(limit) || 10
+      });
       // Successful response
       ctx.body = res;
     } catch (error: any) {

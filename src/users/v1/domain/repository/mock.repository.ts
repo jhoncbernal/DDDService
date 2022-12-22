@@ -73,8 +73,12 @@ export class MockUserRepository implements UserRepository {
     );
     return result ? this.fromPrimitives(result) : null;
   }
-  async findAll(): Promise<User[]> {
-    return this.mockUsers.map((mockUser) => this.fromPrimitives(mockUser));
+  async findAll(pageSize: number, pageNumber: number): Promise<User[]> {
+    const startIndex: number = (pageNumber - 1) * pageSize;
+    const endIndex: number = startIndex + pageSize;
+    return this.mockUsers
+      .map((mockUser) => this.fromPrimitives(mockUser))
+      .slice(startIndex, endIndex);
   }
 
   private userToMock(user: User, cipher: boolean = false): UserMock {

@@ -78,8 +78,12 @@ export class MongoUserRepository implements UserRepository {
     return result ? this.fromPrimitives(result) : null;
   }
 
-  async findAll(): Promise<User[]> {
-    const result: Object[] = await UserModel.find({}).lean();
+  async findAll(pageSize: number, pageNumber: number): Promise<User[]> {
+    const skips = pageSize * (pageNumber - 1);
+    const result: Object[] = await UserModel.find({})
+      .skip(skips)
+      .limit(pageSize)
+      .lean();
     return result.map(this.fromPrimitives);
   }
 

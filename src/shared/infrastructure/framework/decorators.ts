@@ -7,7 +7,9 @@ import {
   tags,
   middlewares,
   Context,
-  SwaggerRouter
+  SwaggerRouter,
+  query,
+  queryAll
 } from '@/shared/infrastructure/framework/koa/decorators';
 export {
   path,
@@ -18,5 +20,7 @@ export {
   tags,
   middlewares,
   Context,
-  SwaggerRouter
+  SwaggerRouter,
+  query,
+  queryAll
 };

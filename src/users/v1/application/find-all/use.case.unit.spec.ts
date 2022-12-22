@@ -13,8 +13,8 @@ describe('find-all-users', () => {
   });
 
   it('should find all users', async () => {
-    await userFindAll.main();
-    const results: User[] = await mockUserRepository.findAll();
+    await userFindAll.main({ page: 1, limit: 2 });
+    const results: User[] = await mockUserRepository.findAll(2, 1);
     results.forEach((result, index) => {
       expect(result).toBeDefined();
       expect(result?.getName().valueOf()).toEqual(MOCK_USERS[index].name);
@@ -32,5 +32,27 @@ describe('find-all-users', () => {
         MOCK_USERS[index].roles[0].privileges
       );
     });
+  });
+
+  it('should find all users on 1 pagination and limit 1', async () => {
+    await userFindAll.main({ page: 1, limit: 1 });
+    const results: User[] = await mockUserRepository.findAll(1, 1);
+    const index = 0;
+    const result = results[index];
+    expect(result).toBeDefined();
+    expect(result?.getName().valueOf()).toEqual(MOCK_USERS[index].name);
+    expect(result?.getEmail().valueOf()).toEqual(MOCK_USERS[index].email);
+    expect(result?.getPhone().valueOf()).toEqual(MOCK_USERS[index].phone);
+    expect(result?.getCompany().valueOf()).toEqual(MOCK_USERS[index].company);
+    expect(result?.getPassword().valueOf().length).toEqual(60);
+    expect(result?.getCountryCode().valueOf()).toEqual(
+      MOCK_USERS[index].country_code
+    );
+    expect(result?.getRole()?.valueOf()).toEqual(
+      MOCK_USERS[index].roles[0].role
+    );
+    expect(result?.getPrivilage()?.valueOf()).toEqual(
+      MOCK_USERS[index].roles[0].privileges
+    );
   });
 });

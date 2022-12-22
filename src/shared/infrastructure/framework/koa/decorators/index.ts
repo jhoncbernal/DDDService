@@ -7,7 +7,9 @@ import {
   body as koaBody,
   middlewares as koaMiddlewares,
   Context as KoaContext,
-  SwaggerRouter
+  SwaggerRouter,
+  query as koaQuery,
+  queryAll as koaQueryAll
 } from 'koa-swagger-decorator';
 export function request(method: string, path: string) {
   return koaRequest(method, path);
@@ -29,6 +31,12 @@ export function body(body: any) {
 }
 export function middlewares(middlewares: any) {
   return koaMiddlewares(middlewares);
+}
+export function query(query: any) {
+  return koaQuery(query);
+}
+export function queryAll(query: any) {
+  return koaQueryAll(query);
 }
 export type Context = KoaContext;
 export { SwaggerRouter };
