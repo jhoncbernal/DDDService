@@ -13,6 +13,7 @@ import { UserPutController } from '@/users/v1/gateway/controllers/update.control
 import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { header } from 'koa-swagger-decorator';
 import { UserDto } from '@/users/v1/gateway/dto/user.dto';
+import { UpdatePasswordDto } from '@/users/v1/gateway/dto/update-password.dto';
 
 export class UserPutRouter {
   @request('PUT', '/api/v1/users/{id}')
@@ -89,11 +90,9 @@ export class UserPutRouter {
       const { password, new_password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUserPassword({
-        authorization,
-        password,
-        new_password
-      });
+      await controller.updateUserPassword(
+        UpdatePasswordDto.fromJSON({ password, new_password, authorization })
+      );
       // Successful response
       ctx.body = { result: 'Password Updated' };
     } catch (error: any) {

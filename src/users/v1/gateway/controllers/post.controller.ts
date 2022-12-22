@@ -6,7 +6,7 @@ import { BaseController } from '@/shared/infrastructure/controller/base.controll
 import { Logger } from '@/shared/domain/logger/logger';
 import { UserLoginQuery } from '@/users/v1/application/auth/sign-in/query';
 import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
-import { UserDto } from '../dto/user.dto';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
 import { SignInDto } from '@/users/v1/gateway/dto/sign-in.dto';
 
 @injectable()

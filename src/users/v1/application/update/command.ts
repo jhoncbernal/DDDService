@@ -1,6 +1,6 @@
 // CQRS command (from params)
 import { Command } from '@/shared/domain/cqrs/command-bus/command';
-import { UserDto } from '../../gateway/dto/user.dto';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
 
 export class UserUpdateCommand implements Command {
   private id: string;

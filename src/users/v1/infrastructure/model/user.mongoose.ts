@@ -5,13 +5,15 @@ const userSchema = new Schema(
   {
     uuid: {
       type: String,
-      default: null
+      default: null,
+      unique: true
     },
     email: {
       type: String,
       required: [true, 'What is your email?'],
       lowercase: true,
-      trim: true
+      trim: true,
+      unique: true
     },
     name: { type: String, required: [true, 'What is your name?'] },
     phone: {
