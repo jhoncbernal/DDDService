@@ -38,5 +38,15 @@ export function query(query: any) {
 export function queryAll(query: any) {
   return koaQueryAll(query);
 }
-export type Context = KoaContext;
+type UserInfo = {
+  userInfo: {
+    email: string;
+    deviceId: string;
+    privilages: {
+      resources: string[];
+      actions: string[];
+    };
+  };
+};
+export type Context = KoaContext & UserInfo;
 export { SwaggerRouter };

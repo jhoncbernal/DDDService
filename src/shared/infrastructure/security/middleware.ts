@@ -17,11 +17,11 @@ export class MiddlewareRouter implements SecurityMiddleware {
    * @param ctx
    * @param next
    */
-  async isAuth(ctx: Ctx, next: Function): Promise<void> {
+  async isAuth(ctx: Context, next: Function): Promise<void> {
     try {
       const resource: string = ctx.request.url.split('/')[3].split('?')[0];
       const subResource: string = ctx.request.url.split('/')[4];
-      const token: string = ctx.request.header.authorization;
+      const token: string | undefined = ctx.request.header.authorization;
       const action: string = ctx.request.method;
 
       if (token) {
@@ -42,7 +42,7 @@ export class MiddlewareRouter implements SecurityMiddleware {
           if (!validateResources || !validateActions) {
             ctx.status = 401;
           } else {
-            ctx.req.user = decoded;
+            ctx.userInfo = { ...decoded, resource, actions };
             await next();
           }
         }

@@ -5,6 +5,9 @@ import { CommandHandler } from '@/shared/domain/cqrs/command-bus/command.handler
 import { UserUpdatePasswordCommand } from '@/users/v1/application/auth/update-password/command';
 import { UpdateUserPasswordUseCase } from '@/users/v1/application/auth/update-password/use.case';
 import { UserPassword } from '@/users/v1/domain/user.password';
+import { UserEmail } from '@/users/v1/domain/user.email';
+import { UserResource } from '@/users/v1/domain/roles/privilages/resources/user.resource';
+import { UserAction } from '@/users/v1/domain/roles/privilages/actions/user.action';
 
 @injectable()
 export class UpdateUserPasswordHandler
@@ -18,14 +21,14 @@ export class UpdateUserPasswordHandler
   subscribedTo = (): Command => UserUpdatePasswordCommand;
 
   async handle(command: UserUpdatePasswordCommand): Promise<void> {
-    const userToken = command.getToken();
     const userPassword = new UserPassword(command.getPassword());
     const userNewPassword = new UserPassword(command.getNewPassword());
+    const userEmail = new UserEmail(command.getEmail());
 
     await this.updateUserPasswordUseCase.main({
       userPassword,
       userNewPassword,
-      userToken
+      userEmail
     });
   }
 }

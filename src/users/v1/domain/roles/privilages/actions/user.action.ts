@@ -3,8 +3,8 @@ import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 type ACTIONS = 'create' | 'read' | 'update' | 'delete';
-
-export class UserAction implements ValueObject<Array<string>> {
+type ArrayOrString = string | string[];
+export class UserAction implements ValueObject<Array<ArrayOrString>> {
   private ROLE_ACTIONS: {
     [key in string]: Array<ACTIONS>;
   } = {
@@ -14,8 +14,12 @@ export class UserAction implements ValueObject<Array<string>> {
     superAdmin: ['create', 'read', 'update', 'delete'],
     custom: ['create', 'read', 'update', 'delete']
   };
-  constructor(private value: string) {
-    this.validate(this.ROLE_ACTIONS[value]);
+  constructor(private value: ArrayOrString) {
+    if (typeof value === 'string') {
+      this.validate(this.ROLE_ACTIONS[value]);
+    } else {
+      this.validate(value);
+    }
   }
 
   fromPrimitive(value: string[]): ValueObject<string[]> {
@@ -29,7 +33,10 @@ export class UserAction implements ValueObject<Array<string>> {
   }
 
   valueOf(): Array<string> {
-    return this.ROLE_ACTIONS[this.value];
+    if (typeof this.value === 'string') {
+      return this.ROLE_ACTIONS[this.value];
+    }
+    return this.value;
   }
 
   equals(object: ValueObject<Array<string>>): boolean {

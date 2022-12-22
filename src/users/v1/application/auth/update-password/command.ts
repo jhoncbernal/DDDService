@@ -9,16 +9,16 @@ export class UserUpdatePasswordCommand implements Command {
     this.updatePasswordDto = updatePasswordDto;
   }
 
-  getToken(): string {
-    return this.default(this.updatePasswordDto.authorization);
-  }
-
   getPassword(): string {
     return this.default(this.updatePasswordDto.password);
   }
 
   getNewPassword(): string {
     return this.default(this.updatePasswordDto.new_password);
+  }
+
+  getEmail(): string {
+    return this.updatePasswordDto.user_info.email;
   }
 
   private default(value: StringUndefined): string {

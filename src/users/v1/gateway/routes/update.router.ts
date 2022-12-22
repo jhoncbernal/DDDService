@@ -84,14 +84,14 @@ export class UserPutRouter {
   @responses({ 200: { description: 'Updated' }, 500: { description: 'Error' } })
   static async updateUserPassword(ctx: Context) {
     try {
-      // Get Token
-      const { authorization } = ctx.request.header;
+      // Get User
+      const user_info = ctx.userInfo;
       // Get Params
       const { password, new_password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
       await controller.updateUserPassword(
-        UpdatePasswordDto.fromJSON({ password, new_password, authorization })
+        UpdatePasswordDto.fromJSON({ password, new_password, user_info })
       );
       // Successful response
       ctx.body = { result: 'Password Updated' };
