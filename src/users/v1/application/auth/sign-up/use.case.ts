@@ -15,8 +15,8 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
-import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserPermissions } from '@/users/v1/domain/permissions/user.permission';
+import { UserRole } from '@/users/v1/domain/user.role';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 type Params = {
   userId: UserId;
@@ -27,7 +27,7 @@ type Params = {
   userPassword: UserPassword;
   userCountryCode: UserCountryCode;
   userRole: UserRole;
-  userPrivilage: UserPrivilage;
+  userPermission: UserPermissions;
 };
 
 @provide(TYPES.CreateUserUseCase)
@@ -48,7 +48,7 @@ export class CreateUserUseCase implements UseCase {
       params.userPassword,
       params.userCountryCode,
       params.userRole,
-      params.userPrivilage
+      params.userPermission
     );
 
     await this.userRepository.save(user);

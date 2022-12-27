@@ -1,6 +1,6 @@
 import { DomainEvent } from '@/shared/infrastructure/event-bus/domain.event';
 import { CreateUserDomainEventBody } from '@/users/v1/infrastructure/user.created.domain.event';
-import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
+import { permissions } from '@/users/v1/domain/permissions/user.permission';
 
 export class UserCreatedDomainEvent extends DomainEvent {
   static readonly EVENT_NAME = 'user.created';
@@ -13,7 +13,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
   private company: string;
   private password: string;
   private country_code: string;
-  private privilage: privilege;
+  private permission: permissions;
 
   constructor(
     id: string,
@@ -23,7 +23,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
     company: string,
     password: string,
     country_code: string,
-    privilage: privilege
+    permission: permissions
   ) {
     super(
       UserCreatedDomainEvent.EVENT_NAME,
@@ -37,7 +37,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
     this.company = company;
     this.password = password;
     this.country_code = country_code;
-    this.privilage = privilage;
+    this.permission = permission;
   }
 
   getId(): string {
@@ -68,8 +68,8 @@ export class UserCreatedDomainEvent extends DomainEvent {
     return this.country_code;
   }
 
-  getPrivilage(): privilege {
-    return this.privilage;
+  getPermission(): permissions {
+    return this.permission;
   }
 
   toPrimitive(): CreateUserDomainEventBody {
@@ -81,7 +81,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       company,
       password,
       country_code,
-      privilage
+      permission
     } = this;
     return {
       id,
@@ -91,7 +91,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       company,
       password,
       country_code,
-      privilage,
+      permission,
       eventName: UserCreatedDomainEvent.EVENT_NAME
     };
   }
@@ -108,7 +108,7 @@ export class UserCreatedDomainEvent extends DomainEvent {
       body.company,
       body.password,
       body.country_code,
-      body.privilage
+      body.permission
     );
   }
 }

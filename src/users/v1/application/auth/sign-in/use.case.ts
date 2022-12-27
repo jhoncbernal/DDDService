@@ -44,7 +44,7 @@ export class LoginUseCase implements UseCase {
       {
         email: params.userEmail.valueOf(),
         deviceId: '2122321312',
-        privilages: user.getPrivilage()?.valueOf()
+        permissions: user.getPermissions()?.valueOf()
       },
       '45m'
     );

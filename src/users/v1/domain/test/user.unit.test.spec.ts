@@ -14,7 +14,8 @@ const emptyUser = User.fromPrimitives(
   '',
   '',
   '',
-  ''
+  '',
+  []
 );
 
 describe('User domain Invalid params', () => {
@@ -37,7 +38,8 @@ describe('User domain Invalid params', () => {
         MOCK_INVALID_USER.company,
         MOCK_INVALID_USER.password,
         MOCK_INVALID_USER.country_code,
-        MOCK_INVALID_USER.role
+        MOCK_INVALID_USER.role,
+        MOCK_INVALID_USER.permissions
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(
@@ -55,7 +57,8 @@ describe('User domain Invalid params', () => {
         emptyUser.getCompany().valueOf(),
         emptyUser.getPassword().valueOf(),
         emptyUser.getCountryCode().valueOf(),
-        ''
+        '',
+        []
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(`Invalid user email`);
@@ -72,7 +75,8 @@ describe('User domain Invalid params', () => {
         emptyUser.getCompany().valueOf(),
         emptyUser.getPassword().valueOf(),
         emptyUser.getCountryCode().valueOf(),
-        ''
+        '',
+        []
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(`User phone is invalid`);
@@ -88,7 +92,8 @@ describe('User domain Invalid params', () => {
         MOCK_INVALID_USER.company,
         emptyUser.getPassword().valueOf(),
         emptyUser.getCountryCode().valueOf(),
-        ''
+        '',
+        []
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(`User company is invalid`);
@@ -104,7 +109,8 @@ describe('User domain Invalid params', () => {
         emptyUser.getCompany().valueOf(),
         MOCK_INVALID_USER.password,
         emptyUser.getCountryCode().valueOf(),
-        ''
+        '',
+        []
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(`Password is not strong enough`);
@@ -120,7 +126,8 @@ describe('User domain Invalid params', () => {
         emptyUser.getCompany().valueOf(),
         emptyUser.getPassword().valueOf(),
         MOCK_INVALID_USER.country_code,
-        ''
+        '',
+        []
       );
     } catch (error: any) {
       expect(error.getErrorMessage()).toBe(`Invalid user country`);

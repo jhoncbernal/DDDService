@@ -22,15 +22,11 @@ const userSchema = new Schema(
       length: { minimum: 10, maximum: 15 }
     },
     company: { type: String, required: [true, 'What is your company name?'] },
-    roles: [
+    role: { type: String, required: true },
+    permissions: [
       {
-        role: { type: String, required: true },
-        privileges: [
-          {
-            actions: [{ type: String, required: true, lowercase: false }],
-            resources: [{ type: String, required: true, lowercase: false }]
-          }
-        ]
+        actions: [{ type: String, required: true, lowercase: false }],
+        resource: { type: String, required: true, lowercase: false }
       }
     ],
     referal_code: { type: String, default: null },

@@ -38,5 +38,34 @@ namespace validate {
   export function isObject(value: any): boolean {
     return typeof value === 'object';
   }
+  export function isString(value: any): boolean {
+    return typeof value === 'string';
+  }
+  export function isNumber(value: any): boolean {
+    return validator.isNumeric(value);
+  }
+  export function isBoolean(value: any): boolean {
+    return validator.isBoolean(value);
+  }
+  export function isAction(value: any): boolean {
+    return validator.isIn(value, ['create', 'read', 'update', 'delete']);
+  }
+  export function isRole(value: any): boolean {
+    return validator.isIn(value, [
+      'viewer',
+      'user',
+      'admin',
+      'guest',
+      'superAdmin'
+    ]);
+  }
+
+  export function isResource(value: any): boolean {
+    return validator.isIn(value, ['users', 'auth', 'permission']);
+  }
+
+  export function isStatus(value: any): boolean {
+    return validator.isIn(value, ['active', 'inactive', 'pending']);
+  }
 }
 export default validate;

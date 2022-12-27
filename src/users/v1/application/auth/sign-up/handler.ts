@@ -10,9 +10,10 @@ import { UserEmail } from '@/users/v1/domain/user.email';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
-import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserPermissions } from '@/users/v1/domain/permissions/user.permission';
+import { UserRole } from '@/users/v1/domain/user.role';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
+import { UserAction } from '@/users/v1/domain/permissions/user.action';
 
 @injectable()
 export class CreateUserHandler implements CommandHandler<UserCreateCommand> {
@@ -31,7 +32,7 @@ export class CreateUserHandler implements CommandHandler<UserCreateCommand> {
     const userCompany = new UserCompany(command.getCompany());
     const userPassword = new UserPassword(command.getPassword());
     const userRole = new UserRole(command.getRole());
-    const userPrivilage = new UserPrivilage(command.getRole());
+    const userPermission = new UserPermissions(command.getPermissions());
     const userCountryCode = new UserCountryCode(command.getCountryCode());
 
     await this.createUserUseCase.main({
@@ -43,7 +44,7 @@ export class CreateUserHandler implements CommandHandler<UserCreateCommand> {
       userPassword,
       userCountryCode,
       userRole,
-      userPrivilage
+      userPermission
     });
   }
 }

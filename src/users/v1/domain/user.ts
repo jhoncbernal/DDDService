@@ -7,10 +7,9 @@ import { UserPhone } from '@/users/v1/domain/user.phone';
 import { UserCompany } from '@/users/v1/domain/user.company';
 import { UserCreatedDomainEvent } from '@/users/v1/domain/user.created.domain.event';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
-import { UserRole } from '@/users/v1/domain/roles/user.role';
+import { UserPermissions } from '@/users/v1/domain/permissions/user.permission';
+import { UserRole } from '@/users/v1/domain/user.role';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
-import { DomainError } from '@/shared/infrastructure/domain.error';
 
 export class User extends Entity {
   constructor(
@@ -22,7 +21,7 @@ export class User extends Entity {
     private password: UserPassword,
     private country_code: UserCountryCode,
     private role?: UserRole,
-    private privilage?: UserPrivilage
+    private permissions?: UserPermissions
   ) {
     super();
     this.id = id;
@@ -33,7 +32,7 @@ export class User extends Entity {
     this.password = password;
     this.country_code = country_code;
     this.role = role;
-    this.privilage = privilage;
+    this.permissions = permissions;
   }
 
   static create(
@@ -45,7 +44,7 @@ export class User extends Entity {
     password: UserPassword,
     country_code: UserCountryCode,
     role: UserRole,
-    privilage: UserPrivilage
+    permissions: UserPermissions
   ): User {
     const user = new User(
       id,
@@ -56,7 +55,7 @@ export class User extends Entity {
       password,
       country_code,
       role,
-      privilage
+      permissions
     );
 
     user.record(
@@ -68,7 +67,7 @@ export class User extends Entity {
         company.valueOf(),
         password.valueOf(),
         country_code.valueOf(),
-        privilage.valueOf()
+        permissions.valueOf()
       )
     );
 
@@ -83,7 +82,8 @@ export class User extends Entity {
     company: string,
     password: string,
     countryCode: string,
-    role: string
+    role: string,
+    permissions: { resource: string; actions: string[] }[]
   ): User {
     const userId = new UserId(id);
     const userName = new UserName(name);
@@ -92,7 +92,7 @@ export class User extends Entity {
     const userCompany = new UserCompany(company);
     const userPassword = new UserPassword(password);
     const userRole = new UserRole(role);
-    const userPrivilage = new UserPrivilage(role);
+    const userPermissions = new UserPermissions(permissions);
     const userCountryCode = new UserCountryCode(countryCode);
     return new User(
       userId,
@@ -103,21 +103,21 @@ export class User extends Entity {
       userPassword,
       userCountryCode,
       userRole,
-      userPrivilage
+      userPermissions
     );
   }
 
-  toPrimitives() {
+  toPrimitives(cifer: boolean = false) {
     return {
-      id: this.id.valueOf(),
+      uuid: this.id.valueOf(),
       name: this.name.valueOf(),
       email: this.email.valueOf(),
       phone: this.phone.valueOf(),
       company: this.company.valueOf(),
-      password: this.password.valueOf(),
+      password: this.password.valueOf(cifer),
       country_code: this.country_code.valueOf(),
       role: this.role?.valueOf(),
-      privilage: this.privilage?.valueOf()
+      permissions: this.permissions?.valueOf()
     };
   }
 
@@ -147,8 +147,8 @@ export class User extends Entity {
   getRole(): UserRole | undefined {
     return this.role;
   }
-  getPrivilage(): UserPrivilage | undefined {
-    return this.privilage;
+  getPermissions(): UserPermissions | undefined {
+    return this.permissions;
   }
   getCountryCode(): UserCountryCode {
     return this.country_code;

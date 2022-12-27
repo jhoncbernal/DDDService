@@ -40,4 +40,8 @@ export class UserCreateCommand implements Command {
   getRole(): string {
     return this.user.getRole();
   }
+
+  getPermissions(): { resource: string; actions: string[] }[] {
+    return this.user.getPermissions();
+  }
 }

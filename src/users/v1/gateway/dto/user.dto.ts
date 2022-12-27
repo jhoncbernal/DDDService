@@ -7,7 +7,8 @@ export class UserDto {
     public readonly company: string,
     public readonly password: string,
     public readonly country_code: string,
-    public readonly role: string | undefined
+    public readonly role: string | undefined,
+    public readonly permissions: { resource: string; actions: string[] }[]
   ) {}
 
   static fromJSON(json: any): UserDto {
@@ -18,7 +19,8 @@ export class UserDto {
       json.company,
       json.password,
       json.country_code,
-      json.role
+      json.role,
+      json.permissions
     );
   }
   toJSON(): object {
@@ -43,7 +45,8 @@ export class UserDto {
       this.getCompany(),
       this.getPassword(),
       this.getCountryCode(),
-      this.getRole()
+      this.getRole(),
+      this.getPermissions()
     );
   }
 
@@ -70,5 +73,13 @@ export class UserDto {
   }
   getRole(): string {
     return this.role ? this.role : '';
+  }
+  getPermissions(): { resource: string; actions: string[] }[] {
+    return this.permissions ? this.permissions : [];
+  }
+  getResouces(): string[] {
+    return this.permissions
+      ? this.permissions.map((permission) => permission.resource)
+      : [];
   }
 }

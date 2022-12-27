@@ -1,10 +1,10 @@
 import { SecurityMiddleware } from '@/shared/domain/security/middleware';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
-import { Ctx } from '@/shared/domain/security/ctx.type';
 import { Context } from '@/shared/infrastructure/framework/decorators';
 enum Actions {
   POST = 'create',
-  GET = 'read',
+  GET = 'readAll',
+  GET_ONE = 'read',
   PUT = 'update',
   PATCH = 'update',
   DELETE = 'delete'
@@ -22,27 +22,35 @@ export class MiddlewareRouter implements SecurityMiddleware {
       const resource: string = ctx.request.url.split('/')[3].split('?')[0];
       const subResource: string = ctx.request.url.split('/')[4];
       const token: string | undefined = ctx.request.header.authorization;
-      const action: string = ctx.request.method;
+      const action: string = /\/:\w+$/.test(ctx.routerPath)
+        ? 'GET_ONE'
+        : ctx.request.method;
 
       if (token) {
         ctx.request.header.authorization = `Bearer ${token}`;
 
         const decoded: any = MiddlewareRouter.jwt.verify(token);
         if (!decoded?.error) {
-          const resources: Array<string> = decoded.privilages.resources;
-          const actions: Array<string> = decoded.privilages.actions;
+          const resources: Array<string> = decoded.permissions.map(
+            (permission: { resource: string }) => permission.resource
+          );
 
           const validateResources = resources.find(
             (res) => res == resource || res == subResource
           );
-          const validateActions = actions.find(
-            (act) => act == Actions[action as keyof typeof Actions]
-          );
+          let validateActions = [];
+          decoded.permissions.forEach((permission: any) => {
+            if (permission.resource === resource) {
+              validateActions = permission.actions.filter(
+                (act: Actions) => act == Actions[action as keyof typeof Actions]
+              );
+            }
+          });
 
-          if (!validateResources || !validateActions) {
+          if (!validateResources || validateActions.length === 0) {
             ctx.status = 401;
           } else {
-            ctx.userInfo = { ...decoded, resource, actions };
+            ctx.userInfo = { ...decoded };
             await next();
           }
         }

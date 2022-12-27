@@ -6,8 +6,8 @@ import { UserUpdatePasswordCommand } from '@/users/v1/application/auth/update-pa
 import { UpdateUserPasswordUseCase } from '@/users/v1/application/auth/update-password/use.case';
 import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserEmail } from '@/users/v1/domain/user.email';
-import { UserResource } from '@/users/v1/domain/roles/privilages/resources/user.resource';
-import { UserAction } from '@/users/v1/domain/roles/privilages/actions/user.action';
+import { UserResource } from '@/users/v1/domain/permissions/user.resource';
+import { UserAction } from '@/users/v1/domain/permissions/user.action';
 
 @injectable()
 export class UpdateUserPasswordHandler

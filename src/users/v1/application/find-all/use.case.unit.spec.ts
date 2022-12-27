@@ -25,11 +25,9 @@ describe('find-all-users', () => {
       expect(result?.getCountryCode().valueOf()).toEqual(
         MOCK_USERS[index].country_code
       );
-      expect(result?.getRole()?.valueOf()).toEqual(
-        MOCK_USERS[index].roles[0].role
-      );
-      expect(result?.getPrivilage()?.valueOf()).toEqual(
-        MOCK_USERS[index].roles[0].privileges
+      expect(result?.getRole()?.valueOf()).toEqual(MOCK_USERS[index].role);
+      expect(result?.getPermissions()?.valueOf()).toEqual(
+        MOCK_USERS[index].permissions
       );
     });
   });
@@ -48,11 +46,9 @@ describe('find-all-users', () => {
     expect(result?.getCountryCode().valueOf()).toEqual(
       MOCK_USERS[index].country_code
     );
-    expect(result?.getRole()?.valueOf()).toEqual(
-      MOCK_USERS[index].roles[0].role
-    );
-    expect(result?.getPrivilage()?.valueOf()).toEqual(
-      MOCK_USERS[index].roles[0].privileges
+    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USERS[index].role);
+    expect(result?.getPermissions()?.valueOf()).toEqual(
+      MOCK_USERS[index].permissions
     );
   });
 });

@@ -42,10 +42,10 @@ type UserInfo = {
   userInfo: {
     email: string;
     deviceId: string;
-    privilages: {
-      resources: string[];
+    permissions: {
+      resources: string;
       actions: string[];
-    };
+    }[];
   };
 };
 export type Context = KoaContext & UserInfo;

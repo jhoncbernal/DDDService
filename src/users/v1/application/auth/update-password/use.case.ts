@@ -10,8 +10,8 @@ import { User } from '@/users/v1/domain/user';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 import validate from '@/shared/infrastructure/validator/validator';
-import { UserAction } from '@/users/v1/domain/roles/privilages/actions/user.action';
-import { UserResource } from '@/users/v1/domain/roles/privilages/resources/user.resource';
+import { UserAction } from '@/users/v1/domain/permissions/user.action';
+import { UserResource } from '@/users/v1/domain/permissions/user.resource';
 
 type Params = {
   userPassword: UserPassword;

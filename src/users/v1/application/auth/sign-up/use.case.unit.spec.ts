@@ -9,11 +9,10 @@ import { MockUserRepository } from '@/users/v1/domain/repository/mock.repository
 import { EventBus } from '@/shared/domain/event-bus/event.bus';
 import { mock } from 'jest-mock-extended';
 import { UserPassword } from '@/users/v1/domain/user.password';
-import { UserRole } from '@/users/v1/domain/roles/user.role';
-import { UserPrivilage } from '@/users/v1/domain/roles/privilages/user.privilage';
+import { UserRole } from '@/users/v1/domain/user.role';
+import { UserPermissions } from '@/users/v1/domain/permissions/user.permission';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 import { MOCK_NEW_USER } from '@/users/v1/infrastructure/mock/user.mock';
-
 describe('create-user', () => {
   it('should create a user', async () => {
     const mockUserRepository = new MockUserRepository([]);
@@ -22,6 +21,7 @@ describe('create-user', () => {
       mockUserRepository,
       mock<EventBus>()
     );
+
     await userCreate.main({
       userId: new UserId(MOCK_NEW_USER.uuid),
       userName: new UserName(MOCK_NEW_USER.name),
@@ -31,7 +31,7 @@ describe('create-user', () => {
       userPassword: new UserPassword(MOCK_NEW_USER.password),
       userCountryCode: new UserCountryCode(MOCK_NEW_USER.country_code),
       userRole: new UserRole(MOCK_NEW_USER.role),
-      userPrivilage: new UserPrivilage(MOCK_NEW_USER.role)
+      userPermission: new UserPermissions([])
     });
 
     const result: User | null = await mockUserRepository.findById(
@@ -62,6 +62,12 @@ describe('create-user', () => {
       ).toEqual(true);
       expect(
         result.getRole()?.equals(new UserRole(MOCK_NEW_USER.role))
+      ).toEqual(true);
+
+      expect(
+        result
+          .getPermissions()
+          ?.equals(new UserPermissions(MOCK_NEW_USER.permissions))
       ).toEqual(true);
     }
   });
