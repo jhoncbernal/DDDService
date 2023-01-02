@@ -31,7 +31,13 @@ describe('jwt functions', () => {
     expect(decoded).toHaveProperty('data');
     expect(decoded?.data).toEqual('test');
   });
-
+  it('should thown an error invalid token', async () => {
+    try {
+      jwt.decode('wrongToken');
+    } catch (error: any) {
+      expect(error.message).toBe('Token is invalid');
+    }
+  });
   it('should throw an error when sign using a jwt', () => {
     jwt.sign = jest.fn(() => {
       throw new Error('Error');
@@ -49,12 +55,5 @@ describe('jwt functions', () => {
       throw new Error('Error');
     });
     expect(() => jwt.decode('')).toThrowError('Error');
-  });
-  it('should thown an error invalid token', async () => {
-    try {
-      jwt.decode('wrongToken');
-    } catch (error: any) {
-      expect(error.message).toBe('Token is invalid');
-    }
   });
 });
