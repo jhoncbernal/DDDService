@@ -7,8 +7,8 @@ namespace validate {
   export function isPhone(phone: string, country: any = 'any'): boolean {
     return validator.isMobilePhone(phone, country);
   }
-  export function isDate(date: Date): boolean {
-    return validator.isDate(date.toString());
+  export function isDate(date: string): boolean {
+    return validator.isDate(date);
   }
   export function isStrongPassword(password: string): boolean {
     return validator.isStrongPassword(password);
@@ -41,10 +41,10 @@ namespace validate {
   export function isString(value: any): boolean {
     return typeof value === 'string';
   }
-  export function isNumber(value: any): boolean {
+  export function isNumber(value: string): boolean {
     return validator.isNumeric(value);
   }
-  export function isBoolean(value: any): boolean {
+  export function isBoolean(value: string): boolean {
     return validator.isBoolean(value);
   }
   export function isAction(value: any): boolean {
