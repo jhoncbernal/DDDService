@@ -12,6 +12,8 @@ import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserPutController } from '@/users/v1/gateway/controllers/update.controller';
 import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
 import { header } from 'koa-swagger-decorator';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
+import { UpdatePasswordDto } from '@/users/v1/gateway/dto/update-password.dto';
 
 export class UserPutRouter {
   @request('PUT', '/api/v1/users/{id}')
@@ -43,14 +45,14 @@ export class UserPutRouter {
       const { name, email, phone, company, country_code } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUser({
-        id,
+      const user = UserDto.fromJSON({
         name,
         email,
         phone,
         company,
         country_code
       });
+      await controller.updateUser(id, user);
       // Successful response
       ctx.body = { result: 'Updated' };
     } catch (error: any) {
@@ -82,17 +84,15 @@ export class UserPutRouter {
   @responses({ 200: { description: 'Updated' }, 500: { description: 'Error' } })
   static async updateUserPassword(ctx: Context) {
     try {
-      // Get Token
-      const { authorization } = ctx.request.header;
+      // Get User
+      const user_info = ctx.userInfo;
       // Get Params
       const { password, new_password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPutController);
-      await controller.updateUserPassword({
-        authorization,
-        password,
-        new_password
-      });
+      await controller.updateUserPassword(
+        UpdatePasswordDto.fromJSON({ password, new_password, user_info })
+      );
       // Successful response
       ctx.body = { result: 'Password Updated' };
     } catch (error: any) {

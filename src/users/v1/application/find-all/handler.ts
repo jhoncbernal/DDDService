@@ -17,6 +17,8 @@ export class FindAllUsersHandler
 
   subscribedTo = (): Query => UserFindAllQuery;
   handle(query: UserFindAllQuery): Promise<UserResponse[]> {
-    return this.findAllUsersUseCase.main();
+    const limit = query.getLimit();
+    const page = query.getPage();
+    return this.findAllUsersUseCase.main({ page, limit });
   }
 }

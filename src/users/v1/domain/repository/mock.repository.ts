@@ -6,7 +6,6 @@ import {
   UserPassword
 } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
-import { privilege } from '@/users/v1/domain/roles/privilages/user.privilage';
 import ObjectUtils from '@/shared/infrastructure/utils/object';
 
 type UserMock = {
@@ -17,10 +16,8 @@ type UserMock = {
   company: string;
   password: string;
   country_code: string;
-  roles: {
-    role: string | undefined;
-    privileges: privilege | undefined;
-  }[];
+  role: string | undefined;
+  permissions: any;
 };
 @injectable()
 export class MockUserRepository implements UserRepository {
@@ -73,8 +70,12 @@ export class MockUserRepository implements UserRepository {
     );
     return result ? this.fromPrimitives(result) : null;
   }
-  async findAll(): Promise<User[]> {
-    return this.mockUsers.map((mockUser) => this.fromPrimitives(mockUser));
+  async findAll(pageSize: number, pageNumber: number): Promise<User[]> {
+    const startIndex: number = (pageNumber - 1) * pageSize;
+    const endIndex: number = startIndex + pageSize;
+    return this.mockUsers
+      .map((mockUser) => this.fromPrimitives(mockUser))
+      .slice(startIndex, endIndex);
   }
 
   private userToMock(user: User, cipher: boolean = false): UserMock {
@@ -86,12 +87,8 @@ export class MockUserRepository implements UserRepository {
       company: user.getCompany().valueOf(),
       password: user.getPassword().valueOf(cipher),
       country_code: user.getCountryCode().valueOf(),
-      roles: [
-        {
-          role: user.getRole()?.valueOf(),
-          privileges: user.getPrivilage()?.valueOf()
-        }
-      ]
+      role: user.getRole()?.valueOf(),
+      permissions: user.getPermissions()?.valueOf()
     };
     ObjectUtils.sanitizeObject(result);
     return result;
@@ -106,7 +103,8 @@ export class MockUserRepository implements UserRepository {
       result.company,
       result.password,
       result.country_code,
-      result.roles[0].role || 'NA' // TODO: fix this
+      result.role || 'NA',
+      result.permissions || {}
     );
   }
 }

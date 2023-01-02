@@ -1,31 +1,24 @@
 // CQRS command (from params)
 import { Command } from '@/shared/domain/cqrs/command-bus/command';
+import { UpdatePasswordDto } from '@/users/v1/gateway/dto/update-password.dto';
 type StringUndefined = string | string[] | undefined;
 export class UserUpdatePasswordCommand implements Command {
-  private token: StringUndefined;
-  private password: StringUndefined;
-  private new_password: StringUndefined;
+  private updatePasswordDto: UpdatePasswordDto;
 
-  constructor(
-    token: StringUndefined,
-    password: string,
-    new_password: StringUndefined
-  ) {
-    this.token = token;
-    this.password = password;
-    this.new_password = new_password;
-  }
-
-  getToken(): string {
-    return this.default(this.token);
+  constructor(updatePasswordDto: UpdatePasswordDto) {
+    this.updatePasswordDto = updatePasswordDto;
   }
 
   getPassword(): string {
-    return this.default(this.password);
+    return this.default(this.updatePasswordDto.password);
   }
 
   getNewPassword(): string {
-    return this.default(this.new_password);
+    return this.default(this.updatePasswordDto.new_password);
+  }
+
+  getEmail(): string {
+    return this.updatePasswordDto.user_info.email;
   }
 
   private default(value: StringUndefined): string {

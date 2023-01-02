@@ -1,31 +1,12 @@
 // CQRS command (from params)
 import { Command } from '@/shared/domain/cqrs/command-bus/command';
 import { Identifier } from '@/shared/domain/value-objects/identifier';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
 export class UserCreateCommand implements Command {
-  private name: string;
-  private email: string;
-  private phone: number;
-  private company: string;
-  private password: string;
-  private role: string;
-  private country_code: string;
+  private user: UserDto;
 
-  constructor(
-    name: string,
-    email: string,
-    phone: number,
-    company: string,
-    password: string,
-    role: string,
-    country_code: string
-  ) {
-    this.name = name;
-    this.email = email;
-    this.phone = phone;
-    this.company = company;
-    this.password = password;
-    this.role = role;
-    this.country_code = country_code;
+  constructor(user: UserDto) {
+    this.user = user;
   }
 
   getId(): string {
@@ -33,30 +14,34 @@ export class UserCreateCommand implements Command {
   }
 
   getName(): string {
-    return this.name;
+    return this.user.getName();
   }
 
   getEmail(): string {
-    return this.email;
+    return this.user.getEmail();
   }
 
   getPhone(): number {
-    return this.phone;
+    return this.user.getPhone();
   }
 
   getCompany(): string {
-    return this.company;
+    return this.user.getCompany();
   }
 
   getPassword(): string {
-    return this.password;
-  }
-
-  getRole(): string {
-    return this.role;
+    return this.user.getPassword();
   }
 
   getCountryCode(): string {
-    return this.country_code;
+    return this.user.getCountryCode();
+  }
+
+  getRole(): string {
+    return this.user.getRole();
+  }
+
+  getPermissions(): { resource: string; actions: string[] }[] {
+    return this.user.getPermissions();
   }
 }

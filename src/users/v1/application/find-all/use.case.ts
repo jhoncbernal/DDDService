@@ -6,6 +6,10 @@ import { UseCase } from '@/shared/domain/use.case';
 import { UserResponse } from '@/users/v1/application/user.response';
 import { UserRepository } from '@/users/v1/domain/user.repository';
 
+type Params = {
+  page: number;
+  limit: number;
+};
 @provide(TYPES.FindAllUsersUseCase)
 export class FindAllUsersUseCase implements UseCase {
   constructor(
@@ -13,8 +17,8 @@ export class FindAllUsersUseCase implements UseCase {
     private readonly userRepository: UserRepository
   ) {}
 
-  async main(): Promise<UserResponse[]> {
-    const users = await this.userRepository.findAll();
+  async main(params: Params): Promise<UserResponse[]> {
+    const users = await this.userRepository.findAll(params.limit, params.page);
 
     return users.map((user) => UserResponse.fromDomain(user));
   }

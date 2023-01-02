@@ -7,13 +7,15 @@ export const MOCK_USERS = [
     company: 'test company',
     password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
     country_code: 'CO',
-    roles: [
+    role: 'admin',
+    permissions: [
       {
-        role: 'admin',
-        privileges: {
-          resources: ['users', 'auth'],
-          actions: ['create', 'read', 'update', 'delete']
-        }
+        resource: 'users',
+        actions: ['read', 'update', 'delete']
+      },
+      {
+        resource: 'auth',
+        actions: ['read', 'update']
       }
     ]
   },
@@ -25,13 +27,11 @@ export const MOCK_USERS = [
     company: 'test2 company',
     password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
     country_code: 'MX',
-    roles: [
+    role: 'user',
+    permissions: [
       {
-        role: 'user',
-        privileges: {
-          resources: ['users'],
-          actions: ['read', 'update', 'delete']
-        }
+        resource: 'users',
+        actions: ['read', 'update', 'delete']
       }
     ]
   }
@@ -44,13 +44,11 @@ export const MOCK_USER = {
   company: 'test company',
   password: '$2b$10$HpiIQA/a4WIJ.v039YW7fuWMSL3TuqVmLJ3tf2tbv0YGoFfybo17O',
   country_code: 'CO',
-  roles: [
+  role: 'admin',
+  permissions: [
     {
-      role: 'admin',
-      privileges: {
-        resources: ['users', 'auth'],
-        actions: ['create', 'read', 'update', 'delete']
-      }
+      resource: 'users',
+      actions: ['read', 'update', 'delete']
     }
   ]
 };
@@ -63,7 +61,13 @@ export const MOCK_NEW_USER = {
   company: 'test company',
   password: 'String123!',
   country_code: 'CO',
-  role: 'admin'
+  role: 'admin',
+  permissions: [
+    {
+      resource: 'users',
+      actions: ['read', 'update', 'delete']
+    }
+  ]
 };
 export const MOCK_UPDATED_USER = {
   name: 'MAX new',
@@ -73,10 +77,12 @@ export const MOCK_UPDATED_USER = {
   password: 'NewPassword123!',
   country_code: 'CO',
   role: 'admin',
-  privileges: {
-    resources: ['users', 'auth'],
-    actions: ['create', 'read', 'update', 'delete']
-  }
+  permissions: [
+    {
+      resource: 'users',
+      actions: ['read', 'update', 'delete']
+    }
+  ]
 };
 
 export const MOCK_INVALID_USER = {
@@ -86,5 +92,11 @@ export const MOCK_INVALID_USER = {
   company: 'test company',
   password: 'INVALID_PASSWORD',
   country_code: 'INVALID',
-  role: 'invalid'
+  role: 'invalid',
+  permissions: [
+    {
+      resource: 'invalid',
+      actions: ['invalid']
+    }
+  ]
 };

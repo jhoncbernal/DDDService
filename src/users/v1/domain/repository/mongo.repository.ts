@@ -11,21 +11,7 @@ import { User } from '@/users/v1/domain/user';
 @injectable()
 export class MongoUserRepository implements UserRepository {
   async save(user: User): Promise<void> {
-    await UserModel.create({
-      uuid: user.getId().valueOf(),
-      name: user.getName().valueOf(),
-      email: user.getEmail().valueOf(),
-      phone: user.getPhone().valueOf(),
-      company: user.getCompany().valueOf(),
-      password: user.getPassword().valueOf(true),
-      country_code: user.getCountryCode().valueOf(),
-      roles: [
-        {
-          role: user.getRole()?.valueOf(),
-          privileges: [user.getPrivilage()?.valueOf()]
-        }
-      ]
-    });
+    await UserModel.create(user.toPrimitives(true));
   }
 
   async update(user: User): Promise<boolean> {
@@ -78,8 +64,12 @@ export class MongoUserRepository implements UserRepository {
     return result ? this.fromPrimitives(result) : null;
   }
 
-  async findAll(): Promise<User[]> {
-    const result: Object[] = await UserModel.find({}).lean();
+  async findAll(pageSize: number, pageNumber: number): Promise<User[]> {
+    const skips = pageSize * (pageNumber - 1);
+    const result: Object[] = await UserModel.find({})
+      .skip(skips)
+      .limit(pageSize)
+      .lean();
     return result.map(this.fromPrimitives);
   }
 
@@ -92,7 +82,8 @@ export class MongoUserRepository implements UserRepository {
       result.company,
       result.password,
       result.country_code,
-      result.roles[0].role // TODO: fix this
+      result.role,
+      result.permissions
     );
   }
 }

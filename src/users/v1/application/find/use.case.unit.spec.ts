@@ -50,9 +50,7 @@ describe('find-user', () => {
     expect(result?.getCompany().valueOf()).toEqual(MOCK_USER.company);
     expect(result?.getPassword().valueOf().length).toEqual(60);
     expect(result?.getCountryCode().valueOf()).toEqual(MOCK_USER.country_code);
-    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USER.roles[0].role);
-    expect(result?.getPrivilage()?.valueOf()).toEqual(
-      MOCK_USER.roles[0].privileges
-    );
+    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USER.role);
+    expect(result?.getPermissions()?.valueOf()).toEqual(MOCK_USER.permissions);
   });
 });

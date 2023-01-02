@@ -22,7 +22,7 @@ describe('sign in', () => {
     });
     expect(result).toBeDefined();
     expect(result?.getEmail().valueOf()).toEqual(MOCK_USER.email);
-    expect(result?.getToken().valueOf().length).toBeGreaterThan(310);
+    expect(result?.getToken().valueOf().length).toBeGreaterThan(200);
   });
 
   it('should thown an error invalid email', async () => {

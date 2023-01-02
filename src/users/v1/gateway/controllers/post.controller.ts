@@ -6,6 +6,8 @@ import { BaseController } from '@/shared/infrastructure/controller/base.controll
 import { Logger } from '@/shared/domain/logger/logger';
 import { UserLoginQuery } from '@/users/v1/application/auth/sign-in/query';
 import { QueryBus } from '@/shared/domain/cqrs/query-bus/query.bus';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
+import { SignInDto } from '@/users/v1/gateway/dto/sign-in.dto';
 
 @injectable()
 export class UserPostController extends BaseController {
@@ -17,42 +19,18 @@ export class UserPostController extends BaseController {
     super(logger);
   }
 
-  async createUser({
-    name,
-    email,
-    phone,
-    company,
-    password,
-    role,
-    country_code
-  }: {
-    name: string;
-    email: string;
-    phone: number;
-    company: string;
-    password: string;
-    role: string;
-    country_code: string;
-  }) {
+  async createUser(user: UserDto) {
     try {
-      const command = new UserCreateCommand(
-        name,
-        email,
-        phone,
-        company,
-        password,
-        role,
-        country_code
-      );
+      const command = new UserCreateCommand(user);
       return await this.commandBus.ask(command);
     } catch (error: any) {
       throw this.mapperException(error, {}, [], 'Users v1');
     }
   }
 
-  async login({ email, password }: { email: string; password: string }) {
+  async login(signIn: SignInDto) {
     try {
-      const command = new UserLoginQuery(email, password);
+      const command = new UserLoginQuery(signIn);
       return await this.queryBus.ask(command);
     } catch (error: any) {
       throw this.mapperException(error, {}, [], 'Users v1');

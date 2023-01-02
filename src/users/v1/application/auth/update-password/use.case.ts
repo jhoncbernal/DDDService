@@ -10,34 +10,29 @@ import { User } from '@/users/v1/domain/user';
 import { JsonWebToken } from '@/shared/infrastructure/security/jwt';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
 import validate from '@/shared/infrastructure/validator/validator';
+import { UserAction } from '@/users/v1/domain/permissions/user.action';
+import { UserResource } from '@/users/v1/domain/permissions/user.resource';
 
 type Params = {
   userPassword: UserPassword;
   userNewPassword: UserPassword;
-  userToken: string;
+  userEmail: UserEmail;
 };
 
 @provide(TYPES.UpdateUserPasswordUseCase)
 export class UpdateUserPasswordUseCase implements UseCase {
-  private jwt: JsonWebToken;
   constructor(
     @inject(TYPES.UserRepository)
     private readonly userRepository: UserRepository
-  ) {
-    this.jwt = new JsonWebToken();
-  }
+  ) {}
 
   async main(params: Params) {
     try {
-      // validate token
-      const decode: any = this.jwt.verify(params.userToken.valueOf());
-      // get user by email
-      const userEmail = new UserEmail(decode?.email);
       let user: User | null | undefined = await this.userRepository.findBy(
         'email',
-        userEmail
+        params.userEmail
       );
-      if (!user) throw new UserNotFound(userEmail.valueOf());
+      if (!user) throw new UserNotFound(params.userEmail.valueOf());
       // validate password
       const invalidPassword = !params.userPassword.equals(user.getPassword());
       if (invalidPassword && !validate.isEmpty(params.userPassword.valueOf())) {

@@ -10,6 +10,8 @@ import {
 import { AppContainer } from '@/shared/infrastructure/d-injection/container';
 import { UserPostController } from '@/users/v1/gateway/controllers/post.controller';
 import { MiddlewareRouter } from '@/shared/infrastructure/security/middleware';
+import { UserDto } from '@/users/v1/gateway/dto/user.dto';
+import { SignInDto } from '@/users/v1/gateway/dto/sign-in.dto';
 
 export class UserPostRouter {
   @request('POST', '/api/v1/users/auth/signup')
@@ -29,19 +31,30 @@ export class UserPostRouter {
   static async createUser(ctx: Context) {
     try {
       // Get Params
-      const { name, email, phone, company, password, role, country_code } =
-        ctx.validatedBody;
-      // Get Controller
-      const controller = AppContainer.resolve(UserPostController);
-      const res = await controller.createUser({
+      const {
         name,
         email,
         phone,
         company,
         password,
         role,
-        country_code
-      });
+        country_code,
+        permissions
+      } = ctx.validatedBody;
+      // Get Controller
+      const controller = AppContainer.resolve(UserPostController);
+      const res = await controller.createUser(
+        UserDto.fromJSON({
+          name,
+          email,
+          phone,
+          company,
+          password,
+          role,
+          country_code,
+          permissions
+        })
+      );
       // Successful response
       ctx.body = res;
       ctx.status = 201;
@@ -67,10 +80,12 @@ export class UserPostRouter {
       const { email, password } = ctx.validatedBody;
       // Get Controller
       const controller = AppContainer.resolve(UserPostController);
-      const res = await controller.login({
-        email,
-        password
-      });
+      const res = await controller.login(
+        SignInDto.fromJSON({
+          email,
+          password
+        })
+      );
       // Successful response
       ctx.body = res;
     } catch (error: any) {

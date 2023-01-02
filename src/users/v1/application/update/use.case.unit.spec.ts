@@ -18,7 +18,8 @@ describe('update-users', () => {
     MOCK_UPDATED_USER.company,
     MOCK_UPDATED_USER.password,
     MOCK_UPDATED_USER.country_code,
-    MOCK_UPDATED_USER.role
+    MOCK_UPDATED_USER.role,
+    MOCK_UPDATED_USER.permissions
   );
   const emptyUser = User.fromPrimitives(
     MOCK_USER.uuid,
@@ -28,8 +29,11 @@ describe('update-users', () => {
     '',
     '',
     '',
-    ''
+    '',
+    []
   );
+
+  const userPrimitive = user.toPrimitives();
 
   beforeAll(() => {
     mockUserRepository = new MockUserRepository([MOCK_USER]);
@@ -52,10 +56,8 @@ describe('update-users', () => {
     expect(result?.getCompany().valueOf()).toEqual(MOCK_USER.company);
     expect(result?.getPassword().valueOf().length).toEqual(60);
     expect(result?.getCountryCode().valueOf()).toEqual(MOCK_USER.country_code);
-    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USER.roles[0].role);
-    expect(result?.getPrivilage()?.valueOf()).toEqual(
-      MOCK_USER.roles[0].privileges
-    );
+    expect(result?.getRole()?.valueOf()).toEqual(MOCK_USER.role);
+    expect(result?.getPermissions()?.valueOf()).toEqual(MOCK_USER.permissions);
   });
   it('should update user all allow values', async () => {
     await userUpdate.main({
@@ -68,17 +70,17 @@ describe('update-users', () => {
     });
     const result: User | null = await mockUserRepository.findById(user.getId());
     expect(result).toBeDefined();
-    expect(result?.getName().valueOf()).toEqual(MOCK_UPDATED_USER.name);
-    expect(result?.getEmail().valueOf()).toEqual(MOCK_UPDATED_USER.email);
-    expect(result?.getPhone().valueOf()).toEqual(MOCK_UPDATED_USER.phone);
-    expect(result?.getCompany().valueOf()).toEqual(MOCK_UPDATED_USER.company);
+    expect(result?.getName().valueOf()).toEqual(userPrimitive.name);
+    expect(result?.getEmail().valueOf()).toEqual(userPrimitive.email);
+    expect(result?.getPhone().valueOf()).toEqual(userPrimitive.phone);
+    expect(result?.getCompany().valueOf()).toEqual(userPrimitive.company);
     expect(result?.getPassword().valueOf().length).toEqual(60);
     expect(result?.getCountryCode().valueOf()).toEqual(
-      MOCK_UPDATED_USER.country_code
+      userPrimitive.country_code
     );
-    expect(result?.getRole()?.valueOf()).toEqual(MOCK_UPDATED_USER.role);
-    expect(result?.getPrivilage()?.valueOf()).toEqual(
-      MOCK_UPDATED_USER.privileges
+    expect(result?.getRole()?.valueOf()).toEqual(userPrimitive.role);
+    expect(result?.getPermissions()?.valueOf()).toEqual(
+      userPrimitive.permissions
     );
   });
 
@@ -103,8 +105,8 @@ describe('update-users', () => {
       MOCK_UPDATED_USER.country_code
     );
     expect(result?.getRole()?.valueOf()).toEqual(MOCK_UPDATED_USER.role);
-    expect(result?.getPrivilage()?.valueOf()).toEqual(
-      MOCK_UPDATED_USER.privileges
+    expect(result?.getPermissions()?.valueOf()).toEqual(
+      MOCK_UPDATED_USER.permissions
     );
   });
 });
