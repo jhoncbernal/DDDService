@@ -31,7 +31,7 @@ describe('create-user', () => {
       userPassword: new UserPassword(MOCK_NEW_USER.password),
       userCountryCode: new UserCountryCode(MOCK_NEW_USER.country_code),
       userRole: new UserRole(MOCK_NEW_USER.role),
-      userPermission: new UserPermissions([])
+      userPermission: new UserPermissions(MOCK_NEW_USER.permissions)
     });
 
     const result: User | null = await mockUserRepository.findById(
