@@ -50,4 +50,11 @@ describe('jwt functions', () => {
     });
     expect(() => jwt.decode('')).toThrowError('Error');
   });
+  it('should thown an error invalid token', async () => {
+    try {
+      jwt.decode('wrongToken');
+    } catch (error: any) {
+      expect(error.message).toBe('Token is invalid');
+    }
+  });
 });
