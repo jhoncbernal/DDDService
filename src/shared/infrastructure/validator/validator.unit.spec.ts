@@ -46,6 +46,10 @@ describe('validate', () => {
     const object = {};
     expect(validate.isObject(object)).toBe(true);
   });
+  it('should be a valid string', () => {
+    const string = 'test';
+    expect(validate.isString(string)).toBe(true);
+  });
   it('should be a valid number', () => {
     const number = '123';
     expect(validate.isNumber(number)).toBe(true);
