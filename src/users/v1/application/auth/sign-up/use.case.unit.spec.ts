@@ -21,7 +21,6 @@ describe('create-user', () => {
       mockUserRepository,
       mock<EventBus>()
     );
-
     await userCreate.main({
       userId: new UserId(MOCK_NEW_USER.uuid),
       userName: new UserName(MOCK_NEW_USER.name),
@@ -69,6 +68,32 @@ describe('create-user', () => {
           .getPermissions()
           ?.equals(new UserPermissions(MOCK_NEW_USER.permissions))
       ).toEqual(true);
+    }
+  });
+  it('should throw an error if user already exists', async () => {
+    try {
+      const mockUserRepository = new MockUserRepository([MOCK_NEW_USER]);
+
+      const userCreate = new CreateUserUseCase(
+        mockUserRepository,
+        mock<EventBus>()
+      );
+
+      const result = await userCreate.main({
+        userId: new UserId(MOCK_NEW_USER.uuid),
+        userName: new UserName(MOCK_NEW_USER.name),
+        userEmail: new UserEmail(MOCK_NEW_USER.email),
+        userPhone: new UserPhone(MOCK_NEW_USER.phone),
+        userCompany: new UserCompany(MOCK_NEW_USER.company),
+        userPassword: new UserPassword(MOCK_NEW_USER.password),
+        userCountryCode: new UserCountryCode(MOCK_NEW_USER.country_code),
+        userRole: new UserRole(MOCK_NEW_USER.role),
+        userPermission: new UserPermissions(MOCK_NEW_USER.permissions)
+      });
+      expect(result).toBeUndefined();
+    } catch (error: any) {
+      expect(error).toBeDefined();
+      expect(error?.message).toEqual(`User already exists`);
     }
   });
 });

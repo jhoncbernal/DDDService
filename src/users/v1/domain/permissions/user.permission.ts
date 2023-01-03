@@ -25,12 +25,11 @@ export class UserPermissions implements ValueObject<permissions> {
         if (!validate.isResource(permission.resource)) {
           throw new UserInvalid('resource');
         }
-        if (!validate.isArray(permission.actions)) {
-          permission.actions.forEach((action) => {
-            if (!validate.isAction(action)) {
-              throw new UserInvalid('action');
-            }
-          });
+        if (validate.isArray(permission.actions)) {
+          const valid = permission.actions?.every((action) =>
+            validate.isAction(action)
+          );
+          if (!valid) throw new UserInvalid('actions');
         }
       });
     }

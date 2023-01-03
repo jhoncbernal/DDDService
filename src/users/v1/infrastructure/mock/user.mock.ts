@@ -59,7 +59,7 @@ export const MOCK_NEW_USER = {
   email: 'test@gmail.com',
   phone: 123456789,
   company: 'test company',
-  password: 'String123!',
+  password: '$2b$10$gC3CLSt3P1JtchfMSgqoa.gyjUNcxH3eR/i5vGh3zvQi5L.XcHhUG',
   country_code: 'CO',
   role: 'admin',
   permissions: [

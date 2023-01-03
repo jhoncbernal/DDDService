@@ -4,7 +4,7 @@ import { provide } from 'inversify-binding-decorators';
 import { TYPES } from '@/users/v1/infrastructure/d-injection/types';
 import { UseCase } from '@/shared/domain/use.case';
 
-import { UserRepository } from '@/users/v1/domain/user.repository';
+import { UserId, UserRepository } from '@/users/v1/domain/user.repository';
 import { User } from '@/users/v1/domain/user';
 
 import { UserEmail } from '@/users/v1/domain/user.email';
@@ -44,6 +44,7 @@ export class LoginUseCase implements UseCase {
       {
         email: params.userEmail.valueOf(),
         deviceId: '2122321312',
+        uuid: user.getId().valueOf(),
         permissions: user.getPermissions()?.valueOf()
       },
       '45m'

@@ -42,6 +42,7 @@ type UserInfo = {
   userInfo: {
     email: string;
     deviceId: string;
+    uuid: string;
     permissions: {
       resources: string;
       actions: string[];

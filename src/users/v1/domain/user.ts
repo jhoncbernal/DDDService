@@ -13,7 +13,7 @@ import { UserCountryCode } from '@/users/v1/domain/user.country.code';
 
 export class User extends Entity {
   constructor(
-    private id: UserId,
+    private uuid: UserId,
     private name: UserName,
     private email: UserEmail,
     private phone: UserPhone,
@@ -24,7 +24,7 @@ export class User extends Entity {
     private permissions?: UserPermissions
   ) {
     super();
-    this.id = id;
+    this.uuid = uuid;
     this.name = name;
     this.email = email;
     this.phone = phone;
@@ -36,7 +36,7 @@ export class User extends Entity {
   }
 
   static create(
-    id: UserId,
+    uuid: UserId,
     name: UserName,
     email: UserEmail,
     phone: UserPhone,
@@ -47,7 +47,7 @@ export class User extends Entity {
     permissions: UserPermissions
   ): User {
     const user = new User(
-      id,
+      uuid,
       name,
       email,
       phone,
@@ -60,7 +60,7 @@ export class User extends Entity {
 
     user.record(
       new UserCreatedDomainEvent(
-        id.valueOf(),
+        uuid.valueOf(),
         name.valueOf(),
         email.valueOf(),
         phone.valueOf(),
@@ -109,7 +109,7 @@ export class User extends Entity {
 
   toPrimitives(cifer: boolean = false) {
     return {
-      uuid: this.id.valueOf(),
+      uuid: this.uuid.valueOf(),
       name: this.name.valueOf(),
       email: this.email.valueOf(),
       phone: this.phone.valueOf(),
@@ -122,7 +122,7 @@ export class User extends Entity {
   }
 
   getId(): UserId {
-    return this.id;
+    return this.uuid;
   }
 
   getName(): UserName {

@@ -48,7 +48,16 @@ namespace validate {
     return validator.isBoolean(value);
   }
   export function isAction(value: any): boolean {
-    return validator.isIn(value, ['create', 'read', 'update', 'delete']);
+    return validator.isIn(value, [
+      'create',
+      'read',
+      'update',
+      'delete',
+      'readOne',
+      'createOne',
+      'updateOne',
+      'deleteOne'
+    ]);
   }
   export function isRole(value: any): boolean {
     return validator.isIn(value, [

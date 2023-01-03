@@ -18,6 +18,7 @@ import { UserPassword } from '@/users/v1/domain/user.password';
 import { UserPermissions } from '@/users/v1/domain/permissions/user.permission';
 import { UserRole } from '@/users/v1/domain/user.role';
 import { UserCountryCode } from '@/users/v1/domain/user.country.code';
+import { UserDuplicated } from '@/users/v1/domain/exceptions/duplicate';
 type Params = {
   userId: UserId;
   userName: UserName;
@@ -39,20 +40,27 @@ export class CreateUserUseCase implements UseCase {
   ) {}
 
   async main(params: Params) {
-    const user = User.create(
-      params.userId,
-      params.userName,
-      params.userEmail,
-      params.userPhone,
-      params.userCompany,
-      params.userPassword,
-      params.userCountryCode,
-      params.userRole,
-      params.userPermission
-    );
+    try {
+      const user = User.create(
+        params.userId,
+        params.userName,
+        params.userEmail,
+        params.userPhone,
+        params.userCompany,
+        params.userPassword,
+        params.userCountryCode,
+        params.userRole,
+        params.userPermission
+      );
 
-    await this.userRepository.save(user);
+      await this.userRepository.save(user);
 
-    await this.eventBus.publish(user.pullDomainEvents());
+      await this.eventBus.publish(user.pullDomainEvents());
+    } catch (error: any) {
+      if (error?.message?.includes('E11000')) {
+        throw new UserDuplicated();
+      }
+      throw error;
+    }
   }
 }

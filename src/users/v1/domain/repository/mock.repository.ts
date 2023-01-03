@@ -23,6 +23,12 @@ type UserMock = {
 export class MockUserRepository implements UserRepository {
   constructor(private mockUsers: UserMock[]) {}
   async save(user: User): Promise<void> {
+    const duplicateEmail = this.mockUsers.find(
+      (userMock: UserMock) =>
+        userMock.email === user.getEmail().valueOf() ||
+        userMock.uuid === user.getId().valueOf()
+    );
+    if (duplicateEmail) throw new Error('E11000 : User already exists');
     this.mockUsers.push(this.userToMock(user, true));
   }
   async findBy(params: string, value: userTypes): Promise<User | undefined> {

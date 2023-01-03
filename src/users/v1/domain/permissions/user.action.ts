@@ -2,16 +2,24 @@ import compare from '@/shared/infrastructure/utils/compare';
 import validate from '@/shared/infrastructure/validator/validator';
 import { ValueObject } from '@/shared/domain/value-objects/value.object';
 import { UserInvalid } from '@/users/v1/domain/exceptions/invalid';
-type ACTIONS = 'create' | 'read' | 'update' | 'delete' | 'readAll';
+type ACTIONS =
+  | 'create'
+  | 'read'
+  | 'update'
+  | 'delete'
+  | 'readOne'
+  | 'createOne'
+  | 'updateOne'
+  | 'deleteOne';
 type ArrayOrString = string | string[];
 export class UserAction implements ValueObject<Array<ArrayOrString>> {
   private ROLE_ACTIONS: {
     [key in string]: Array<ACTIONS>;
   } = {
-    user: ['read', 'update', 'delete'],
-    admin: ['create', 'read', 'update', 'delete', 'readAll'],
+    user: ['readOne', 'updateOne', 'deleteOne'],
+    admin: ['create', 'read', 'update', 'deleteOne'],
     viewer: ['read'],
-    superAdmin: ['create', 'read', 'update', 'delete', 'readAll'],
+    superAdmin: ['create', 'read', 'update', 'delete'],
     custom: ['create', 'read', 'update', 'delete']
   };
   constructor(private value: ArrayOrString) {
@@ -27,7 +35,7 @@ export class UserAction implements ValueObject<Array<ArrayOrString>> {
   }
 
   validate(values: Array<string>): void {
-    if (values && !validate.isArray(values)) {
+    if (values && !validate.isAction(values)) {
       throw new UserInvalid('actions');
     }
   }

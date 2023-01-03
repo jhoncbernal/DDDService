@@ -5,6 +5,7 @@ export class UpdatePasswordDto {
     public readonly user_info: {
       email: string;
       deviceId: string;
+      uuid: string;
       permissions: {
         resources: string[];
         actions: string[];
@@ -26,6 +27,7 @@ export class UpdatePasswordDto {
       user_info: {
         email: this.getEmail(),
         deviceId: this.getDeviceId(),
+        uuid: this.getUuid(),
         permissions: {
           resources: this.getResouces(),
           actions: this.getActions()
@@ -50,5 +52,8 @@ export class UpdatePasswordDto {
   }
   getActions(): string[] {
     return this.user_info.permissions.actions;
+  }
+  getUuid(): string {
+    return this.user_info.uuid;
   }
 }
